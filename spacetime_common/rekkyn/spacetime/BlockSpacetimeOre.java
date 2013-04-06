@@ -6,6 +6,7 @@ import net.minecraft.block.BlockOre;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.entity.Entity;
 import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -51,9 +52,9 @@ public class BlockSpacetimeOre extends BlockOre {
             d5 = (rand.nextFloat() - 0.5D) * 0.5D;
             
             d0 = x + 0.5D + 0.25D * randx;
-            d3 = (rand.nextFloat() * 2.0F * randx);
+            d3 = rand.nextFloat() * 2.0F * randx;
             d2 = z + 0.5D + 0.25D * randz;
-            d5 = (rand.nextFloat() * 2.0F * randz);
+            d5 = rand.nextFloat() * 2.0F * randz;
             
             ParticleEffects.spawnParticle("spacetime", d0, d1, d2, d3, d4, d5, 0.16F + rand.nextFloat() / 8,
                     0.18F + rand.nextFloat() / 8, 0.62F + rand.nextFloat() / 8);
@@ -64,4 +65,13 @@ public class BlockSpacetimeOre extends BlockOre {
             
         }
     }
+    
+    @Override
+    public void onFallenUpon(World world, int x, int y, int z, Entity entity, float fallDistance) {
+        if (!world.isRemote) {
+            world.createExplosion(entity, x, y, z, fallDistance + 7, true);
+        }
+        
+    }
+    
 }
