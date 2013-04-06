@@ -10,9 +10,9 @@ import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.world.World;
 
-public class BlockReedstone extends Block {
+public class BlockRekkynite extends Block {
     
-    protected BlockReedstone(int id, Material material, boolean active) {
+    protected BlockRekkynite(int id, Material material, boolean active) {
         super(id, material);
         
         isActive = active;
@@ -25,15 +25,15 @@ public class BlockReedstone extends Block {
     @Override
     public void onNeighborBlockChange(World world, int x, int y, int z, int neighbourID) {
         if (world.isBlockIndirectlyGettingPowered(x, y, z)) {
-            world.setBlock(x, y, z, Spacetime.reedstoneGlowing.blockID);
+            world.setBlock(x, y, z, Spacetime.rekkyniteGlowing.blockID);
         } else {
-            world.setBlock(x, y, z, Spacetime.reedstone.blockID);
+            world.setBlock(x, y, z, Spacetime.rekkynite.blockID);
         }
     }
     
     @Override
     public int idDropped(int i, Random random, int j) {
-        return Spacetime.reedstone.blockID;
+        return Spacetime.rekkynite.blockID;
     }
     
     @Override
