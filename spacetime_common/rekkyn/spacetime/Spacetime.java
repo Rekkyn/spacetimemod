@@ -29,6 +29,10 @@ public class Spacetime {
     public static final BlockSpacetimeOre spacetimeOre = (BlockSpacetimeOre) new BlockSpacetimeOre(452).setHardness(5F)
             .setResistance(50F).setUnlocalizedName("spacetimeOre").setCreativeTab(CreativeTabs.tabBlock);
     
+    public static final ItemSpacetimeFluctuation spacetimeFluctuation = (ItemSpacetimeFluctuation) new ItemSpacetimeFluctuation(
+            1000).setMaxStackSize(1).setCreativeTab(CreativeTabs.tabMaterials)
+            .setUnlocalizedName("spacetimeFluctuation");
+    
     @Instance("Spacetime")
     public static Spacetime instance;
     
@@ -53,7 +57,8 @@ public class Spacetime {
         LanguageRegistry.addName(spacetimeOre, "Spacetime Ore");
         MinecraftForge.setBlockHarvestLevel(spacetimeOre, "pickaxe", 2);
         GameRegistry.registerBlock(spacetimeOre, "spacetimeOre");
-
+        
+        LanguageRegistry.addName(spacetimeFluctuation, "Spacetime Fluctuation");
         
     }
     
