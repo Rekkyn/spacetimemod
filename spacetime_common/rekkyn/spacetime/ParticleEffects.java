@@ -10,39 +10,32 @@ public class ParticleEffects {
     private static World theWorld = mc.theWorld;
     private static RenderEngine renderEngine = mc.renderEngine;
     
-    public static EntityFX spawnParticle(String particleName, double par2, double par4, double par6, double par8,
-            double par10, double par12) {
+    public static EntityFX spawnParticle(String particleName, double x, double y, double z, double motionX,
+            double motionY, double motionZ, float red, float green, float blue) {
         if (mc != null && mc.renderViewEntity != null && mc.effectRenderer != null) {
-            int var14 = mc.gameSettings.particleSetting;
+            int particleSetting = mc.gameSettings.particleSetting;
             
-            if (var14 == 1 && theWorld.rand.nextInt(3) == 0) {
-                var14 = 2;
+            if (particleSetting == 1 && theWorld.rand.nextInt(3) == 0) {
+                particleSetting = 2;
             }
             
-            double var15 = mc.renderViewEntity.posX - par2;
-            double var17 = mc.renderViewEntity.posY - par4;
-            double var19 = mc.renderViewEntity.posZ - par6;
-            EntityFX var21 = null;
-            double var22 = 16.0D;
+            double xdist = mc.renderViewEntity.posX - x;
+            double ydist = mc.renderViewEntity.posY - y;
+            double zdist = mc.renderViewEntity.posZ - z;
+            EntityFX effect = null;
+            double maxDist = 16.0D;
             
-            if (var15 * var15 + var17 * var17 + var19 * var19 > var22 * var22) {
+            if (xdist * xdist + ydist * ydist + zdist * zdist > maxDist * maxDist) {
                 return null;
-            } else if (var14 > 1) {
+            } else if (particleSetting > 1) {
                 return null;
             } else {
-                if (particleName.equals("spacetime"))// if the name of the
-                                                     // particle to be spawned
-                                                     // equals test spawn our
-                                                     // particle note the name
-                                                     // here is the name that
-                                                     // you use when you call
-                                                     // spawn particle
-                {
-                    var21 = new EntitySpacetimeFX(theWorld, par2, par4, par6, par8, par10, par12, 1.0F);
+                if (particleName.equals("spacetime")) {
+                    effect = new EntitySpacetimeFX(theWorld, x, y, z, motionX, motionY, motionZ, 1.0F, red, green, blue);
                 }
                 
-                mc.effectRenderer.addEffect(var21);
-                return var21;
+                mc.effectRenderer.addEffect(effect);
+                return effect;
             }
         }
         return null;
