@@ -22,9 +22,12 @@ public class Spacetime {
     
     public static final String modid = "Spacetime";
     
-    public static final BlockReedstone reedstone = (BlockReedstone) (new BlockReedstone(450, Material.rock, false)).setHardness(1.7F).setResistance(10F).setUnlocalizedName("reedstone").setCreativeTab(CreativeTabs.tabBlock);
-    public static final BlockReedstone reedstoneGlowing = (BlockReedstone) (new BlockReedstone(451, Material.rock, true)).setHardness(1.7F).setResistance(10F).setUnlocalizedName("reedstoneGlowing").setLightValue(1.0F);
-
+    public static final BlockReedstone reedstone = (BlockReedstone) new BlockReedstone(450, Material.rock, false)
+            .setHardness(1.7F).setResistance(10F).setUnlocalizedName("reedstone").setCreativeTab(CreativeTabs.tabBlock);
+    public static final BlockReedstone reedstoneGlowing = (BlockReedstone) new BlockReedstone(451, Material.rock, true)
+            .setHardness(1.7F).setResistance(10F).setUnlocalizedName("reedstoneGlowing").setLightValue(1.0F);
+    public static final BlockSpacetimeOre spacetimeOre = (BlockSpacetimeOre) new BlockSpacetimeOre(452).setHardness(5F)
+            .setResistance(50F).setUnlocalizedName("spacetimeOre").setCreativeTab(CreativeTabs.tabBlock);
     
     @Instance("Spacetime")
     public static Spacetime instance;
@@ -46,7 +49,12 @@ public class Spacetime {
         LanguageRegistry.addName(reedstone, "Reedstone");
         MinecraftForge.setBlockHarvestLevel(reedstone, "pickaxe", 0);
         GameRegistry.registerBlock(reedstone, "reedstone");
+        
+        LanguageRegistry.addName(spacetimeOre, "Spacetime Ore");
+        MinecraftForge.setBlockHarvestLevel(spacetimeOre, "pickaxe", 2);
+        GameRegistry.registerBlock(spacetimeOre, "spacetimeOre");
 
+        
     }
     
     @PostInit
