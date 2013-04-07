@@ -58,7 +58,7 @@ public class Spacetime {
         MinecraftForge.setBlockHarvestLevel(spacetimeOre, "pickaxe", 2);
         GameRegistry.registerBlock(spacetimeOre, "spacetimeOre");
         
-        LanguageRegistry.addName(spacetimeFluctuation, "Spacetime Fluctuation");
+        LanguageRegistry.addName(spacetimeFluctuation, "Spacetime Fluct¤ku¤rat¤ki¤ron");
         
     }
     
