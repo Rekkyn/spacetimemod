@@ -20,9 +20,10 @@ public class BlockSpacetimeOre extends BlockOre {
         super(id);
     }
     
+    @Override
     public int idDropped(int par1, Random random, int par2) {
         return Spacetime.spacetimeFluctuation.itemID;
-}
+    }
     
     @Override
     @SideOnly(Side.CLIENT)

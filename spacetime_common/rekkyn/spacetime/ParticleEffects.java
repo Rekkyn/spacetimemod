@@ -34,11 +34,11 @@ public class ParticleEffects {
                 return null;
             } else {
                 if (particleName.equals("blue")) {
-                    effect = new EntitySpacetimeFX(theWorld, x, y, z, motionX, motionY, motionZ, 1.0F, 0.16F + rand.nextFloat() / 8,
-                            0.18F + rand.nextFloat() / 8, 0.62F + rand.nextFloat() / 8);
+                    effect = new EntitySpacetimeFX(theWorld, x, y, z, motionX, motionY, motionZ, 1.0F,
+                            0.16F + rand.nextFloat() / 8, 0.18F + rand.nextFloat() / 8, 0.62F + rand.nextFloat() / 8);
                 } else if (particleName.equals("orange")) {
-                    effect = new EntitySpacetimeFX(theWorld, x, y, z, motionX, motionY, motionZ, 1.0F, 0.81F + rand.nextFloat() / 8,
-                            0.41F + rand.nextFloat() / 8, 0.05F + rand.nextFloat() / 8);
+                    effect = new EntitySpacetimeFX(theWorld, x, y, z, motionX, motionY, motionZ, 1.0F,
+                            0.81F + rand.nextFloat() / 8, 0.41F + rand.nextFloat() / 8, 0.05F + rand.nextFloat() / 8);
                 }
                 
                 mc.effectRenderer.addEffect(effect);

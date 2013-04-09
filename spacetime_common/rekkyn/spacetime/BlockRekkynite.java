@@ -2,13 +2,12 @@ package rekkyn.spacetime;
 
 import java.util.Random;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.world.World;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockRekkynite extends Block {
     
@@ -44,10 +43,10 @@ public class BlockRekkynite extends Block {
     @Override
     @SideOnly(Side.CLIENT)
     public void registerIcons(IconRegister iconRegister) {
-
-        blockIcon = iconRegister.registerIcon(Spacetime.modid.toLowerCase() + ":" + this.getUnlocalizedName().substring(this.getUnlocalizedName().indexOf(".") + 1));
+        
+        blockIcon = iconRegister.registerIcon(Spacetime.modid.toLowerCase() + ":"
+                + this.getUnlocalizedName().substring(this.getUnlocalizedName().indexOf(".") + 1));
     }
-
     
     private boolean isActive;
     
