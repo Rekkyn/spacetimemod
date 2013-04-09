@@ -2,13 +2,12 @@ package rekkyn.spacetime;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.ItemStack;
-import net.minecraftforge.common.MinecraftForge;
+import rekkyn.spacetime.block.*;
+import rekkyn.spacetime.item.*;
+import rekkyn.spacetime.network.*;
+import rekkyn.spacetime.proxy.CommonProxy;
 import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.Mod.Init;
-import cpw.mods.fml.common.Mod.Instance;
-import cpw.mods.fml.common.Mod.PostInit;
-import cpw.mods.fml.common.Mod.PreInit;
+import cpw.mods.fml.common.Mod.*;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
@@ -16,8 +15,6 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.network.NetworkMod.SidedPacketHandler;
 import cpw.mods.fml.common.network.NetworkRegistry;
-import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.common.registry.LanguageRegistry;
 
 @Mod(modid = Spacetime.modid, name = "Spacetime", version = "0.0")
 @NetworkMod(
@@ -28,9 +25,7 @@ import cpw.mods.fml.common.registry.LanguageRegistry;
 public class Spacetime {
     
     public static final String modid = "Spacetime";
-    
-    private GuiHandler guiHandler = new GuiHandler();
-    
+        
     public static final BlockRekkynite rekkynite = (BlockRekkynite) new BlockRekkynite(450, Material.rock, false)
             .setHardness(1.7F).setResistance(10F).setUnlocalizedName("rekkynite").setCreativeTab(CreativeTabs.tabBlock);
     public static final BlockRekkynite rekkyniteGlowing = (BlockRekkynite) new BlockRekkynite(451, Material.rock, true)
@@ -53,7 +48,7 @@ public class Spacetime {
     @Instance("Spacetime")
     public static Spacetime instance;
     
-    @SidedProxy(clientSide = "rekkyn.spacetime.ClientProxy", serverSide = "rekkyn.spacetime.CommonProxy")
+    @SidedProxy(clientSide = "rekkyn.spacetime.proxy.ClientProxy", serverSide = "rekkyn.spacetime.proxy.CommonProxy")
     public static CommonProxy proxy;
     
     @PreInit
@@ -67,23 +62,7 @@ public class Spacetime {
         proxy.addNames();
         proxy.addRecipes();
         
-        MinecraftForge.setBlockHarvestLevel(rekkynite, "pickaxe", 0);
-        GameRegistry.registerBlock(rekkynite, "rekkynite");
-        
-        LanguageRegistry.addName(spacetimeOre, "Spacetime Ore");
-        MinecraftForge.setBlockHarvestLevel(spacetimeOre, "pickaxe", 2);
-        GameRegistry.registerBlock(spacetimeOre, "spacetimeOre");
-        
-        LanguageRegistry.addName(spacetimeInfuser, "Spacetime Infuser");
-        MinecraftForge.setBlockHarvestLevel(spacetimeInfuser, "pickaxe", 2);
-        GameRegistry.registerBlock(spacetimeInfuser, "spacetimeInfuser");
-        GameRegistry.registerTileEntity(TileSpacetimeInfuser.class, "tileSpacetimeInfuser");
-        
-        
-        GameRegistry.addSmelting(Spacetime.spacetimeGem.itemID, new ItemStack(Spacetime.spacetimeIngot), 0.1f);
-        
-        NetworkRegistry.instance().registerGuiHandler(this, guiHandler);
-
+        NetworkRegistry.instance().registerGuiHandler(instance, proxy);
         
     }
     

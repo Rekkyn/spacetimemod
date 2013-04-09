@@ -1,7 +1,9 @@
-package rekkyn.spacetime;
+package rekkyn.spacetime.item;
 
 import java.util.List;
 import java.util.Random;
+
+import rekkyn.spacetime.particles.ParticleEffects;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.effect.EntityLightningBolt;
@@ -37,7 +39,7 @@ public class ItemSpacetimeFluctuation extends Item {
             int lightningy = (int) (entity.posY + (rand.nextInt(11) - 5));
             int lightningz = (int) (entity.posZ + (rand.nextInt(11) - 5));
             
-            if (rand.nextInt(50) == 0) {
+            if (rand.nextInt(120) == 0) {
                 
                 if (world.canBlockSeeTheSky(lightningx, lightningy, lightningz)
                         && world.getPrecipitationHeight(lightningx, lightningz) == lightningy) {

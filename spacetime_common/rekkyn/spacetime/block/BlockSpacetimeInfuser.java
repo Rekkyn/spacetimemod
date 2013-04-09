@@ -1,6 +1,9 @@
-package rekkyn.spacetime;
+package rekkyn.spacetime.block;
 
 import java.util.Random;
+
+import rekkyn.spacetime.Spacetime;
+import rekkyn.spacetime.inventory.TileSpacetimeInfuser;
 
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
@@ -14,7 +17,7 @@ import net.minecraft.world.World;
 
 public class BlockSpacetimeInfuser extends BlockContainer {
     
-    protected BlockSpacetimeInfuser(int id) {
+    public BlockSpacetimeInfuser(int id) {
         super(id, Material.rock);
     }
     

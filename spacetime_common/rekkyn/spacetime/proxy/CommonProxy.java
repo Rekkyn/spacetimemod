@@ -1,8 +1,15 @@
-package rekkyn.spacetime;
+package rekkyn.spacetime.proxy;
 
+import rekkyn.spacetime.Spacetime;
+import rekkyn.spacetime.inventory.ContainerSpacetimeInfuser;
+import rekkyn.spacetime.inventory.GuiSpacetimeInfuser;
+import rekkyn.spacetime.inventory.TileSpacetimeInfuser;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
 import cpw.mods.fml.common.network.IGuiHandler;
+import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
 public class CommonProxy implements IGuiHandler {
@@ -31,11 +38,20 @@ public class CommonProxy implements IGuiHandler {
     
     
     public void registerTiles() {
-        
+        GameRegistry.registerTileEntity(TileSpacetimeInfuser.class, "tileSpacetimeInfuser");
+
     }
     
     public void registerBlocks() {
+        MinecraftForge.setBlockHarvestLevel(Spacetime.rekkynite, "pickaxe", 0);
+        GameRegistry.registerBlock(Spacetime.rekkynite, "rekkynite");
         
+        MinecraftForge.setBlockHarvestLevel(Spacetime.spacetimeOre, "pickaxe", 2);
+        GameRegistry.registerBlock(Spacetime.spacetimeOre, "spacetimeOre");
+        
+        MinecraftForge.setBlockHarvestLevel(Spacetime.spacetimeInfuser, "pickaxe", 2);
+        GameRegistry.registerBlock(Spacetime.spacetimeInfuser, "spacetimeInfuser");
+
     }
     
     public void addNames() {
@@ -48,6 +64,7 @@ public class CommonProxy implements IGuiHandler {
     }
     
     public void addRecipes() {
-        
+        GameRegistry.addSmelting(Spacetime.spacetimeGem.itemID, new ItemStack(Spacetime.spacetimeIngot), 0.1f);
+
     }
 }

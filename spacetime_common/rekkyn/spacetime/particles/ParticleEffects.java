@@ -1,4 +1,4 @@
-package rekkyn.spacetime;
+package rekkyn.spacetime.particles;
 
 import java.util.Random;
 

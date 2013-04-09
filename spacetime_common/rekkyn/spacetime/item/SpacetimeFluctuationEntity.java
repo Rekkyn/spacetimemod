@@ -1,5 +1,6 @@
-package rekkyn.spacetime;
+package rekkyn.spacetime.item;
 
+import rekkyn.spacetime.particles.ParticleEffects;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;

@@ -1,6 +1,8 @@
-package rekkyn.spacetime;
+package rekkyn.spacetime.block;
 
 import java.util.Random;
+
+import rekkyn.spacetime.Spacetime;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -11,7 +13,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockRekkynite extends Block {
     
-    protected BlockRekkynite(int id, Material material, boolean active) {
+    public BlockRekkynite(int id, Material material, boolean active) {
         super(id, material);
         
         isActive = active;

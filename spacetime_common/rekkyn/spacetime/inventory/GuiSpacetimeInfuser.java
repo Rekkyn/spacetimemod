@@ -1,10 +1,11 @@
-package rekkyn.spacetime;
+package rekkyn.spacetime.inventory;
 
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.StatCollector;
 
 import org.lwjgl.opengl.GL11;
+
 
 public class GuiSpacetimeInfuser extends GuiContainer {
     public GuiSpacetimeInfuser(InventoryPlayer player_inventory, TileSpacetimeInfuser tile_entity) {

@@ -1,6 +1,9 @@
-package rekkyn.spacetime;
+package rekkyn.spacetime.block;
 
 import java.util.Random;
+
+import rekkyn.spacetime.Spacetime;
+import rekkyn.spacetime.particles.ParticleEffects;
 
 import net.minecraft.block.BlockOre;
 import net.minecraft.client.Minecraft;

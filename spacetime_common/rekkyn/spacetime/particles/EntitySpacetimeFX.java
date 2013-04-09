@@ -1,4 +1,4 @@
-package rekkyn.spacetime;
+package rekkyn.spacetime.particles;
 
 import net.minecraft.client.particle.EntityPortalFX;
 import net.minecraft.world.World;
