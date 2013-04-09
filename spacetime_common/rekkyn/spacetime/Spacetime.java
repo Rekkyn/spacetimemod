@@ -2,6 +2,7 @@ package rekkyn.spacetime;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.Init;
@@ -35,6 +36,8 @@ public class Spacetime {
             .setUnlocalizedName("spacetimeFluctuation");
     public static final ItemSpacetimeGem spacetimeGem = (ItemSpacetimeGem) new ItemSpacetimeGem(1001).setCreativeTab(
             CreativeTabs.tabMaterials).setUnlocalizedName("spacetimeGem");
+    public static final ItemSpacetimeIngot spacetimeIngot = (ItemSpacetimeIngot) new ItemSpacetimeIngot(1002)
+            .setCreativeTab(CreativeTabs.tabMaterials).setUnlocalizedName("spacetimeIngot");
     
     @Instance("Spacetime")
     public static Spacetime instance;
@@ -53,9 +56,9 @@ public class Spacetime {
         proxy.addNames();
         proxy.addRecipes();
         
-        LanguageRegistry.addName(rekkynite, "Reedstone");
+        LanguageRegistry.addName(rekkynite, "Rekkynite");
         MinecraftForge.setBlockHarvestLevel(rekkynite, "pickaxe", 0);
-        GameRegistry.registerBlock(rekkynite, "reedstone");
+        GameRegistry.registerBlock(rekkynite, "rekkynite");
         
         LanguageRegistry.addName(spacetimeOre, "Spacetime Ore");
         MinecraftForge.setBlockHarvestLevel(spacetimeOre, "pickaxe", 2);
@@ -63,6 +66,10 @@ public class Spacetime {
         
         LanguageRegistry.addName(spacetimeFluctuation, "Spacetime Fluct¤ku¤rat¤ki¤ron");
         LanguageRegistry.addName(spacetimeGem, "Spacetime Gem");
+        LanguageRegistry.addName(spacetimeIngot, "Spacetime Ingot");
+        
+        GameRegistry.addSmelting(Spacetime.spacetimeGem.itemID, new ItemStack(Spacetime.spacetimeIngot), 0.1f);
+
         
     }
     
