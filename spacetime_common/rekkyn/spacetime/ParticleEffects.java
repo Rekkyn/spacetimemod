@@ -1,5 +1,7 @@
 package rekkyn.spacetime;
 
+import java.util.Random;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.EntityFX;
 import net.minecraft.client.renderer.RenderEngine;
@@ -9,9 +11,10 @@ public class ParticleEffects {
     private static Minecraft mc = Minecraft.getMinecraft();
     private static World theWorld = mc.theWorld;
     private static RenderEngine renderEngine = mc.renderEngine;
+    private static Random rand = new Random();
     
     public static EntityFX spawnParticle(String particleName, double x, double y, double z, double motionX,
-            double motionY, double motionZ, float red, float green, float blue) {
+            double motionY, double motionZ) {
         if (mc != null && mc.renderViewEntity != null && mc.effectRenderer != null) {
             int particleSetting = mc.gameSettings.particleSetting;
             
@@ -30,8 +33,12 @@ public class ParticleEffects {
             } else if (particleSetting > 1) {
                 return null;
             } else {
-                if (particleName.equals("spacetime")) {
-                    effect = new EntitySpacetimeFX(theWorld, x, y, z, motionX, motionY, motionZ, 1.0F, red, green, blue);
+                if (particleName.equals("blue")) {
+                    effect = new EntitySpacetimeFX(theWorld, x, y, z, motionX, motionY, motionZ, 1.0F, 0.16F + rand.nextFloat() / 8,
+                            0.18F + rand.nextFloat() / 8, 0.62F + rand.nextFloat() / 8);
+                } else if (particleName.equals("orange")) {
+                    effect = new EntitySpacetimeFX(theWorld, x, y, z, motionX, motionY, motionZ, 1.0F, 0.81F + rand.nextFloat() / 8,
+                            0.41F + rand.nextFloat() / 8, 0.05F + rand.nextFloat() / 8);
                 }
                 
                 mc.effectRenderer.addEffect(effect);
