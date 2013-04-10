@@ -20,7 +20,7 @@ public class SpacetimeFluctuationEntity extends EntityItem {
         super.onUpdate();
         
         if (!worldObj.isRemote) {
-            if (rand.nextInt(3000) == 0) {
+            if (rand.nextInt(ItemSpacetimeFluctuation.explosionChance) == 0) {
                 worldObj.createExplosion(this, posX, posY, posZ, 3, true);
             }
             
@@ -28,7 +28,7 @@ public class SpacetimeFluctuationEntity extends EntityItem {
             int lightningy = (int) (posY + (rand.nextInt(11) - 5));
             int lightningz = (int) (posZ + (rand.nextInt(11) - 5));
             
-            if (rand.nextInt(50) == 0) {
+            if (rand.nextInt(ItemSpacetimeFluctuation.lightningChance) == 0) {
                 
                 if (worldObj.canBlockSeeTheSky(lightningx, lightningy, lightningz)
                         && worldObj.getPrecipitationHeight(lightningx, lightningz) == lightningy) {

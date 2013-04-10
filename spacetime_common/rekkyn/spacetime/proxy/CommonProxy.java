@@ -59,7 +59,7 @@ public class CommonProxy implements IGuiHandler {
         LanguageRegistry.addName(Spacetime.spacetimeOre, "Spacetime Ore");
         LanguageRegistry.addName(Spacetime.spacetimeInfuser, "Spacetime Infuser");
         LanguageRegistry.addName(Spacetime.spacetimeFluctuation, "Spacetime Fluct¤ku¤rat¤ki¤ron");
-        LanguageRegistry.addName(Spacetime.spacetimeGem, "Spacetime Gem");
+        LanguageRegistry.addName(Spacetime.spacetimeGem, "Spacetime Crystal");
         LanguageRegistry.addName(Spacetime.spacetimeIngot, "Spacetime Ingot");
     }
     

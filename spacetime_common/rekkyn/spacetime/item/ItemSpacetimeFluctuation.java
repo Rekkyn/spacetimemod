@@ -19,6 +19,9 @@ public class ItemSpacetimeFluctuation extends Item {
     
     Random rand = new Random();
     
+    public static int explosionChance = 3000;
+    public static int lightningChance = 80;
+    
     public ItemSpacetimeFluctuation(int id) {
         super(id);
     }
@@ -30,7 +33,7 @@ public class ItemSpacetimeFluctuation extends Item {
         double z = entity.posZ;
         
         if (!world.isRemote) {
-            if (rand.nextInt(3000) == 0) {
+            if (rand.nextInt(explosionChance) == 0) {
                 world.createExplosion(entity, entity.posX, entity.posY, entity.posZ, 3, true);
                 entity.attackEntityFrom(DamageSource.setExplosionSource(null), 7);
             }
@@ -39,7 +42,7 @@ public class ItemSpacetimeFluctuation extends Item {
             int lightningy = (int) (entity.posY + (rand.nextInt(11) - 5));
             int lightningz = (int) (entity.posZ + (rand.nextInt(11) - 5));
             
-            if (rand.nextInt(120) == 0) {
+            if (rand.nextInt(lightningChance) == 0) {
                 
                 if (world.canBlockSeeTheSky(lightningx, lightningy, lightningz)
                         && world.getPrecipitationHeight(lightningx, lightningz) == lightningy) {
