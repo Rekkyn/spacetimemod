@@ -11,16 +11,11 @@ public class ContainerSpacetimeInfuser extends Container {
     
     public ContainerSpacetimeInfuser(TileSpacetimeInfuser tileEntity, InventoryPlayer playerInventory) {
         this.tileEntity = tileEntity;
-        int o = 0;
-        for (int q = 0; q < 3; q++) {
-            for (int p = 0; p < 9; p++) {
-                
-                addSlotToContainer(new Slot(tileEntity, o, 9 + p * 18, 9 + q * 18));
-                
-                bindPlayerInventory(playerInventory);
-                o++;
-            }
-        }
+        addSlotToContainer(new Slot(tileEntity, 0, 44, 18));
+        addSlotToContainer(new Slot(tileEntity, 2, 44, 61));
+        addSlotToContainer(new Slot(tileEntity, 3, 120, 39));
+        
+        bindPlayerInventory(playerInventory);
     }
     
     @Override
