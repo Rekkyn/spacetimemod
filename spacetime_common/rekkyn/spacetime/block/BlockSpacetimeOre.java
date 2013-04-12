@@ -2,15 +2,14 @@ package rekkyn.spacetime.block;
 
 import java.util.Random;
 
-import rekkyn.spacetime.Spacetime;
-import rekkyn.spacetime.particles.ParticleEffects;
-
 import net.minecraft.block.BlockOre;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.world.World;
+import rekkyn.spacetime.Spacetime;
+import rekkyn.spacetime.particles.ParticleEffects;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 

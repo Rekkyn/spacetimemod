@@ -4,6 +4,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
+import net.minecraft.inventory.SlotFurnace;
 import net.minecraft.item.ItemStack;
 
 public class ContainerSpacetimeInfuser extends Container {
@@ -11,9 +12,9 @@ public class ContainerSpacetimeInfuser extends Container {
     
     public ContainerSpacetimeInfuser(TileSpacetimeInfuser tileEntity, InventoryPlayer playerInventory) {
         this.tileEntity = tileEntity;
-        addSlotToContainer(new Slot(tileEntity, 0, 44, 18));
-        addSlotToContainer(new Slot(tileEntity, 2, 44, 61));
-        addSlotToContainer(new Slot(tileEntity, 3, 120, 39));
+        addSlotToContainer(new Slot(tileEntity, 0, 40, 19));
+        addSlotToContainer(new Slot(tileEntity, 2, 40, 51));
+        addSlotToContainer(new SlotFurnace(playerInventory.player, tileEntity, 3, 120, 35));
         
         bindPlayerInventory(playerInventory);
     }
@@ -37,30 +38,69 @@ public class ContainerSpacetimeInfuser extends Container {
         
     }
     
+    /*
+     * @Override public ItemStack transferStackInSlot(EntityPlayer player, int
+     * slotIndex) { ItemStack stack = null; Slot slotObject = (Slot)
+     * inventorySlots.get(slotIndex);
+     * 
+     * if (slotObject != null && slotObject.getHasStack()) { ItemStack
+     * stackInSlot = slotObject.getStack(); stack = stackInSlot.copy();
+     * 
+     * if (slotIndex == 0) { if (!mergeItemStack(stackInSlot, 1,
+     * inventorySlots.size(), true)) { return null; } } else if
+     * (!mergeItemStack(stackInSlot, 0, 1, false)) { return null; }
+     * 
+     * if (stackInSlot.stackSize == 0) { slotObject.putStack(null); } else {
+     * slotObject.onSlotChanged(); } }
+     * 
+     * return stack; }
+     */
+    
     @Override
-    public ItemStack transferStackInSlot(EntityPlayer player, int slotIndex) {
-        ItemStack stack = null;
-        Slot slotObject = (Slot) inventorySlots.get(slotIndex);
+    public ItemStack transferStackInSlot(EntityPlayer par1EntityPlayer, int par2) {
+        ItemStack itemstack = null;
+        Slot slot = (Slot) inventorySlots.get(par2);
         
-        if (slotObject != null && slotObject.getHasStack()) {
-            ItemStack stackInSlot = slotObject.getStack();
-            stack = stackInSlot.copy();
+        if (slot != null && slot.getHasStack()) {
+            ItemStack stack = slot.getStack();
+            itemstack = stack.copy();
             
-            if (slotIndex == 0) {
-                if (!mergeItemStack(stackInSlot, 1, inventorySlots.size(), true)) {
+            if (par2 == 2) {
+                if (!this.mergeItemStack(stack, 3, 39, true)) {
                     return null;
                 }
-            } else if (!mergeItemStack(stackInSlot, 0, 1, false)) {
+                
+                slot.onSlotChange(stack, itemstack);
+                
+            } else if (par2 != 1 && par2 != 0) {
+                if (!this.mergeItemStack(stack, 0, 2, false)) {
+                    return null;
+                }
+            } else if (par2 >= 3 && par2 < 30) {
+                if (!this.mergeItemStack(stack, 30, 39, false)) {
+                    return null;
+                }
+            } else if (par2 >= 30 && par2 < 39 && !this.mergeItemStack(stack, 3, 30, false)) {
                 return null;
             }
             
-            if (stackInSlot.stackSize == 0) {
-                slotObject.putStack(null);
-            } else {
-                slotObject.onSlotChanged();
+            else if (!this.mergeItemStack(stack, 3, 39, false)) {
+                return null;
             }
+            
+            if (stack.stackSize == 0) {
+                slot.putStack((ItemStack) null);
+            } else {
+                slot.onSlotChanged();
+            }
+            
+            if (stack.stackSize == itemstack.stackSize) {
+                return null;
+            }
+            
+            slot.onPickupFromSlot(par1EntityPlayer, stack);
         }
         
-        return stack;
+        return itemstack;
     }
 }

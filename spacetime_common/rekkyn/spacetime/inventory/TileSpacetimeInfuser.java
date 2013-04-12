@@ -3,6 +3,7 @@ package rekkyn.spacetime.inventory;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
@@ -12,7 +13,7 @@ public class TileSpacetimeInfuser extends TileEntity implements IInventory {
     private ItemStack[] inventory;
     
     public TileSpacetimeInfuser() {
-        inventory = new ItemStack[27];
+        inventory = new ItemStack[2];
     }
     
     @Override
@@ -137,4 +138,46 @@ public class TileSpacetimeInfuser extends TileEntity implements IInventory {
     public boolean isStackValidForSlot(int i, ItemStack itemstack) {
         return true;
     }
+    
+    private boolean canInfuse() {
+        if (inventory[0] == null) {
+            return false;
+        } else {
+            ItemStack itemstack = FurnaceRecipes.smelting().getSmeltingResult(inventory[0]);
+            if (itemstack == null) {
+                return false;
+            }
+            if (inventory[2] == null) {
+                return true;
+            }
+            if (!inventory[2].isItemEqual(itemstack)) {
+                return false;
+            }
+            int result = inventory[2].stackSize + itemstack.stackSize;
+            return result <= getInventoryStackLimit() && result <= itemstack.getMaxStackSize();
+        }
+    }
+    
+    /**
+     * Turn one item from the furnace source stack into the appropriate smelted
+     * item in the furnace result stack
+     */
+    public void infuseItem() {
+        if (this.canInfuse()) {
+            ItemStack itemstack = FurnaceRecipes.smelting().getSmeltingResult(inventory[0]);
+            
+            if (inventory[2] == null) {
+                inventory[2] = itemstack.copy();
+            } else if (inventory[2].isItemEqual(itemstack)) {
+                inventory[2].stackSize += itemstack.stackSize;
+            }
+            
+            --inventory[0].stackSize;
+            
+            if (inventory[0].stackSize <= 0) {
+                inventory[0] = null;
+            }
+        }
+    }
+    
 }

@@ -6,7 +6,6 @@ import net.minecraft.util.StatCollector;
 
 import org.lwjgl.opengl.GL11;
 
-
 public class GuiSpacetimeInfuser extends GuiContainer {
     public GuiSpacetimeInfuser(InventoryPlayer player_inventory, TileSpacetimeInfuser tile_entity) {
         super(new ContainerSpacetimeInfuser(tile_entity, player_inventory));

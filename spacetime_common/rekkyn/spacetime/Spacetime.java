@@ -2,12 +2,20 @@ package rekkyn.spacetime;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
-import rekkyn.spacetime.block.*;
-import rekkyn.spacetime.item.*;
-import rekkyn.spacetime.network.*;
+import rekkyn.spacetime.block.BlockRekkynite;
+import rekkyn.spacetime.block.BlockSpacetimeInfuser;
+import rekkyn.spacetime.block.BlockSpacetimeOre;
+import rekkyn.spacetime.item.ItemSpacetimeFluctuation;
+import rekkyn.spacetime.item.ItemSpacetimeGem;
+import rekkyn.spacetime.item.ItemSpacetimeIngot;
+import rekkyn.spacetime.network.ClientPacketHandler;
+import rekkyn.spacetime.network.ServerPacketHandler;
 import rekkyn.spacetime.proxy.CommonProxy;
 import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.Mod.*;
+import cpw.mods.fml.common.Mod.Init;
+import cpw.mods.fml.common.Mod.Instance;
+import cpw.mods.fml.common.Mod.PostInit;
+import cpw.mods.fml.common.Mod.PreInit;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
@@ -25,7 +33,7 @@ import cpw.mods.fml.common.network.NetworkRegistry;
 public class Spacetime {
     
     public static final String modid = "Spacetime";
-        
+    
     public static final BlockRekkynite rekkynite = (BlockRekkynite) new BlockRekkynite(450, Material.rock, false)
             .setHardness(1.7F).setResistance(10F).setUnlocalizedName("rekkynite").setCreativeTab(CreativeTabs.tabBlock);
     public static final BlockRekkynite rekkyniteGlowing = (BlockRekkynite) new BlockRekkynite(451, Material.rock, true)
