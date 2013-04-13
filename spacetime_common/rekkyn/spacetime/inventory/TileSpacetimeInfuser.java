@@ -1,19 +1,24 @@
 package rekkyn.spacetime.inventory;
 
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.ISidedInventory;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 
-public class TileSpacetimeInfuser extends TileEntity implements IInventory {
+public class TileSpacetimeInfuser extends TileEntity implements ISidedInventory {
     
     private static final int totalInfuseTime = 20 * 2;
     
-    private ItemStack[] inventory = new ItemStack[4];
+    private ItemStack[] inventory = new ItemStack[3];
     
     public int infuseTime = 0;
+    
+    private static final int[] side1 = new int[] { 0 };  //put: top     pull: bottom
+    private static final int[] side2 = new int[] { 2, 1 }; //put: top, sides
+    private static final int[] side3 = new int[] { 1 }; //put: top, sides
     
     @Override
     public int getSizeInventory() {
@@ -139,7 +144,7 @@ public class TileSpacetimeInfuser extends TileEntity implements IInventory {
     
     @Override
     public boolean isStackValidForSlot(int i, ItemStack itemstack) {
-        return true;
+        return i != 2;
     }
     
     private boolean canInfuse() {
@@ -212,4 +217,21 @@ public class TileSpacetimeInfuser extends TileEntity implements IInventory {
             this.onInventoryChanged();
         }
     }
+    
+    @Override
+    public boolean func_102007_a(int slot, ItemStack item, int par3) {
+        return this.isStackValidForSlot(slot, item);
+    }
+    
+    @Override
+    public boolean func_102008_b(int par1, ItemStack par2ItemStack, int par3) {
+        return par3 != 0 || par1 != 1 || par2ItemStack.itemID == Item.bucketEmpty.itemID;
+    }
+    
+    @Override
+    public int[] getSizeInventorySide(int par1) {
+         return par1 == 0 ? side2 : (par1 == 1 ? side1 : side3);
+        //return side2;
+    }
+    
 }
