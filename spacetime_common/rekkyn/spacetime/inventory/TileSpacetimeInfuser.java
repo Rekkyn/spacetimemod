@@ -3,18 +3,17 @@ package rekkyn.spacetime.inventory;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 
 public class TileSpacetimeInfuser extends TileEntity implements IInventory {
     
-    private ItemStack[] inventory;
+    private static final int totalInfuseTime = 20 * 2;
     
-    public TileSpacetimeInfuser() {
-        inventory = new ItemStack[2];
-    }
+    private ItemStack[] inventory = new ItemStack[4];
+    
+    public int infuseTime = 0;
     
     @Override
     public int getSizeInventory() {
@@ -101,11 +100,15 @@ public class TileSpacetimeInfuser extends TileEntity implements IInventory {
                 inventory[slot] = ItemStack.loadItemStackFromNBT(tag);
             }
         }
+        
+        infuseTime = tagCompound.getShort("InfuseTime");
+        
     }
     
     @Override
     public void writeToNBT(NBTTagCompound tagCompound) {
         super.writeToNBT(tagCompound);
+        tagCompound.setShort("InfuseTime", (short) infuseTime);
         
         NBTTagList itemList = new NBTTagList();
         
@@ -140,10 +143,10 @@ public class TileSpacetimeInfuser extends TileEntity implements IInventory {
     }
     
     private boolean canInfuse() {
-        if (inventory[0] == null) {
+        if (inventory[0] == null || inventory[1] == null) {
             return false;
         } else {
-            ItemStack itemstack = FurnaceRecipes.smelting().getSmeltingResult(inventory[0]);
+            ItemStack itemstack = InfuserRecipes.infusing().getInfusingResult(inventory[0], inventory[1]);
             if (itemstack == null) {
                 return false;
             }
@@ -164,7 +167,7 @@ public class TileSpacetimeInfuser extends TileEntity implements IInventory {
      */
     public void infuseItem() {
         if (this.canInfuse()) {
-            ItemStack itemstack = FurnaceRecipes.smelting().getSmeltingResult(inventory[0]);
+            ItemStack itemstack = InfuserRecipes.infusing().getInfusingResult(inventory[0], inventory[1]);
             
             if (inventory[2] == null) {
                 inventory[2] = itemstack.copy();
@@ -173,11 +176,40 @@ public class TileSpacetimeInfuser extends TileEntity implements IInventory {
             }
             
             --inventory[0].stackSize;
+            --inventory[1].stackSize;
             
             if (inventory[0].stackSize <= 0) {
                 inventory[0] = null;
             }
+            if (inventory[1].stackSize <= 0) {
+                inventory[1] = null;
+            }
+            
         }
     }
     
+    @Override
+    public void updateEntity() {
+        boolean infusing = false;
+        
+        if (!worldObj.isRemote) {
+            
+            if (this.canInfuse()) {
+                ++infuseTime;
+                if (infuseTime == totalInfuseTime) {
+                    infuseTime = 0;
+                    this.infuseItem();
+                    infusing = true;
+                }
+            } else {
+                infuseTime = 0;
+                
+            }
+            
+        }
+        
+        if (infusing) {
+            this.onInventoryChanged();
+        }
+    }
 }

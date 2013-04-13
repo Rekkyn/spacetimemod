@@ -13,8 +13,8 @@ public class ContainerSpacetimeInfuser extends Container {
     public ContainerSpacetimeInfuser(TileSpacetimeInfuser tileEntity, InventoryPlayer playerInventory) {
         this.tileEntity = tileEntity;
         addSlotToContainer(new Slot(tileEntity, 0, 40, 19));
-        addSlotToContainer(new Slot(tileEntity, 2, 40, 51));
-        addSlotToContainer(new SlotFurnace(playerInventory.player, tileEntity, 3, 120, 35));
+        addSlotToContainer(new Slot(tileEntity, 1, 40, 51));
+        addSlotToContainer(new SlotFurnace(playerInventory.player, tileEntity, 2, 120, 35));
         
         bindPlayerInventory(playerInventory);
     }
