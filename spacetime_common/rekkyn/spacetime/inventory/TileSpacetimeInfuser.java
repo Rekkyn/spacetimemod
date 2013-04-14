@@ -12,7 +12,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class TileSpacetimeInfuser extends TileEntity implements ISidedInventory {
     
-    private static final int totalInfuseTime = 20 * 2;
+    private static final int totalInfuseTime = 20 * 10;
     
     private ItemStack[] inventory = new ItemStack[3];
     
@@ -198,21 +198,20 @@ public class TileSpacetimeInfuser extends TileEntity implements ISidedInventory 
     
     @Override
     public void updateEntity() {
-        
         boolean infusing = false;
-        
-        if (this.canInfuse()) {
-            ++infuseTime;
-            
-            if (infuseTime == totalInfuseTime) {
+        if (!worldObj.isRemote) {
+            if (this.canInfuse()) {
+                ++infuseTime;
+                
+                if (infuseTime == totalInfuseTime) {
+                    infuseTime = 0;
+                    this.infuseItem();
+                    infusing = true;
+                }
+            } else {
                 infuseTime = 0;
-                this.infuseItem();
-                infusing = true;
             }
-        } else {
-            infuseTime = 0;
         }
-        
         if (infusing) {
             this.onInventoryChanged();
         }

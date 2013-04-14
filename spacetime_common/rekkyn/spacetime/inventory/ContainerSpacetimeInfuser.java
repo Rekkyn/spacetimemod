@@ -1,14 +1,18 @@
 package rekkyn.spacetime.inventory;
 
+import java.util.Iterator;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
+import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.Slot;
 import net.minecraft.inventory.SlotFurnace;
 import net.minecraft.item.ItemStack;
 
 public class ContainerSpacetimeInfuser extends Container {
     protected TileSpacetimeInfuser tileEntity;
+    private int lastInfuseTime = 0;
     
     public ContainerSpacetimeInfuser(TileSpacetimeInfuser tileEntity, InventoryPlayer playerInventory) {
         this.tileEntity = tileEntity;
@@ -38,23 +42,6 @@ public class ContainerSpacetimeInfuser extends Container {
         
     }
     
-    /*
-     * @Override public ItemStack transferStackInSlot(EntityPlayer player, int
-     * slotIndex) { ItemStack stack = null; Slot slotObject = (Slot)
-     * inventorySlots.get(slotIndex);
-     * 
-     * if (slotObject != null && slotObject.getHasStack()) { ItemStack
-     * stackInSlot = slotObject.getStack(); stack = stackInSlot.copy();
-     * 
-     * if (slotIndex == 0) { if (!mergeItemStack(stackInSlot, 1,
-     * inventorySlots.size(), true)) { return null; } } else if
-     * (!mergeItemStack(stackInSlot, 0, 1, false)) { return null; }
-     * 
-     * if (stackInSlot.stackSize == 0) { slotObject.putStack(null); } else {
-     * slotObject.onSlotChanged(); } }
-     * 
-     * return stack; }
-     */
     
     @Override
     public ItemStack transferStackInSlot(EntityPlayer par1EntityPlayer, int par2) {
@@ -103,4 +90,28 @@ public class ContainerSpacetimeInfuser extends Container {
         
         return itemstack;
     }
+    
+    public void detectAndSendChanges()
+    {
+             super.detectAndSendChanges();
+             Iterator iterator = this.crafters.iterator();
+             while (iterator.hasNext())
+             {
+                     ICrafting crafting = (ICrafting)iterator.next();
+                     if (this.lastInfuseTime != this.tileEntity.infuseTime)
+                     {
+                             crafting.sendProgressBarUpdate(this, 0, this.tileEntity.infuseTime);
+                     }
+             }
+             this.lastInfuseTime = this.tileEntity.infuseTime;
+    }
+
+    public void updateProgressBar(int par1, int par2)
+    {
+             if (par1 == 0)
+             {
+                 tileEntity.infuseTime = par2;
+             }
+    }
+
 }
