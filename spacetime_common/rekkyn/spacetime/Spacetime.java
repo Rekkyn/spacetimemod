@@ -2,9 +2,11 @@ package rekkyn.spacetime;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.Item;
 import rekkyn.spacetime.block.BlockRekkynite;
 import rekkyn.spacetime.block.BlockSpacetimeInfuser;
 import rekkyn.spacetime.block.BlockSpacetimeOre;
+import rekkyn.spacetime.item.ItemIronRod;
 import rekkyn.spacetime.item.ItemSpacetimeFluctuation;
 import rekkyn.spacetime.item.ItemSpacetimeGem;
 import rekkyn.spacetime.network.ClientPacketHandler;
@@ -49,6 +51,7 @@ public class Spacetime {
             .setUnlocalizedName("spacetimeFluctuation");
     public static final ItemSpacetimeGem spacetimeGem = (ItemSpacetimeGem) new ItemSpacetimeGem(1001).setCreativeTab(
             CreativeTabs.tabMaterials).setUnlocalizedName("spacetimeGem");
+    public static final Item ironRod = (new ItemIronRod(1002)).setUnlocalizedName("ironRod").setCreativeTab(CreativeTabs.tabMaterials);
     
     @Instance("Spacetime")
     public static Spacetime instance;

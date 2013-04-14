@@ -1,6 +1,7 @@
 package rekkyn.spacetime.proxy;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
@@ -59,9 +60,12 @@ public class CommonProxy implements IGuiHandler {
         LanguageRegistry.addName(Spacetime.spacetimeInfuser, "Spacetime Infuser");
         LanguageRegistry.addName(Spacetime.spacetimeFluctuation, "Spacetime Fluct¤ku¤rat¤ki¤ron");
         LanguageRegistry.addName(Spacetime.spacetimeGem, "Spacetime Crystal");
+        LanguageRegistry.addName(Spacetime.ironRod, "Iron Rod");
+
     }
     
     public void addRecipes() {
-        
+        GameRegistry.addRecipe(new ItemStack(Spacetime.ironRod), "x", "x", "x", 
+                'x', Item.ingotIron);
     }
 }
