@@ -1,5 +1,7 @@
 package rekkyn.spacetime.inventory;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.Item;
@@ -14,11 +16,11 @@ public class TileSpacetimeInfuser extends TileEntity implements ISidedInventory 
     
     private ItemStack[] inventory = new ItemStack[3];
     
-    public int infuseTime = 0;
+    public int infuseTime;
     
-    private static final int[] side1 = new int[] { 0 };  //put: top     pull: bottom
-    private static final int[] side2 = new int[] { 2, 1 }; //put: top, sides
-    private static final int[] side3 = new int[] { 1 }; //put: top, sides
+    private static final int[] side1 = new int[] { 0 };
+    private static final int[] side2 = new int[] { 2, 1 };
+    private static final int[] side3 = new int[] { 1 };
     
     @Override
     public int getSizeInventory() {
@@ -166,10 +168,11 @@ public class TileSpacetimeInfuser extends TileEntity implements ISidedInventory 
         }
     }
     
-    /**
-     * Turn one item from the furnace source stack into the appropriate smelted
-     * item in the furnace result stack
-     */
+    @SideOnly(Side.CLIENT)
+    public int getProgressScaled(int par1) {
+        return infuseTime * par1 / totalInfuseTime;
+    }
+    
     public void infuseItem() {
         if (this.canInfuse()) {
             ItemStack itemstack = InfuserRecipes.infusing().getInfusingResult(inventory[0], inventory[1]);
@@ -195,12 +198,13 @@ public class TileSpacetimeInfuser extends TileEntity implements ISidedInventory 
     
     @Override
     public void updateEntity() {
+
         boolean infusing = false;
-        
-        if (!worldObj.isRemote) {
-            
+
+        //if (!worldObj.isRemote) {
             if (this.canInfuse()) {
                 ++infuseTime;
+
                 if (infuseTime == totalInfuseTime) {
                     infuseTime = 0;
                     this.infuseItem();
@@ -211,11 +215,13 @@ public class TileSpacetimeInfuser extends TileEntity implements ISidedInventory 
                 
             }
             
-        }
-        
+       // }
+            System.out.println(infuseTime);
+
         if (infusing) {
             this.onInventoryChanged();
         }
+
     }
     
     @Override
@@ -230,8 +236,7 @@ public class TileSpacetimeInfuser extends TileEntity implements ISidedInventory 
     
     @Override
     public int[] getSizeInventorySide(int par1) {
-         return par1 == 0 ? side2 : (par1 == 1 ? side1 : side3);
-        //return side2;
+        return par1 == 0 ? side2 : par1 == 1 ? side1 : side3;
     }
     
 }

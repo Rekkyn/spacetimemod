@@ -7,8 +7,12 @@ import net.minecraft.util.StatCollector;
 import org.lwjgl.opengl.GL11;
 
 public class GuiSpacetimeInfuser extends GuiContainer {
-    public GuiSpacetimeInfuser(InventoryPlayer player_inventory, TileSpacetimeInfuser tile_entity) {
-        super(new ContainerSpacetimeInfuser(tile_entity, player_inventory));
+    
+    private TileSpacetimeInfuser infuserInventory;
+    
+    public GuiSpacetimeInfuser(InventoryPlayer player_inventory, TileSpacetimeInfuser tileEntity) {
+        super(new ContainerSpacetimeInfuser(tileEntity, player_inventory));
+        infuserInventory = tileEntity;
     }
     
     @Override
@@ -20,7 +24,7 @@ public class GuiSpacetimeInfuser extends GuiContainer {
     
     @Override
     protected void drawGuiContainerBackgroundLayer(float f, int i, int j) {
-        
+
         GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
         
         mc.renderEngine.bindTexture("/mods/Spacetime/textures/gui/spacetimeInfuser.png");
@@ -30,5 +34,8 @@ public class GuiSpacetimeInfuser extends GuiContainer {
         int y = (height - ySize) / 2;
         
         this.drawTexturedModalRect(x, y, 0, 0, xSize, ySize);
+        
+        int i1 = infuserInventory.getProgressScaled(24);
+        drawTexturedModalRect(x + 79, y + 34, 176, 14, i1 + 1, 16);
     }
 }
