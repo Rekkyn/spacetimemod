@@ -1,7 +1,5 @@
 package rekkyn.spacetime.inventory;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.Item;
@@ -9,6 +7,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class TileSpacetimeInfuser extends TileEntity implements ISidedInventory {
     
@@ -198,30 +198,25 @@ public class TileSpacetimeInfuser extends TileEntity implements ISidedInventory 
     
     @Override
     public void updateEntity() {
-
+        
         boolean infusing = false;
-
-        //if (!worldObj.isRemote) {
-            if (this.canInfuse()) {
-                ++infuseTime;
-
-                if (infuseTime == totalInfuseTime) {
-                    infuseTime = 0;
-                    this.infuseItem();
-                    infusing = true;
-                }
-            } else {
-                infuseTime = 0;
-                
-            }
+        
+        if (this.canInfuse()) {
+            ++infuseTime;
             
-       // }
-            System.out.println(infuseTime);
-
+            if (infuseTime == totalInfuseTime) {
+                infuseTime = 0;
+                this.infuseItem();
+                infusing = true;
+            }
+        } else {
+            infuseTime = 0;
+        }
+        
         if (infusing) {
             this.onInventoryChanged();
         }
-
+        
     }
     
     @Override
