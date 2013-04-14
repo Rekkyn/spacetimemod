@@ -7,7 +7,6 @@ import rekkyn.spacetime.block.BlockSpacetimeInfuser;
 import rekkyn.spacetime.block.BlockSpacetimeOre;
 import rekkyn.spacetime.item.ItemSpacetimeFluctuation;
 import rekkyn.spacetime.item.ItemSpacetimeGem;
-import rekkyn.spacetime.item.ItemSpacetimeIngot;
 import rekkyn.spacetime.network.ClientPacketHandler;
 import rekkyn.spacetime.network.ServerPacketHandler;
 import rekkyn.spacetime.proxy.CommonProxy;
@@ -50,8 +49,6 @@ public class Spacetime {
             .setUnlocalizedName("spacetimeFluctuation");
     public static final ItemSpacetimeGem spacetimeGem = (ItemSpacetimeGem) new ItemSpacetimeGem(1001).setCreativeTab(
             CreativeTabs.tabMaterials).setUnlocalizedName("spacetimeGem");
-    public static final ItemSpacetimeIngot spacetimeIngot = (ItemSpacetimeIngot) new ItemSpacetimeIngot(1002)
-            .setCreativeTab(CreativeTabs.tabMaterials).setUnlocalizedName("spacetimeIngot");
     
     @Instance("Spacetime")
     public static Spacetime instance;
