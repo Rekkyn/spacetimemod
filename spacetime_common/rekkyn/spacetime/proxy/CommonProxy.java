@@ -70,6 +70,18 @@ public class CommonProxy implements IGuiHandler {
     }
     
     public void addRecipes() {
-        GameRegistry.addRecipe(new ItemStack(Spacetime.ironRod), "x", "x", "x", 'x', Item.ingotIron);
+        GameRegistry.addRecipe(new ItemStack(Spacetime.ironRod), "x", "x", "x",
+                'x', Item.ingotIron);
+        GameRegistry.addRecipe(new ItemStack(Spacetime.spacetimeSword), "x", "x", "|",
+                'x', Spacetime.spacetimeGem, '|', Spacetime.ironRod);
+        GameRegistry.addRecipe(new ItemStack(Spacetime.spacetimePick), "xxx", " | ", " | ",
+                'x', Spacetime.spacetimeGem, '|', Spacetime.ironRod);
+        GameRegistry.addRecipe(new ItemStack(Spacetime.spacetimeShovel), "x", "|", "|",
+                'x', Spacetime.spacetimeGem, '|', Spacetime.ironRod);
+        GameRegistry.addRecipe(new ItemStack(Spacetime.spacetimeAxe), "xx", "x|", " |",
+                'x', Spacetime.spacetimeGem, '|', Spacetime.ironRod);
+        GameRegistry.addRecipe(new ItemStack(Spacetime.spacetimeHoe), "xx", " |", " |",
+                'x', Spacetime.spacetimeGem, '|', Spacetime.ironRod);
+
     }
 }
