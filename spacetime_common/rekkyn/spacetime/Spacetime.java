@@ -2,13 +2,20 @@ package rekkyn.spacetime;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.EnumToolMaterial;
 import net.minecraft.item.Item;
+import net.minecraftforge.common.EnumHelper;
 import rekkyn.spacetime.block.BlockRekkynite;
 import rekkyn.spacetime.block.BlockSpacetimeInfuser;
 import rekkyn.spacetime.block.BlockSpacetimeOre;
 import rekkyn.spacetime.item.ItemIronRod;
 import rekkyn.spacetime.item.ItemSpacetimeFluctuation;
 import rekkyn.spacetime.item.ItemSpacetimeGem;
+import rekkyn.spacetime.item.tool.ItemSpacetimeAxe;
+import rekkyn.spacetime.item.tool.ItemSpacetimeHoe;
+import rekkyn.spacetime.item.tool.ItemSpacetimePickaxe;
+import rekkyn.spacetime.item.tool.ItemSpacetimeSpade;
+import rekkyn.spacetime.item.tool.ItemSpacetimeSword;
 import rekkyn.spacetime.network.ClientPacketHandler;
 import rekkyn.spacetime.network.ServerPacketHandler;
 import rekkyn.spacetime.proxy.CommonProxy;
@@ -51,7 +58,21 @@ public class Spacetime {
             .setUnlocalizedName("spacetimeFluctuation");
     public static final ItemSpacetimeGem spacetimeGem = (ItemSpacetimeGem) new ItemSpacetimeGem(1001).setCreativeTab(
             CreativeTabs.tabMaterials).setUnlocalizedName("spacetimeGem");
-    public static final Item ironRod = (new ItemIronRod(1002)).setUnlocalizedName("ironRod").setCreativeTab(CreativeTabs.tabMaterials);
+    public static final Item ironRod = new ItemIronRod(1002).setUnlocalizedName("ironRod").setCreativeTab(
+            CreativeTabs.tabMaterials);
+    
+    public static EnumToolMaterial spacetimeMaterial = EnumHelper.addToolMaterial("SPACETIME", 3, 2842, 14F, 7, 27);
+    
+    public static final Item spacetimeSword = new ItemSpacetimeSword(1003, spacetimeMaterial)
+            .setUnlocalizedName("spacetimeSword");
+    public static final Item spacetimePick = new ItemSpacetimePickaxe(1004, spacetimeMaterial)
+            .setUnlocalizedName("spacetimePick");
+    public static final Item spacetimeShovel = new ItemSpacetimeSpade(1005, spacetimeMaterial)
+            .setUnlocalizedName("spacetimeShovel");
+    public static final Item spacetimeAxe = new ItemSpacetimeAxe(1006, spacetimeMaterial)
+            .setUnlocalizedName("spacetimeAxe");
+    public static final Item spacetimeHoe = new ItemSpacetimeHoe(1007, spacetimeMaterial)
+            .setUnlocalizedName("spacetimeHoe");
     
     @Instance("Spacetime")
     public static Spacetime instance;

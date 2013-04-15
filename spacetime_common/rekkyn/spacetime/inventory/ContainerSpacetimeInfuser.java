@@ -42,7 +42,6 @@ public class ContainerSpacetimeInfuser extends Container {
         
     }
     
-    
     @Override
     public ItemStack transferStackInSlot(EntityPlayer par1EntityPlayer, int par2) {
         ItemStack itemstack = null;
@@ -91,27 +90,24 @@ public class ContainerSpacetimeInfuser extends Container {
         return itemstack;
     }
     
-    public void detectAndSendChanges()
-    {
-             super.detectAndSendChanges();
-             Iterator iterator = this.crafters.iterator();
-             while (iterator.hasNext())
-             {
-                     ICrafting crafting = (ICrafting)iterator.next();
-                     if (this.lastInfuseTime != this.tileEntity.infuseTime)
-                     {
-                             crafting.sendProgressBarUpdate(this, 0, this.tileEntity.infuseTime);
-                     }
-             }
-             this.lastInfuseTime = this.tileEntity.infuseTime;
+    @Override
+    public void detectAndSendChanges() {
+        super.detectAndSendChanges();
+        Iterator iterator = crafters.iterator();
+        while (iterator.hasNext()) {
+            ICrafting crafting = (ICrafting) iterator.next();
+            if (lastInfuseTime != tileEntity.infuseTime) {
+                crafting.sendProgressBarUpdate(this, 0, tileEntity.infuseTime);
+            }
+        }
+        lastInfuseTime = tileEntity.infuseTime;
     }
-
-    public void updateProgressBar(int par1, int par2)
-    {
-             if (par1 == 0)
-             {
-                 tileEntity.infuseTime = par2;
-             }
+    
+    @Override
+    public void updateProgressBar(int par1, int par2) {
+        if (par1 == 0) {
+            tileEntity.infuseTime = par2;
+        }
     }
-
+    
 }

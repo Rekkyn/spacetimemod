@@ -61,11 +61,15 @@ public class CommonProxy implements IGuiHandler {
         LanguageRegistry.addName(Spacetime.spacetimeFluctuation, "Spacetime Fluct¤ku¤rat¤ki¤ron");
         LanguageRegistry.addName(Spacetime.spacetimeGem, "Spacetime Crystal");
         LanguageRegistry.addName(Spacetime.ironRod, "Iron Rod");
-
+        LanguageRegistry.addName(Spacetime.spacetimeSword, "Spacetime Sword");
+        LanguageRegistry.addName(Spacetime.spacetimePick, "Spacetime Pick");
+        LanguageRegistry.addName(Spacetime.spacetimeShovel, "Spacetime Shovel");
+        LanguageRegistry.addName(Spacetime.spacetimeAxe, "Spacetime Axe");
+        LanguageRegistry.addName(Spacetime.spacetimeHoe, "Spacetime Hoe");
+        
     }
     
     public void addRecipes() {
-        GameRegistry.addRecipe(new ItemStack(Spacetime.ironRod), "x", "x", "x", 
-                'x', Item.ingotIron);
+        GameRegistry.addRecipe(new ItemStack(Spacetime.ironRod), "x", "x", "x", 'x', Item.ingotIron);
     }
 }
