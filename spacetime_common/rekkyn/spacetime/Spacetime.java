@@ -5,6 +5,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.EnumToolMaterial;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.EnumHelper;
+import net.minecraftforge.common.MinecraftForge;
 import rekkyn.spacetime.block.BlockRekkynite;
 import rekkyn.spacetime.block.BlockSpacetimeInfuser;
 import rekkyn.spacetime.block.BlockSpacetimeOre;
@@ -17,6 +18,7 @@ import rekkyn.spacetime.item.tool.ItemSpacetimePickaxe;
 import rekkyn.spacetime.item.tool.ItemSpacetimeSpade;
 import rekkyn.spacetime.item.tool.ItemSpacetimeSword;
 import rekkyn.spacetime.network.ClientPacketHandler;
+import rekkyn.spacetime.network.EventHandler;
 import rekkyn.spacetime.network.ServerPacketHandler;
 import rekkyn.spacetime.proxy.CommonProxy;
 import cpw.mods.fml.common.Mod;
@@ -92,6 +94,8 @@ public class Spacetime {
         proxy.addRecipes();
         
         NetworkRegistry.instance().registerGuiHandler(instance, proxy);
+        
+        MinecraftForge.EVENT_BUS.register(new EventHandler());
         
     }
     
