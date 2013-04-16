@@ -19,19 +19,20 @@ public class EventHandler {
                 EntityPlayer target = (EntityPlayer) event.target;
                 if (player.getCurrentEquippedItem() != null
                         && player.getCurrentEquippedItem().itemID == Spacetime.ironRod.itemID && target.username.equals("epic_jdog")) {
-                    float var7 = (float)Math.pow(2.0D, (6 - 12) / 12.0D);
-                    target.worldObj.playSoundEffect(target.posX, target.posY, target.posZ, "note.harp", 1.0F, var7);
-                     var7 = (float)Math.pow(2.0D, (10) / 12.0D);
-                    target.worldObj.playSoundEffect(target.posX, target.posY, target.posZ, "note.harp", 1.0F, var7);
-                     var7 = (float)Math.pow(2.0D, (13 - 12) / 12.0D);
-                    target.worldObj.playSoundEffect(target.posX, target.posY, target.posZ, "note.harp", 1.0F, var7);
-                    var7 = (float)Math.pow(2.0D, (12 - 12) / 12.0D);
-                    target.worldObj.playSoundEffect(target.posX, target.posY, target.posZ, "note.harp", 1.0F, var7);
-                    var7 = (float)Math.pow(2.0D, (15 - 12) / 12.0D);
-                    target.worldObj.playSoundEffect(target.posX, target.posY, target.posZ, "note.harp", 1.0F, var7);
-                    var7 = (float)Math.pow(2.0D, (20 - 12) / 12.0D);
-                    target.worldObj.playSoundEffect(target.posX, target.posY, target.posZ, "note.harp", 1.0F, var7);
+                    float pitch = (float)Math.pow(2.0D, (6 - 12) / 12.0D);
+                    target.worldObj.playSoundEffect(target.posX, target.posY, target.posZ, "note.harp", 1.0F, pitch);
+                     pitch = (float)Math.pow(2.0D, (10) / 12.0D);
+                    target.worldObj.playSoundEffect(target.posX, target.posY, target.posZ, "note.harp", 1.0F, pitch);
+                     pitch = (float)Math.pow(2.0D, (13 - 12) / 12.0D);
+                    target.worldObj.playSoundEffect(target.posX, target.posY, target.posZ, "note.harp", 1.0F, pitch);
+                    pitch = (float)Math.pow(2.0D, (12 - 12) / 12.0D);
+                    target.worldObj.playSoundEffect(target.posX, target.posY, target.posZ, "note.harp", 1.0F, pitch);
+                    pitch = (float)Math.pow(2.0D, (15 - 12) / 12.0D);
+                    target.worldObj.playSoundEffect(target.posX, target.posY, target.posZ, "note.harp", 1.0F, pitch);
+                    pitch = (float)Math.pow(2.0D, (20 - 12) / 12.0D);
+                    target.worldObj.playSoundEffect(target.posX, target.posY, target.posZ, "note.harp", 1.0F, pitch);
 
+                    
                 }
                 
             
