@@ -40,13 +40,13 @@ public class InfuserRecipes {
         } else if (i.getItem() == Spacetime.spacetimeSword && j.getItem() == Item.swordDiamond) {
             diamondTool = j;
             spacetimeTool = i;
-        }else if (i.getItem() == Item.shovelDiamond && j.getItem() == Spacetime.spacetimeShovel) {
+        } else if (i.getItem() == Item.shovelDiamond && j.getItem() == Spacetime.spacetimeShovel) {
             diamondTool = i;
             spacetimeTool = j;
         } else if (i.getItem() == Spacetime.spacetimeShovel && j.getItem() == Item.shovelDiamond) {
             diamondTool = j;
             spacetimeTool = i;
-        }else if (i.getItem() == Item.axeDiamond && j.getItem() == Spacetime.spacetimeAxe) {
+        } else if (i.getItem() == Item.axeDiamond && j.getItem() == Spacetime.spacetimeAxe) {
             diamondTool = i;
             spacetimeTool = j;
         } else if (i.getItem() == Spacetime.spacetimeAxe && j.getItem() == Item.axeDiamond) {

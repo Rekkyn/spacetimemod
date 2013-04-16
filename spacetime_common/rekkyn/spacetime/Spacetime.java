@@ -59,7 +59,7 @@ public class Spacetime {
     public static final ItemSpacetimeGem spacetimeGem = (ItemSpacetimeGem) new ItemSpacetimeGem(1001).setCreativeTab(
             CreativeTabs.tabMaterials).setUnlocalizedName("spacetimeGem");
     public static final Item ironRod = new ItemIronRod(1002).setUnlocalizedName("ironRod").setCreativeTab(
-            CreativeTabs.tabMaterials);
+            CreativeTabs.tabMaterials).setFull3D();
     
     public static EnumToolMaterial spacetimeMaterial = EnumHelper.addToolMaterial("SPACETIME", 3, 2842, 14F, 7, 27);
     
