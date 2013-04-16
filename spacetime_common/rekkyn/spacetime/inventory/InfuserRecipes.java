@@ -60,6 +60,10 @@ public class InfuserRecipes {
                 return null;
             }
             spacetimeToolOutput = spacetimeTool.copy();
+            if (diamondTool.hasDisplayName() && !spacetimeTool.hasDisplayName()) {
+                String name = diamondTool.getDisplayName();
+                spacetimeToolOutput.setItemName(name);
+            }
             EnchantmentHelper.setEnchantments(enchants, spacetimeToolOutput);
             return spacetimeToolOutput;
         }
