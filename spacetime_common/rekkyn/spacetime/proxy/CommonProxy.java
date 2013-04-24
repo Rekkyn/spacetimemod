@@ -61,17 +61,23 @@ public class CommonProxy implements IGuiHandler {
         LanguageRegistry.addName(Spacetime.spacetimeFluctuation, "Spacetime Fluct¤ku¤rat¤ki¤ron");
         LanguageRegistry.addName(Spacetime.spacetimeGem, "Spacetime Crystal");
         LanguageRegistry.addName(Spacetime.ironRod, "Iron Rod");
-        LanguageRegistry.addName(Spacetime.spacetimeSword, "Spacetime Sword");
-        LanguageRegistry.addName(Spacetime.spacetimePick, "Spacetime Pick");
-        LanguageRegistry.addName(Spacetime.spacetimeShovel, "Spacetime Shovel");
-        LanguageRegistry.addName(Spacetime.spacetimeAxe, "Spacetime Axe");
-        LanguageRegistry.addName(Spacetime.spacetimeHoe, "Spacetime Hoe");
+        LanguageRegistry.addName(Spacetime.spacetimeSword, "¤9Spacetime Sword");
+        LanguageRegistry.addName(Spacetime.spacetimePick, "¤9Spacetime Pick");
+        LanguageRegistry.addName(Spacetime.spacetimeShovel, "¤9Spacetime Shovel");
+        LanguageRegistry.addName(Spacetime.spacetimeAxe, "¤9Spacetime Axe");
+        LanguageRegistry.addName(Spacetime.spacetimeHoe, "¤9Spacetime Hoe");
+        LanguageRegistry.addName(Spacetime.spacetimeHelmet, "¤9Spacetime Helmet");
+        LanguageRegistry.addName(Spacetime.spacetimeChest, "¤9Spacetime Chestplate");
+        LanguageRegistry.addName(Spacetime.spacetimeLegs, "¤9Spacetime Leggings");
+        LanguageRegistry.addName(Spacetime.spacetimeBoots, "¤9Spacetime Boots");
+
         
     }
     
     public void addRecipes() {
         GameRegistry.addRecipe(new ItemStack(Spacetime.ironRod), "x", "x", "x",
                 'x', Item.ingotIron);
+        
         GameRegistry.addRecipe(new ItemStack(Spacetime.spacetimeSword), "x", "x", "|",
                 'x', Spacetime.spacetimeGem, '|', Spacetime.ironRod);
         GameRegistry.addRecipe(new ItemStack(Spacetime.spacetimePick), "xxx", " | ", " | ",
@@ -82,6 +88,16 @@ public class CommonProxy implements IGuiHandler {
                 'x', Spacetime.spacetimeGem, '|', Spacetime.ironRod);
         GameRegistry.addRecipe(new ItemStack(Spacetime.spacetimeHoe), "xx", " |", " |",
                 'x', Spacetime.spacetimeGem, '|', Spacetime.ironRod);
+        
+        GameRegistry.addRecipe(new ItemStack(Spacetime.spacetimeHelmet), "xxx", "x x",
+                'x', Spacetime.spacetimeGem);
+        GameRegistry.addRecipe(new ItemStack(Spacetime.spacetimeChest), "x x", "xxx", "xxx",
+                'x', Spacetime.spacetimeGem);
+        GameRegistry.addRecipe(new ItemStack(Spacetime.spacetimeLegs), "xxx", "x x", "x x",
+                'x', Spacetime.spacetimeGem);
+        GameRegistry.addRecipe(new ItemStack(Spacetime.spacetimeBoots), "x x", "x x",
+                'x', Spacetime.spacetimeGem);
+
 
     }
 }
