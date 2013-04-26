@@ -7,6 +7,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.Entity;
+import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 import rekkyn.spacetime.Spacetime;
 import rekkyn.spacetime.particles.ParticleEffects;
@@ -77,6 +78,16 @@ public class BlockSpacetimeOre extends BlockOre {
             world.createExplosion(entity, x, y, z, fallDistance + 7, true);
         }
         
+    }
+    
+    @Override
+    public void onBlockDestroyedByExplosion(World world, int x, int y, int z, Explosion explosion) {
+        dropBlockAsItem(world, x, y, z, 0, 0);
+    }
+    
+    @Override
+    public boolean canDropFromExplosion(Explosion par1Explosion) {
+        return false;
     }
     
 }

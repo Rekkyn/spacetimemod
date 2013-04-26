@@ -37,17 +37,35 @@ public class ItemSpacetimeFluctuation extends Item {
                 entity.attackEntityFrom(DamageSource.setExplosionSource(null), 7);
             }
             
-            int lightningx = (int) (entity.posX + (rand.nextInt(11) - 5));
-            int lightningy = (int) (entity.posY + (rand.nextInt(11) - 5));
-            int lightningz = (int) (entity.posZ + (rand.nextInt(11) - 5));
+            int randX = (int) (entity.posX + (rand.nextInt(11) - 5));
+            int randY = (int) (entity.posY + (rand.nextInt(11) - 5));
+            int randZ = (int) (entity.posZ + (rand.nextInt(11) - 5));
             
             if (rand.nextInt(lightningChance) == 0) {
                 
-                if (world.canBlockSeeTheSky(lightningx, lightningy, lightningz)
-                        && world.getPrecipitationHeight(lightningx, lightningz) == lightningy) {
-                    world.addWeatherEffect(new EntityLightningBolt(world, lightningx, lightningy, lightningz));
+                if (world.canBlockSeeTheSky(randX, randY, randZ)
+                        && world.getPrecipitationHeight(randX, randZ) == randY) {
+                    world.addWeatherEffect(new EntityLightningBolt(world, randX, randY, randZ));
                 }
             }
+            
+            /*if (entity instanceof EntityPlayer) {
+                EntityPlayer player = (EntityPlayer) entity;
+                if (rand.nextInt(10) == 0) {
+                    if (world.getBlockId(randX, randY, randZ) == 0 && world.getBlockId(randX, randY + 1, randZ) == 0) {
+                        boolean safe = false;
+                        for (int i = 1; i < 4; i++) {
+                            if (world.getBlockId(randZ, randY - i, randZ) != 0) {
+                                safe = true;
+                            }
+                        }
+                        if (safe) {
+                            player.setPositionAndUpdate(randX, randY, randZ);
+                            System.out.println("Teleport!");
+                        }
+                    }
+                }
+            }*/
         }
         
         for (int l = 0; l < 4; ++l) {

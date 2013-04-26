@@ -24,6 +24,7 @@ import rekkyn.spacetime.network.ClientPacketHandler;
 import rekkyn.spacetime.network.EventHandler;
 import rekkyn.spacetime.network.ServerPacketHandler;
 import rekkyn.spacetime.proxy.CommonProxy;
+import rekkyn.spacetime.world.SpacetimeWorldGen;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.Init;
 import cpw.mods.fml.common.Mod.Instance;
@@ -36,6 +37,7 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.network.NetworkMod.SidedPacketHandler;
 import cpw.mods.fml.common.network.NetworkRegistry;
+import cpw.mods.fml.common.registry.GameRegistry;
 
 @Mod(modid = Spacetime.modid, name = "Spacetime", version = "0.0")
 @NetworkMod(
@@ -101,6 +103,8 @@ public class Spacetime {
         proxy.registerBlocks();
         proxy.addNames();
         proxy.addRecipes();
+        
+        GameRegistry.registerWorldGenerator(new SpacetimeWorldGen());
         
         NetworkRegistry.instance().registerGuiHandler(instance, proxy);
         
