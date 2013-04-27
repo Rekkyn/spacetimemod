@@ -13,8 +13,10 @@ import net.minecraft.item.ItemHoe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import rekkyn.spacetime.Spacetime;
+import rekkyn.spacetime.particles.ParticleEffects;
 
 public class ItemSpacetimeHoe extends ItemHoe {
     
@@ -102,6 +104,32 @@ public class ItemSpacetimeHoe extends ItemHoe {
     public ItemStack onItemRightClick(ItemStack item, World world, EntityPlayer player) {
         
         player.setItemInUse(item, this.getMaxItemUseDuration(item));
+        
+        for (int l = 0; l < 32; ++l) {
+            double d1 = player.posY + world.rand.nextFloat();
+            int randx = world.rand.nextInt(2) * 2 - 1;
+            int randz = world.rand.nextInt(2) * 2 - 1;
+            double d4 = (world.rand.nextFloat() - 0.5D) * 0.5D;
+            
+            double d0 = player.posX + 0.5D + 0.25D * randx;
+            double d3 = world.rand.nextFloat() * 2.0F * randx;
+            double d2 = player.posZ + 0.5D + 0.25D * randz;
+            double d5 = world.rand.nextFloat() * 2.0F * randz;
+            
+            ParticleEffects.spawnParticle("blue", d0, d1, d2, d3, d4, d5);
+            world.spawnParticle("smoke", d0, d1, d2, d3, d4, d5);
+            if (l % 4 == 0) {
+                ParticleEffects.spawnParticle("orange", d0, d1, d2, d3, d4, d5);
+            }
+            
+        }
+
+        if (!player.isSneaking()) {
+            player.addVelocity((double)(-MathHelper.sin(player.rotationYaw * (float)Math.PI / 180.0F)  * 1.0F), (double)(-MathHelper.sin(player.rotationPitch / 180.0F * (float)Math.PI) * 0.1F) + 0.7, (double)(MathHelper.cos(player.rotationYaw * (float)Math.PI / 180.0F)  * 1.0F));
+        } else {
+            player.addVelocity((double)(MathHelper.sin(player.rotationYaw * (float)Math.PI / 180.0F)  * 1.0F), (double)(MathHelper.sin(player.rotationPitch / 180.0F * (float)Math.PI) * 0.1F) + 0.7, (double)(-MathHelper.cos(player.rotationYaw * (float)Math.PI / 180.0F)  * 1.0F));
+        }
+        player.fallDistance = 0;
         
         return item;
     }
