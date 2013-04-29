@@ -1,4 +1,4 @@
-package rekkyn.spacetime.network;
+package rekkyn.spacetime.handlers;
 
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;

@@ -11,6 +11,9 @@ import net.minecraftforge.common.MinecraftForge;
 import rekkyn.spacetime.block.BlockRekkynite;
 import rekkyn.spacetime.block.BlockSpacetimeInfuser;
 import rekkyn.spacetime.block.BlockSpacetimeOre;
+import rekkyn.spacetime.handlers.ClientPacketHandler;
+import rekkyn.spacetime.handlers.EventHandler;
+import rekkyn.spacetime.handlers.ServerPacketHandler;
 import rekkyn.spacetime.item.ItemIronRod;
 import rekkyn.spacetime.item.ItemSpacetimeFluctuation;
 import rekkyn.spacetime.item.ItemSpacetimeGem;
@@ -20,9 +23,6 @@ import rekkyn.spacetime.item.tool.ItemSpacetimeHoe;
 import rekkyn.spacetime.item.tool.ItemSpacetimePickaxe;
 import rekkyn.spacetime.item.tool.ItemSpacetimeSpade;
 import rekkyn.spacetime.item.tool.ItemSpacetimeSword;
-import rekkyn.spacetime.network.ClientPacketHandler;
-import rekkyn.spacetime.network.EventHandler;
-import rekkyn.spacetime.network.ServerPacketHandler;
 import rekkyn.spacetime.proxy.CommonProxy;
 import rekkyn.spacetime.world.SpacetimeWorldGen;
 import cpw.mods.fml.common.Mod;
@@ -65,11 +65,12 @@ public class Spacetime {
             .setUnlocalizedName("spacetimeFluctuation");
     public static final ItemSpacetimeGem spacetimeGem = (ItemSpacetimeGem) new ItemSpacetimeGem(1001).setCreativeTab(
             CreativeTabs.tabMaterials).setUnlocalizedName("spacetimeGem");
-    public static final Item ironRod = new ItemIronRod(1002).setUnlocalizedName("ironRod").setCreativeTab(
-            CreativeTabs.tabMaterials).setFull3D();
+    public static final Item ironRod = new ItemIronRod(1002).setUnlocalizedName("ironRod")
+            .setCreativeTab(CreativeTabs.tabMaterials).setFull3D();
     
     public static EnumToolMaterial spacetimeMaterial = EnumHelper.addToolMaterial("SPACETIME", 3, 2842, 14F, 7, 27);
-    public static EnumArmorMaterial spacetimeArmorMaterial = EnumHelper.addArmorMaterial("SPACETIME", 38, new int[] {4, 9, 7, 3}, 27);
+    public static EnumArmorMaterial spacetimeArmorMaterial = EnumHelper.addArmorMaterial("SPACETIME", 38, new int[] {
+            4, 9, 7, 3 }, 27);
     
     public static final Item spacetimeSword = new ItemSpacetimeSword(1003, spacetimeMaterial)
             .setUnlocalizedName("spacetimeSword");
@@ -82,10 +83,14 @@ public class Spacetime {
     public static final Item spacetimeHoe = new ItemSpacetimeHoe(1007, spacetimeMaterial)
             .setUnlocalizedName("spacetimeHoe");
     
-    public static final Item spacetimeHelmet = new SpacetimeArmor(1008, spacetimeArmorMaterial, ModLoader.addArmor("SpacetimeArmor"), 0).setUnlocalizedName("spacetimeHelmet");
-    public static final Item spacetimeChest = new SpacetimeArmor(1009, spacetimeArmorMaterial, ModLoader.addArmor("SpacetimeArmor"), 1).setUnlocalizedName("spacetimeChest");
-    public static final Item spacetimeLegs = new SpacetimeArmor(1010, spacetimeArmorMaterial, ModLoader.addArmor("SpacetimeArmor"), 2).setUnlocalizedName("spacetimeLegs");
-    public static final Item spacetimeBoots = new SpacetimeArmor(1011, spacetimeArmorMaterial, ModLoader.addArmor("SpacetimeArmor"), 3).setUnlocalizedName("spacetimeBoots");
+    public static final Item spacetimeHelmet = new SpacetimeArmor(1008, spacetimeArmorMaterial,
+            ModLoader.addArmor("SpacetimeArmor"), 0).setUnlocalizedName("spacetimeHelmet");
+    public static final Item spacetimeChest = new SpacetimeArmor(1009, spacetimeArmorMaterial,
+            ModLoader.addArmor("SpacetimeArmor"), 1).setUnlocalizedName("spacetimeChest");
+    public static final Item spacetimeLegs = new SpacetimeArmor(1010, spacetimeArmorMaterial,
+            ModLoader.addArmor("SpacetimeArmor"), 2).setUnlocalizedName("spacetimeLegs");
+    public static final Item spacetimeBoots = new SpacetimeArmor(1011, spacetimeArmorMaterial,
+            ModLoader.addArmor("SpacetimeArmor"), 3).setUnlocalizedName("spacetimeBoots");
     
     @Instance("Spacetime")
     public static Spacetime instance;

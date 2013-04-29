@@ -1,13 +1,13 @@
 package rekkyn.spacetime.item;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.item.EnumArmorMaterial;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.IArmorTextureProvider;
 import rekkyn.spacetime.Spacetime;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class SpacetimeArmor extends ItemArmor implements IArmorTextureProvider {
     
@@ -27,9 +27,9 @@ public class SpacetimeArmor extends ItemArmor implements IArmorTextureProvider {
     @Override
     @SideOnly(Side.CLIENT)
     public void updateIcons(IconRegister iconRegister) {
-
-        iconIndex = iconRegister.registerIcon("Spacetime:" + this.getUnlocalizedName().substring(this.getUnlocalizedName().indexOf(".") + 1));
+        
+        iconIndex = iconRegister.registerIcon("Spacetime:"
+                + this.getUnlocalizedName().substring(this.getUnlocalizedName().indexOf(".") + 1));
     }
-
     
 }

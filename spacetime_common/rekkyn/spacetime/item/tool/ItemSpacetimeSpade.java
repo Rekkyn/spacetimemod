@@ -1,10 +1,10 @@
 package rekkyn.spacetime.item.tool;
 
-import rekkyn.spacetime.Spacetime;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.item.EnumToolMaterial;
 import net.minecraft.item.ItemSpade;
 import net.minecraft.item.ItemStack;
+import rekkyn.spacetime.Spacetime;
 
 public class ItemSpacetimeSpade extends ItemSpade {
     
@@ -17,10 +17,9 @@ public class ItemSpacetimeSpade extends ItemSpade {
         iconIndex = iconRegister.registerIcon("Spacetime:spacetimeShovel");
     }
     
-    public boolean getIsRepairable(ItemStack tool, ItemStack repairItem)
-    {
+    @Override
+    public boolean getIsRepairable(ItemStack tool, ItemStack repairItem) {
         return repairItem.itemID == Spacetime.spacetimeGem.itemID;
     }
-
     
 }

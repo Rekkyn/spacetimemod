@@ -123,11 +123,15 @@ public class ItemSpacetimeHoe extends ItemHoe {
             }
             
         }
-
+        
         if (!player.isSneaking()) {
-            player.addVelocity((double)(-MathHelper.sin(player.rotationYaw * (float)Math.PI / 180.0F)  * 1.0F), (double)(-MathHelper.sin(player.rotationPitch / 180.0F * (float)Math.PI) * 0.1F) + 0.7, (double)(MathHelper.cos(player.rotationYaw * (float)Math.PI / 180.0F)  * 1.0F));
+            player.addVelocity((-MathHelper.sin(player.rotationYaw * (float) Math.PI / 180.0F) * 1.0F),
+                    (-MathHelper.sin(player.rotationPitch / 180.0F * (float) Math.PI) * 0.1F) + 0.4,
+                    (MathHelper.cos(player.rotationYaw * (float) Math.PI / 180.0F) * 1.0F));
         } else {
-            player.addVelocity((double)(MathHelper.sin(player.rotationYaw * (float)Math.PI / 180.0F)  * 1.0F), (double)(MathHelper.sin(player.rotationPitch / 180.0F * (float)Math.PI) * 0.1F) + 0.7, (double)(-MathHelper.cos(player.rotationYaw * (float)Math.PI / 180.0F)  * 1.0F));
+            player.addVelocity((MathHelper.sin(player.rotationYaw * (float) Math.PI / 180.0F) * 1.0F),
+                    (MathHelper.sin(player.rotationPitch / 180.0F * (float) Math.PI) * 0.1F) + 0.4,
+                    (-MathHelper.cos(player.rotationYaw * (float) Math.PI / 180.0F) * 1.0F));
         }
         player.fallDistance = 0;
         

@@ -43,29 +43,21 @@ public class ItemSpacetimeFluctuation extends Item {
             
             if (rand.nextInt(lightningChance) == 0) {
                 
-                if (world.canBlockSeeTheSky(randX, randY, randZ)
-                        && world.getPrecipitationHeight(randX, randZ) == randY) {
+                if (world.canBlockSeeTheSky(randX, randY, randZ) && world.getPrecipitationHeight(randX, randZ) == randY) {
                     world.addWeatherEffect(new EntityLightningBolt(world, randX, randY, randZ));
                 }
             }
             
-            /*if (entity instanceof EntityPlayer) {
-                EntityPlayer player = (EntityPlayer) entity;
-                if (rand.nextInt(10) == 0) {
-                    if (world.getBlockId(randX, randY, randZ) == 0 && world.getBlockId(randX, randY + 1, randZ) == 0) {
-                        boolean safe = false;
-                        for (int i = 1; i < 4; i++) {
-                            if (world.getBlockId(randZ, randY - i, randZ) != 0) {
-                                safe = true;
-                            }
-                        }
-                        if (safe) {
-                            player.setPositionAndUpdate(randX, randY, randZ);
-                            System.out.println("Teleport!");
-                        }
-                    }
-                }
-            }*/
+            /*
+             * if (entity instanceof EntityPlayer) { EntityPlayer player =
+             * (EntityPlayer) entity; if (rand.nextInt(10) == 0) { if
+             * (world.getBlockId(randX, randY, randZ) == 0 &&
+             * world.getBlockId(randX, randY + 1, randZ) == 0) { boolean safe =
+             * false; for (int i = 1; i < 4; i++) { if (world.getBlockId(randZ,
+             * randY - i, randZ) != 0) { safe = true; } } if (safe) {
+             * player.setPositionAndUpdate(randX, randY, randZ);
+             * System.out.println("Teleport!"); } } } }
+             */
         }
         
         for (int l = 0; l < 4; ++l) {
