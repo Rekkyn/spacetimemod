@@ -3,7 +3,6 @@ package rekkyn.spacetime.item.tool;
 import java.util.ArrayList;
 
 import net.minecraft.client.renderer.texture.IconRegister;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityFireworkRocket;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
@@ -14,10 +13,8 @@ import net.minecraft.item.ItemHoe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import rekkyn.spacetime.Spacetime;
-import rekkyn.spacetime.particles.ParticleEffects;
 
 public class ItemSpacetimeHoe extends ItemHoe {
     
@@ -108,8 +105,8 @@ public class ItemSpacetimeHoe extends ItemHoe {
     @Override
     public ItemStack onItemRightClick(ItemStack item, World world, EntityPlayer player) {
         
-        player.setItemInUse(item, this.getMaxItemUseDuration(item));        
+        player.setItemInUse(item, this.getMaxItemUseDuration(item));
         return item;
     }
-        
+    
 }
