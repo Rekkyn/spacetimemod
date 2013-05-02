@@ -108,72 +108,8 @@ public class ItemSpacetimeHoe extends ItemHoe {
     @Override
     public ItemStack onItemRightClick(ItemStack item, World world, EntityPlayer player) {
         
-        player.setItemInUse(item, this.getMaxItemUseDuration(item));
-        
-        if (changeCharge(item, useAmount)) {
-
-        
-        for (int l = 0; l < 32; ++l) {
-            double d1 = player.posY + world.rand.nextFloat();
-            int randx = world.rand.nextInt(2) * 2 - 1;
-            int randz = world.rand.nextInt(2) * 2 - 1;
-            double d4 = (world.rand.nextFloat() - 0.5D) * 0.5D;
-            
-            double d0 = player.posX + 0.5D + 0.25D * randx;
-            double d3 = world.rand.nextFloat() * 2.0F * randx;
-            double d2 = player.posZ + 0.5D + 0.25D * randz;
-            double d5 = world.rand.nextFloat() * 2.0F * randz;
-            
-            ParticleEffects.spawnParticle("blue", d0, d1, d2, d3, d4, d5);
-            world.spawnParticle("smoke", d0, d1, d2, d3, d4, d5);
-            if (l % 4 == 0) {
-                ParticleEffects.spawnParticle("orange", d0, d1, d2, d3, d4, d5);
-            }
-            
-        }
-        
-        if (!player.isSneaking()) {
-            player.addVelocity(-MathHelper.sin(player.rotationYaw * (float) Math.PI / 180.0F) * 1.0F,
-                    -MathHelper.sin(player.rotationPitch / 180.0F * (float) Math.PI) * 0.2F + 0.4,
-                    MathHelper.cos(player.rotationYaw * (float) Math.PI / 180.0F) * 1.0F);
-        } else {
-            player.addVelocity(MathHelper.sin(player.rotationYaw * (float) Math.PI / 180.0F) * 1.0F,
-                    MathHelper.sin(player.rotationPitch / 180.0F * (float) Math.PI) * 0.2F + 0.4,
-                    -MathHelper.cos(player.rotationYaw * (float) Math.PI / 180.0F) * 1.0F);
-        }
-        player.fallDistance = 0;
-        }
-        
+        player.setItemInUse(item, this.getMaxItemUseDuration(item));        
         return item;
     }
-    
-    @Override
-    public void onUpdate(ItemStack itemstack, World world, Entity player, int par4, boolean par5) {
         
-        changeCharge(itemstack, 1);
-        System.out.println(spacetimeCharge);
-
-    }
-    
-    @Override
-    public void onCreated(ItemStack itemstack, World world, EntityPlayer player) {
-        if (itemstack.stackTagCompound == null) {
-            itemstack.setTagCompound(new NBTTagCompound());
-        }
-    }
-    
-    @Override
-    public boolean getShareTag() {
-        return true;
-    }
-    
-    public boolean changeCharge(ItemStack itemstack, int x) {
-         spacetimeCharge = itemstack.stackTagCompound.getInteger("SpacetimeCharge");
-         if (spacetimeCharge + x < 0) return false;
-         spacetimeCharge += x;
-         if (spacetimeCharge > spacetimeMaxCharge) spacetimeCharge = spacetimeMaxCharge;
-         itemstack.stackTagCompound.setInteger("SpacetimeCharge", spacetimeCharge);
-         return true;
-    }
-    
 }
