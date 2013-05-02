@@ -15,7 +15,7 @@ import rekkyn.spacetime.particles.ParticleEffects;
 
 public class ItemSpacetimeSword extends ItemSword implements ISpacetimeCharge {
     
-    public static final int spacetimeMaxCharge = 100;
+    public static final int spacetimeMaxCharge = 100;    
     public static final int useAmount = -50;
     public int spacetimeCharge = 100;
     
@@ -76,8 +76,6 @@ public class ItemSpacetimeSword extends ItemSword implements ISpacetimeCharge {
     public void onUpdate(ItemStack itemstack, World world, Entity player, int par4, boolean par5) {
         
         changeCharge(itemstack, 1);
-        System.out.println(spacetimeCharge);
-        
     }
     
     @Override
@@ -103,5 +101,15 @@ public class ItemSpacetimeSword extends ItemSword implements ISpacetimeCharge {
         itemstack.stackTagCompound.setInteger("SpacetimeCharge", spacetimeCharge);
         return true;
     }
+    
+    public int getSpacetimeCharge() {
+        return spacetimeCharge;
+    }
+
+    public int getSpacetimeMaxCharge() {
+        return spacetimeMaxCharge;
+    }
+
+
     
 }

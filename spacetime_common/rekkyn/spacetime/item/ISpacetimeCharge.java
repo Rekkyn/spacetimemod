@@ -11,4 +11,8 @@ public interface ISpacetimeCharge {
     boolean getShareTag();
     
     boolean changeCharge(ItemStack itemstack, int x);
+    
+    int getSpacetimeCharge();
+    
+    int getSpacetimeMaxCharge();
 }

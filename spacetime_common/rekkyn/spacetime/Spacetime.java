@@ -108,6 +108,7 @@ public class Spacetime {
         proxy.registerBlocks();
         proxy.addNames();
         proxy.addRecipes();
+        proxy.registerRenderInformation();
         
         GameRegistry.registerWorldGenerator(new SpacetimeWorldGen());
         
