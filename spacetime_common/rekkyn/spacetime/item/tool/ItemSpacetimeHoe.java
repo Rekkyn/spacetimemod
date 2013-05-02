@@ -3,6 +3,7 @@ package rekkyn.spacetime.item.tool;
 import java.util.ArrayList;
 
 import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityFireworkRocket;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
@@ -19,6 +20,10 @@ import rekkyn.spacetime.Spacetime;
 import rekkyn.spacetime.particles.ParticleEffects;
 
 public class ItemSpacetimeHoe extends ItemHoe {
+    
+    public static final int spacetimeMaxCharge = 100;
+    public static final int useAmount = -50;
+    public int spacetimeCharge = 100;
     
     public ItemSpacetimeHoe(int id, EnumToolMaterial material) {
         super(id, material);
@@ -85,10 +90,10 @@ public class ItemSpacetimeHoe extends ItemHoe {
         }
     }
     
-    @Override
-    public ItemStack onEaten(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer) {
-        return par1ItemStack;
-    }
+    /*
+     * @Override public ItemStack onEaten(ItemStack par1ItemStack, World
+     * par2World, EntityPlayer par3EntityPlayer) { return par1ItemStack; }
+     */
     
     @Override
     public int getMaxItemUseDuration(ItemStack par1ItemStack) {
@@ -104,6 +109,9 @@ public class ItemSpacetimeHoe extends ItemHoe {
     public ItemStack onItemRightClick(ItemStack item, World world, EntityPlayer player) {
         
         player.setItemInUse(item, this.getMaxItemUseDuration(item));
+        
+        if (changeCharge(item, useAmount)) {
+
         
         for (int l = 0; l < 32; ++l) {
             double d1 = player.posY + world.rand.nextFloat();
@@ -125,17 +133,47 @@ public class ItemSpacetimeHoe extends ItemHoe {
         }
         
         if (!player.isSneaking()) {
-            player.addVelocity((-MathHelper.sin(player.rotationYaw * (float) Math.PI / 180.0F) * 1.0F),
-                    (-MathHelper.sin(player.rotationPitch / 180.0F * (float) Math.PI) * 0.1F) + 0.4,
-                    (MathHelper.cos(player.rotationYaw * (float) Math.PI / 180.0F) * 1.0F));
+            player.addVelocity(-MathHelper.sin(player.rotationYaw * (float) Math.PI / 180.0F) * 1.0F,
+                    -MathHelper.sin(player.rotationPitch / 180.0F * (float) Math.PI) * 0.2F + 0.4,
+                    MathHelper.cos(player.rotationYaw * (float) Math.PI / 180.0F) * 1.0F);
         } else {
-            player.addVelocity((MathHelper.sin(player.rotationYaw * (float) Math.PI / 180.0F) * 1.0F),
-                    (MathHelper.sin(player.rotationPitch / 180.0F * (float) Math.PI) * 0.1F) + 0.4,
-                    (-MathHelper.cos(player.rotationYaw * (float) Math.PI / 180.0F) * 1.0F));
+            player.addVelocity(MathHelper.sin(player.rotationYaw * (float) Math.PI / 180.0F) * 1.0F,
+                    MathHelper.sin(player.rotationPitch / 180.0F * (float) Math.PI) * 0.2F + 0.4,
+                    -MathHelper.cos(player.rotationYaw * (float) Math.PI / 180.0F) * 1.0F);
         }
         player.fallDistance = 0;
+        }
         
         return item;
+    }
+    
+    @Override
+    public void onUpdate(ItemStack itemstack, World world, Entity player, int par4, boolean par5) {
+        
+        changeCharge(itemstack, 1);
+        System.out.println(spacetimeCharge);
+
+    }
+    
+    @Override
+    public void onCreated(ItemStack itemstack, World world, EntityPlayer player) {
+        if (itemstack.stackTagCompound == null) {
+            itemstack.setTagCompound(new NBTTagCompound());
+        }
+    }
+    
+    @Override
+    public boolean getShareTag() {
+        return true;
+    }
+    
+    public boolean changeCharge(ItemStack itemstack, int x) {
+         spacetimeCharge = itemstack.stackTagCompound.getInteger("SpacetimeCharge");
+         if (spacetimeCharge + x < 0) return false;
+         spacetimeCharge += x;
+         if (spacetimeCharge > spacetimeMaxCharge) spacetimeCharge = spacetimeMaxCharge;
+         itemstack.stackTagCompound.setInteger("SpacetimeCharge", spacetimeCharge);
+         return true;
     }
     
 }
