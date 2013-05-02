@@ -15,9 +15,9 @@ import rekkyn.spacetime.particles.ParticleEffects;
 
 public class ItemSpacetimeSword extends ItemSword implements ISpacetimeCharge {
     
-    public static final int spacetimeMaxCharge = 100;    
+    public static final int spacetimeMaxCharge = 50;    
     public static final int useAmount = -50;
-    public int spacetimeCharge = 100;
+    public int spacetimeCharge = spacetimeMaxCharge;
     
     public ItemSpacetimeSword(int id, EnumToolMaterial material) {
         super(id, material);

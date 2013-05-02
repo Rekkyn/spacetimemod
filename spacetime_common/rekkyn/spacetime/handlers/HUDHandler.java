@@ -2,13 +2,13 @@ package rekkyn.spacetime.handlers;
 
 import java.util.EnumSet;
 
-import rekkyn.spacetime.item.ISpacetimeCharge;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import rekkyn.spacetime.item.ISpacetimeCharge;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.common.ITickHandler;
 import cpw.mods.fml.common.TickType;
@@ -45,22 +45,50 @@ public class HUDHandler implements ITickHandler {
     private static void renderSpacetimeCharge(Minecraft minecraft, EntityPlayer player, ItemStack currentItemStack,
             float partialTicks) {
         
-        if (currentItemStack.getItem() instanceof ISpacetimeCharge) {
-            ISpacetimeCharge item = (ISpacetimeCharge)currentItemStack.getItem();
-        // setup render
-        ScaledResolution res = new ScaledResolution(minecraft.gameSettings, minecraft.displayWidth,
-                minecraft.displayHeight);
-        FontRenderer fontRender = minecraft.fontRenderer;
-        int width = res.getScaledWidth();
-        int height = res.getScaledHeight();
-        minecraft.entityRenderer.setupOverlayRendering();
+        boolean display = false;
         
-        // draw
-        String text = item.getSpacetimeCharge() + "/" + item.getSpacetimeMaxCharge();
-        int x = 100;
-        int y = 200;
-        int color = 0x2a2f9f;
-        fontRender.drawStringWithShadow(text, x, y, color);
+        for (int i=0; i<=4; i++) {
+            if (player.getCurrentItemOrArmor(i) != null && player.getCurrentItemOrArmor(0).getItem() instanceof ISpacetimeCharge) {
+                display = true;
+            }
+        }
+        
+        /*if ( (player.getCurrentItemOrArmor(0).getItem() != null && player.getCurrentItemOrArmor(0).getItem() instanceof ISpacetimeCharge)
+                || (player.getCurrentItemOrArmor(1).getItem() != null && player.getCurrentItemOrArmor(0).getItem() instanceof ISpacetimeCharge)
+                || (player.getCurrentItemOrArmor(2).getItem() != null && player.getCurrentItemOrArmor(0).getItem() instanceof ISpacetimeCharge)
+                || (player.getCurrentItemOrArmor(3).getItem() != null && player.getCurrentItemOrArmor(0).getItem() instanceof ISpacetimeCharge)
+                || (player.getCurrentItemOrArmor(4).getItem() != null && player.getCurrentItemOrArmor(0).getItem() instanceof ISpacetimeCharge)) */
+        
+        if (display){
+            // setup render
+            ScaledResolution res = new ScaledResolution(minecraft.gameSettings, minecraft.displayWidth,
+                    minecraft.displayHeight);
+            FontRenderer fontRender = minecraft.fontRenderer;
+            int width = res.getScaledWidth();
+            int height = res.getScaledHeight();
+            minecraft.entityRenderer.setupOverlayRendering();
+            
+            int maxCharge = 0;
+            int currentCharge = 0;
+            
+            for (int i=0; i<=4; i++) {
+                if (player.getCurrentItemOrArmor(i) == null) {
+                    continue;
+                }
+                Item item = player.getCurrentItemOrArmor(i).getItem();
+                if (item instanceof ISpacetimeCharge) {
+                    ISpacetimeCharge lolitem = (ISpacetimeCharge) item;
+                    maxCharge += lolitem.getSpacetimeMaxCharge();
+                    currentCharge += lolitem.getSpacetimeCharge();
+                }
+            }
+            
+            // draw
+            String text = currentCharge + "/" + maxCharge;
+            int x = 100;
+            int y = 200;
+            int color = 0x2a2f9f;
+            fontRender.drawStringWithShadow(text, x, y, color);
         }
     }
     
