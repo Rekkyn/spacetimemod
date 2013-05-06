@@ -8,6 +8,7 @@ public class ClientProxy extends CommonProxy {
     @Override
     public void registerRenderInformation() {
         TickRegistry.registerTickHandler(new HUDHandler(), Side.CLIENT);
+        
     }
     
 }

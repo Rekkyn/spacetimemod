@@ -1,5 +1,7 @@
 package rekkyn.spacetime.item.tool;
 
+import java.util.List;
+
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -12,10 +14,12 @@ import net.minecraft.world.World;
 import rekkyn.spacetime.Spacetime;
 import rekkyn.spacetime.item.ISpacetimeCharge;
 import rekkyn.spacetime.particles.ParticleEffects;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemSpacetimeSword extends ItemSword implements ISpacetimeCharge {
     
-    public static final int spacetimeMaxCharge = 50;    
+    public static final int spacetimeMaxCharge = 50;
     public static final int useAmount = -50;
     public int spacetimeCharge = spacetimeMaxCharge;
     
@@ -102,14 +106,20 @@ public class ItemSpacetimeSword extends ItemSword implements ISpacetimeCharge {
         return true;
     }
     
+    @Override
     public int getSpacetimeCharge() {
         return spacetimeCharge;
     }
-
+    
+    @Override
     public int getSpacetimeMaxCharge() {
         return spacetimeMaxCharge;
     }
-
-
+    
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4) {
+        par3List.add(spacetimeCharge + "/" + spacetimeMaxCharge);
+    }
     
 }

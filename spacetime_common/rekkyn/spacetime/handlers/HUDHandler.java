@@ -6,7 +6,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import rekkyn.spacetime.item.ISpacetimeCharge;
 import cpw.mods.fml.client.FMLClientHandler;
@@ -47,19 +46,29 @@ public class HUDHandler implements ITickHandler {
         
         boolean display = false;
         
-        for (int i=0; i<=4; i++) {
-            if (player.getCurrentItemOrArmor(i) != null && player.getCurrentItemOrArmor(0).getItem() instanceof ISpacetimeCharge) {
+        for (int i = 0; i <= 4; i++) {
+            if (player.getCurrentItemOrArmor(i) != null
+                    && player.getCurrentItemOrArmor(i).getItem() instanceof ISpacetimeCharge) {
                 display = true;
+                break;
             }
         }
         
-        /*if ( (player.getCurrentItemOrArmor(0).getItem() != null && player.getCurrentItemOrArmor(0).getItem() instanceof ISpacetimeCharge)
-                || (player.getCurrentItemOrArmor(1).getItem() != null && player.getCurrentItemOrArmor(0).getItem() instanceof ISpacetimeCharge)
-                || (player.getCurrentItemOrArmor(2).getItem() != null && player.getCurrentItemOrArmor(0).getItem() instanceof ISpacetimeCharge)
-                || (player.getCurrentItemOrArmor(3).getItem() != null && player.getCurrentItemOrArmor(0).getItem() instanceof ISpacetimeCharge)
-                || (player.getCurrentItemOrArmor(4).getItem() != null && player.getCurrentItemOrArmor(0).getItem() instanceof ISpacetimeCharge)) */
+        /*
+         * if ( (player.getCurrentItemOrArmor(0).getItem() != null &&
+         * player.getCurrentItemOrArmor(0).getItem() instanceof
+         * ISpacetimeCharge) || (player.getCurrentItemOrArmor(1).getItem() !=
+         * null && player.getCurrentItemOrArmor(0).getItem() instanceof
+         * ISpacetimeCharge) || (player.getCurrentItemOrArmor(2).getItem() !=
+         * null && player.getCurrentItemOrArmor(0).getItem() instanceof
+         * ISpacetimeCharge) || (player.getCurrentItemOrArmor(3).getItem() !=
+         * null && player.getCurrentItemOrArmor(0).getItem() instanceof
+         * ISpacetimeCharge) || (player.getCurrentItemOrArmor(4).getItem() !=
+         * null && player.getCurrentItemOrArmor(0).getItem() instanceof
+         * ISpacetimeCharge))
+         */
         
-        if (display){
+        if (display) {
             // setup render
             ScaledResolution res = new ScaledResolution(minecraft.gameSettings, minecraft.displayWidth,
                     minecraft.displayHeight);
@@ -68,27 +77,12 @@ public class HUDHandler implements ITickHandler {
             int height = res.getScaledHeight();
             minecraft.entityRenderer.setupOverlayRendering();
             
-            int maxCharge = 0;
-            int currentCharge = 0;
-            
-            for (int i=0; i<=4; i++) {
-                if (player.getCurrentItemOrArmor(i) == null) {
-                    continue;
-                }
-                Item item = player.getCurrentItemOrArmor(i).getItem();
-                if (item instanceof ISpacetimeCharge) {
-                    ISpacetimeCharge lolitem = (ISpacetimeCharge) item;
-                    maxCharge += lolitem.getSpacetimeMaxCharge();
-                    currentCharge += lolitem.getSpacetimeCharge();
-                }
-            }
-            
             // draw
-            String text = currentCharge + "/" + maxCharge;
+            String text = SpacetimeChargeHandler.getCurrentCharge(player) + "/"
+                    + SpacetimeChargeHandler.getMaxCharge(player);
             int x = 100;
             int y = 200;
-            int color = 0x2a2f9f;
-            fontRender.drawStringWithShadow(text, x, y, color);
+            fontRender.drawStringWithShadow(text, x, y, 0x2a2f9f);
         }
     }
     
@@ -99,7 +93,7 @@ public class HUDHandler implements ITickHandler {
     
     @Override
     public String getLabel() {
-        return "SpacetimeChargeHandler";
+        return "SpacetimeHUDHandler";
     }
     
 }

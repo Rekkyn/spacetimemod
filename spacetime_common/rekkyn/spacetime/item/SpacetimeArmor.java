@@ -1,7 +1,10 @@
 package rekkyn.spacetime.item;
 
+import java.util.List;
+
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumArmorMaterial;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
@@ -14,26 +17,31 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class SpacetimeArmor extends ItemArmor implements IArmorTextureProvider, ISpacetimeCharge {
     
-    public static int spacetimeMaxCharge;    
-    public static final int useAmount = -50;
+    public int spacetimeMaxCharge;
+    public final int useAmount = -50;
     public int spacetimeCharge = spacetimeMaxCharge;
-
     
     public SpacetimeArmor(int id, EnumArmorMaterial material, int armor, int slot) {
         super(id, material, armor, slot);
         
         switch (slot) {
-            case 0: spacetimeMaxCharge = 125;
+            case 0:
+                spacetimeMaxCharge = 125;
                 break;
-            case 1: spacetimeMaxCharge = 200;
+            case 1:
+                spacetimeMaxCharge = 200;
                 break;
-            case 2: spacetimeMaxCharge = 175;
+            case 2:
+                spacetimeMaxCharge = 175;
                 break;
-            case 3: spacetimeMaxCharge = 100;
+            case 3:
+                spacetimeMaxCharge = 100;
                 break;
-            default: spacetimeMaxCharge = 0;
+            default:
+                spacetimeMaxCharge = 0;
                 break;
         }
+        
     }
     
     @Override
@@ -58,8 +66,7 @@ public class SpacetimeArmor extends ItemArmor implements IArmorTextureProvider, 
         
         changeCharge(itemstack, 1);
     }
-
-
+    
     @Override
     public boolean getShareTag() {
         return true;
@@ -84,12 +91,25 @@ public class SpacetimeArmor extends ItemArmor implements IArmorTextureProvider, 
         return true;
     }
     
+    @Override
     public int getSpacetimeCharge() {
         return spacetimeCharge;
     }
-
+    
+    @Override
     public int getSpacetimeMaxCharge() {
         return spacetimeMaxCharge;
+    }
+    
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4) {
+        par3List.add(spacetimeCharge + "/" + spacetimeMaxCharge);
+    }
+    
+    @Override
+    public void onArmorTickUpdate(World worldObj, EntityPlayer player, ItemStack itemstack) {
+        changeCharge(itemstack, 1);
     }
     
 }
