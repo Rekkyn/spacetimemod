@@ -19,7 +19,6 @@ public class SpacetimeArmor extends ItemArmor implements IArmorTextureProvider, 
     
     public int spacetimeMaxCharge;
     public final int useAmount = -50;
-    public int spacetimeCharge = spacetimeMaxCharge;
     
     public SpacetimeArmor(int id, EnumArmorMaterial material, int armor, int slot) {
         super(id, material, armor, slot);
@@ -79,7 +78,7 @@ public class SpacetimeArmor extends ItemArmor implements IArmorTextureProvider, 
             itemstack.stackTagCompound.setInteger("SpacetimeCharge", spacetimeMaxCharge);
         }
         
-        spacetimeCharge = itemstack.stackTagCompound.getInteger("SpacetimeCharge");
+        int spacetimeCharge = getSpacetimeCharge(itemstack);
         if (spacetimeCharge + x < 0) {
             return false;
         }
@@ -92,8 +91,12 @@ public class SpacetimeArmor extends ItemArmor implements IArmorTextureProvider, 
     }
     
     @Override
-    public int getSpacetimeCharge() {
-        return spacetimeCharge;
+    public int getSpacetimeCharge(ItemStack itemstack) {
+        if (itemstack.stackTagCompound == null) {
+            itemstack.setTagCompound(new NBTTagCompound());
+            itemstack.stackTagCompound.setInteger("SpacetimeCharge", spacetimeMaxCharge);
+        }
+        return itemstack.stackTagCompound.getInteger("SpacetimeCharge");
     }
     
     @Override
@@ -103,13 +106,26 @@ public class SpacetimeArmor extends ItemArmor implements IArmorTextureProvider, 
     
     @Override
     @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4) {
-        par3List.add(spacetimeCharge + "/" + spacetimeMaxCharge);
+    public void addInformation(ItemStack itemstack, EntityPlayer player, List list, boolean par4) {
+        list.add(getSpacetimeCharge(itemstack) + "/" + spacetimeMaxCharge);
     }
     
     @Override
     public void onArmorTickUpdate(World worldObj, EntityPlayer player, ItemStack itemstack) {
-        changeCharge(itemstack, 1);
+        changeCharge(itemstack, 0);
     }
+    
+    @Override
+    public int subtractToZero(ItemStack itemstack, int amount) {
+        if (amount <= getSpacetimeCharge(itemstack)) {
+            changeCharge(itemstack, -amount);
+            return amount;
+        } else {
+            int amountSubtracted = getSpacetimeCharge(itemstack);
+            changeCharge(itemstack, -getSpacetimeCharge(itemstack));
+            return amountSubtracted;
+        }
+    }
+
     
 }

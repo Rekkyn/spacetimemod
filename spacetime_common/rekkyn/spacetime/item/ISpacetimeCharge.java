@@ -12,7 +12,9 @@ public interface ISpacetimeCharge {
     
     boolean changeCharge(ItemStack itemstack, int x);
     
-    int getSpacetimeCharge();
+    int getSpacetimeCharge(ItemStack itemstack);
     
     int getSpacetimeMaxCharge();
+    
+    int subtractToZero(ItemStack itemstack, int amount);
 }

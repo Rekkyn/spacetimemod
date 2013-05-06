@@ -12,6 +12,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import rekkyn.spacetime.Spacetime;
+import rekkyn.spacetime.handlers.SpacetimeChargeHandler;
 import rekkyn.spacetime.item.ISpacetimeCharge;
 import rekkyn.spacetime.particles.ParticleEffects;
 import cpw.mods.fml.relauncher.Side;
@@ -20,11 +21,11 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class ItemSpacetimeSword extends ItemSword implements ISpacetimeCharge {
     
     public static final int spacetimeMaxCharge = 50;
-    public static final int useAmount = -50;
-    public int spacetimeCharge = spacetimeMaxCharge;
+    public static final int useAmount = 100;
     
     public ItemSpacetimeSword(int id, EnumToolMaterial material) {
         super(id, material);
+        int spacetimeCharge = spacetimeMaxCharge;
     }
     
     @Override
@@ -38,9 +39,9 @@ public class ItemSpacetimeSword extends ItemSword implements ISpacetimeCharge {
     }
     
     @Override
-    public ItemStack onItemRightClick(ItemStack item, World world, EntityPlayer player) {
+    public ItemStack onItemRightClick(ItemStack itemstack, World world, EntityPlayer player) {
         
-        if (changeCharge(item, useAmount)) {
+        if (SpacetimeChargeHandler.subChargeFromTotal(player, useAmount)) {
             
             for (int l = 0; l < 32; ++l) {
                 double d1 = player.posY + world.rand.nextFloat();
@@ -73,13 +74,13 @@ public class ItemSpacetimeSword extends ItemSword implements ISpacetimeCharge {
             player.fallDistance = 0;
         }
         
-        return item;
+        return itemstack;
     }
     
     @Override
     public void onUpdate(ItemStack itemstack, World world, Entity player, int par4, boolean par5) {
         
-        changeCharge(itemstack, 1);
+        changeCharge(itemstack, 0);
     }
     
     @Override
@@ -89,12 +90,8 @@ public class ItemSpacetimeSword extends ItemSword implements ISpacetimeCharge {
     
     @Override
     public boolean changeCharge(ItemStack itemstack, int x) {
-        if (itemstack.stackTagCompound == null) {
-            itemstack.setTagCompound(new NBTTagCompound());
-            itemstack.stackTagCompound.setInteger("SpacetimeCharge", spacetimeMaxCharge);
-        }
         
-        spacetimeCharge = itemstack.stackTagCompound.getInteger("SpacetimeCharge");
+        int spacetimeCharge = getSpacetimeCharge(itemstack);
         if (spacetimeCharge + x < 0) {
             return false;
         }
@@ -107,8 +104,12 @@ public class ItemSpacetimeSword extends ItemSword implements ISpacetimeCharge {
     }
     
     @Override
-    public int getSpacetimeCharge() {
-        return spacetimeCharge;
+    public int getSpacetimeCharge(ItemStack itemstack) {
+        if (itemstack.stackTagCompound == null) {
+            itemstack.setTagCompound(new NBTTagCompound());
+            itemstack.stackTagCompound.setInteger("SpacetimeCharge", spacetimeMaxCharge);
+        }
+        return itemstack.stackTagCompound.getInteger("SpacetimeCharge");
     }
     
     @Override
@@ -118,8 +119,20 @@ public class ItemSpacetimeSword extends ItemSword implements ISpacetimeCharge {
     
     @Override
     @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4) {
-        par3List.add(spacetimeCharge + "/" + spacetimeMaxCharge);
+    public void addInformation(ItemStack itemstack, EntityPlayer player, List list, boolean par4) {
+        list.add(getSpacetimeCharge(itemstack) + "/" + spacetimeMaxCharge);
+    }
+
+    @Override
+    public int subtractToZero(ItemStack itemstack, int amount) {
+        if (amount <= getSpacetimeCharge(itemstack)) {
+            changeCharge(itemstack, -amount);
+            return amount;
+        } else {
+            int amountSubtracted = getSpacetimeCharge(itemstack);
+            changeCharge(itemstack, -getSpacetimeCharge(itemstack));
+            return amountSubtracted;
+        }
     }
     
 }
