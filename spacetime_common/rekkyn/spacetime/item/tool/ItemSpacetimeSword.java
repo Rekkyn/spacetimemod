@@ -80,7 +80,7 @@ public class ItemSpacetimeSword extends ItemSword implements ISpacetimeCharge {
     @Override
     public void onUpdate(ItemStack itemstack, World world, Entity player, int par4, boolean par5) {
         
-        changeCharge(itemstack, 0);
+        changeCharge(itemstack, 1);
     }
     
     @Override

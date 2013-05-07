@@ -43,8 +43,9 @@ public class SpacetimeChargeHandler {
     
     public static boolean subChargeFromTotal(EntityPlayer player, int amount) {
         if (getCurrentCharge(player) < amount) { return false; }
-        int numberOfItems = 0;
         int amountLeft = amount;
+        while (amountLeft > 0) {
+        int numberOfItems = 0;
         for (int i = 0; i <= 4; i++) {
             if (player.getCurrentItemOrArmor(i) == null) {
                 continue;
@@ -56,6 +57,8 @@ public class SpacetimeChargeHandler {
             }
         }
         
+        int subtractFromEach = amountLeft / numberOfItems;
+        
         for (int i = 0; i <= 4; i++) {
             if (player.getCurrentItemOrArmor(i) == null) {
                 continue;
@@ -63,14 +66,13 @@ public class SpacetimeChargeHandler {
             ItemStack itemstack = player.getCurrentItemOrArmor(i);
             Item item = itemstack.getItem();
             if (item instanceof ISpacetimeCharge) {
-                System.out.println(i + "," + amountLeft + "," + numberOfItems);
-                if (amountLeft == 0) {
-                    break;
+                amountLeft -= ((ISpacetimeCharge) item).subtractToZero(itemstack, subtractFromEach);
+                if (subtractFromEach == 0) {
+                    amountLeft = 0;
                 }
-                amountLeft -= ((ISpacetimeCharge) item).subtractToZero(itemstack, amountLeft / numberOfItems);
-                numberOfItems--;
             }
             
+        }
         }
         return true;
     }

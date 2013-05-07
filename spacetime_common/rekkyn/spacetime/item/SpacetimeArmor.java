@@ -112,7 +112,7 @@ public class SpacetimeArmor extends ItemArmor implements IArmorTextureProvider, 
     
     @Override
     public void onArmorTickUpdate(World worldObj, EntityPlayer player, ItemStack itemstack) {
-        changeCharge(itemstack, 0);
+        changeCharge(itemstack, 1);
     }
     
     @Override
