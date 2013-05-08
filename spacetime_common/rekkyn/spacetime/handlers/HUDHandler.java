@@ -2,15 +2,16 @@ package rekkyn.spacetime.handlers;
 
 import java.util.EnumSet;
 
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL12;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL12;
+
 import rekkyn.spacetime.item.ISpacetimeCharge;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.common.ITickHandler;
@@ -36,7 +37,7 @@ public class HUDHandler implements ITickHandler {
             if (player != null) {
                 currentItemStack = player.inventory.getCurrentItem();
                 
-                if (Minecraft.isGuiEnabled() /*&& minecraft.inGameHasFocus*/) {
+                if (Minecraft.isGuiEnabled()) {
                     if (currentItemStack != null) {
                         renderSpacetimeCharge(minecraft, player, currentItemStack, (Float) tickData[0]);
                     }
@@ -79,7 +80,7 @@ public class HUDHandler implements ITickHandler {
                     minecraft.displayHeight);
             
             minecraft.entityRenderer.setupOverlayRendering();
-
+            
             RenderHelper.enableGUIStandardItemLighting();
             FontRenderer fontRender = minecraft.fontRenderer;
             int width = res.getScaledWidth();
@@ -91,42 +92,33 @@ public class HUDHandler implements ITickHandler {
             GL11.glEnable(GL12.GL_RESCALE_NORMAL);
             GL11.glEnable(GL11.GL_COLOR_MATERIAL);
             
-            GL11.glEnable(2929 /*GL_DEPTH_TEST*/);
-          //Makes your image get draw on the top layer instead of being covered by other things.
-
-
+            GL11.glEnable(2929 /* GL_DEPTH_TEST */);
             
+            if (!minecraft.inGameHasFocus) {
+                GL11.glColor4f(0.24F, 0.24F, 0.24F, 1.0F);
+            } else {
+                GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+            }
 
-            
-          GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-          //This is redundant if all 1.0F but changes the shade.
-          GL11.glBindTexture(3553, minecraft.renderEngine.getTexture("/mods/Spacetime/textures/gui/spacetimeInfuser.png"));
-          //Bind the texture to be used.
-          minecraft.ingameGUI.drawTexturedModalRect(0, 0, 0, 166, 12, 40);
-          //Draw the part you want from the sprite map.
-          
-          minecraft.ingameGUI.drawTexturedModalRect(0, 0, 12, 166, 12, 40);
-
-          
-
-
-            
             // draw
-            String text = SpacetimeChargeHandler.getCurrentCharge(player) + "/"
-                    + SpacetimeChargeHandler.getMaxCharge(player);
-            int x = 100;
-            int y = 200;
-            fontRender.drawStringWithShadow(text, x, y, 0x2a2f9f);
-            
-
+            GL11.glBindTexture(3553,
+                    minecraft.renderEngine.getTexture("/mods/Spacetime/textures/gui/spacetimeInfuser.png"));
+            minecraft.ingameGUI.drawTexturedModalRect(width / 2 + 97, height - 40, 0, 166, 12, 40);
+                        
+            if (SpacetimeChargeHandler.getCurrentCharge(player) >= ((ISpacetimeCharge) player.getCurrentItemOrArmor(0).getItem()).getUseAmount()) {
+            minecraft.ingameGUI.drawTexturedModalRect(width / 2 + 97, height - 36, 12, 170, 12,
+                    (int)((float)SpacetimeChargeHandler.getCurrentCharge(player) / (float)SpacetimeChargeHandler.getMaxCharge(player) * 34));
+            } else {
+                minecraft.ingameGUI.drawTexturedModalRect(width / 2 + 97, height - 36, 24, 170, 12,
+                        (int)((float)SpacetimeChargeHandler.getCurrentCharge(player) / (float)SpacetimeChargeHandler.getMaxCharge(player) * 34));
+            }
             
             GL11.glDisable(GL11.GL_LIGHTING);
-            GL11.glDisable(2929 /*GL_DEPTH_TEST*/);
+            GL11.glDisable(2929 /* GL_DEPTH_TEST */);
             
             GL11.glPopMatrix();
             GL11.glPopMatrix();
-
-
+            
         }
     }
     

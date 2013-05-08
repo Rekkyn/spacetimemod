@@ -6,6 +6,7 @@ import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumToolMaterial;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 import net.minecraft.nbt.NBTTagCompound;
@@ -133,6 +134,11 @@ public class ItemSpacetimeSword extends ItemSword implements ISpacetimeCharge {
             changeCharge(itemstack, -getSpacetimeCharge(itemstack));
             return amountSubtracted;
         }
+    }
+
+    @Override
+    public int getUseAmount() {
+        return useAmount;
     }
     
 }

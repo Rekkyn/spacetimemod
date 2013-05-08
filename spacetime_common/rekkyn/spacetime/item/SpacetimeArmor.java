@@ -127,5 +127,10 @@ public class SpacetimeArmor extends ItemArmor implements IArmorTextureProvider, 
         }
     }
 
+    @Override
+    public int getUseAmount() {
+        return 0;
+    }
+
     
 }
