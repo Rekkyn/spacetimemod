@@ -99,18 +99,22 @@ public class HUDHandler implements ITickHandler {
             } else {
                 GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
             }
-
+            
             // draw
             GL11.glBindTexture(3553,
                     minecraft.renderEngine.getTexture("/mods/Spacetime/textures/gui/spacetimeInfuser.png"));
             minecraft.ingameGUI.drawTexturedModalRect(width / 2 + 97, height - 40, 0, 166, 12, 40);
-                        
-            if (SpacetimeChargeHandler.getCurrentCharge(player) >= ((ISpacetimeCharge) player.getCurrentItemOrArmor(0).getItem()).getUseAmount()) {
-            minecraft.ingameGUI.drawTexturedModalRect(width / 2 + 97, height - 36, 12, 170, 12,
-                    (int)((float)SpacetimeChargeHandler.getCurrentCharge(player) / (float)SpacetimeChargeHandler.getMaxCharge(player) * 34));
+            
+            int scaledAmount = (int) ((float) SpacetimeChargeHandler.getCurrentCharge(player)
+                    / (float) SpacetimeChargeHandler.getMaxCharge(player) * 34);
+            
+            if (SpacetimeChargeHandler.getCurrentCharge(player) >= ((ISpacetimeCharge) player.getCurrentItemOrArmor(0)
+                    .getItem()).getUseAmount()) {
+                minecraft.ingameGUI.drawTexturedModalRect(width / 2 + 97, height - 2 - scaledAmount, 12, 170, 12,
+                        scaledAmount - 2);
             } else {
-                minecraft.ingameGUI.drawTexturedModalRect(width / 2 + 97, height - 36, 24, 170, 12,
-                        (int)((float)SpacetimeChargeHandler.getCurrentCharge(player) / (float)SpacetimeChargeHandler.getMaxCharge(player) * 34));
+                minecraft.ingameGUI.drawTexturedModalRect(width / 2 + 97, height - 2 - scaledAmount, 24, 170, 12,
+                        scaledAmount - 2);
             }
             
             GL11.glDisable(GL11.GL_LIGHTING);
