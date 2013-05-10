@@ -1,5 +1,6 @@
 package rekkyn.spacetime.proxy;
 
+import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -77,6 +78,8 @@ public class CommonProxy implements IGuiHandler {
         LanguageRegistry.addName(Spacetime.spacetimeLegs, "¤9Spacetime Leggings");
         LanguageRegistry.addName(Spacetime.spacetimeBoots, "¤9Spacetime Boots");
         LanguageRegistry.addName(Spacetime.spacetimeCrossbow, "¤9Spacetime Crossbow");
+        LanguageRegistry.addName(Spacetime.obsidianShard, "Obsidian Shard");
+        LanguageRegistry.addName(Spacetime.crossbowBolt, "Crossbow Bolt");
         
     }
     
@@ -103,6 +106,15 @@ public class CommonProxy implements IGuiHandler {
         
         GameRegistry.addRecipe(new ItemStack(Spacetime.spacetimeCrossbow), "XX|", "S|X", "|SX", 'X',
                 Spacetime.spacetimeGem, '|', Spacetime.ironRod, 'S', Item.silk);
+        
+        GameRegistry.addRecipe(new ItemStack(Spacetime.obsidianShard, 4), new Object[] { "#", Character.valueOf('#'),
+                Block.obsidian });
+        GameRegistry.addRecipe(new ItemStack(Block.obsidian), new Object[] { "##", "##", Character.valueOf('#'),
+                Spacetime.obsidianShard });
+        
+        GameRegistry.addRecipe(new ItemStack(Spacetime.crossbowBolt, 1),
+                new Object[] { "^", "|", "|", Character.valueOf('^'), Spacetime.obsidianShard, Character.valueOf('|'),
+                        Spacetime.ironRod });
         
     }
 }

@@ -14,9 +14,8 @@ import rekkyn.spacetime.block.BlockSpacetimeOre;
 import rekkyn.spacetime.handlers.ClientPacketHandler;
 import rekkyn.spacetime.handlers.EventHandler;
 import rekkyn.spacetime.handlers.ServerPacketHandler;
-import rekkyn.spacetime.item.ItemIronRod;
+import rekkyn.spacetime.item.GenericItem;
 import rekkyn.spacetime.item.ItemSpacetimeFluctuation;
-import rekkyn.spacetime.item.ItemSpacetimeGem;
 import rekkyn.spacetime.item.SpacetimeArmor;
 import rekkyn.spacetime.item.SpacetimeCrossbow;
 import rekkyn.spacetime.item.tool.ItemSpacetimeAxe;
@@ -64,9 +63,9 @@ public class Spacetime {
     public static final ItemSpacetimeFluctuation spacetimeFluctuation = (ItemSpacetimeFluctuation) new ItemSpacetimeFluctuation(
             1000).setMaxStackSize(1).setCreativeTab(CreativeTabs.tabMaterials)
             .setUnlocalizedName("spacetimeFluctuation");
-    public static final ItemSpacetimeGem spacetimeGem = (ItemSpacetimeGem) new ItemSpacetimeGem(1001).setCreativeTab(
+    public static final Item spacetimeGem = new GenericItem(1001, true).setCreativeTab(
             CreativeTabs.tabMaterials).setUnlocalizedName("spacetimeGem");
-    public static final Item ironRod = new ItemIronRod(1002).setUnlocalizedName("ironRod")
+    public static final Item ironRod = new GenericItem(1002, false).setUnlocalizedName("ironRod")
             .setCreativeTab(CreativeTabs.tabMaterials).setFull3D();
     
     public static EnumToolMaterial spacetimeMaterial = EnumHelper.addToolMaterial("SPACETIME", 3, 2842, 14F, 7, 27);
@@ -93,7 +92,13 @@ public class Spacetime {
     public static final Item spacetimeBoots = new SpacetimeArmor(1011, spacetimeArmorMaterial,
             ModLoader.addArmor("SpacetimeArmor"), 3).setUnlocalizedName("spacetimeBoots");
     
-    public static final SpacetimeCrossbow spacetimeCrossbow = (SpacetimeCrossbow) new SpacetimeCrossbow(1012).setUnlocalizedName("spacetimeBow").setFull3D();
+    public static final SpacetimeCrossbow spacetimeCrossbow = (SpacetimeCrossbow) new SpacetimeCrossbow(1012)
+            .setUnlocalizedName("spacetimeBow").setFull3D();
+    
+    public static final Item obsidianShard = new GenericItem(1013, false)
+    .setUnlocalizedName("obsidianShard").setCreativeTab(CreativeTabs.tabMaterials);
+    public static final Item crossbowBolt = new GenericItem(1014, false)
+    .setUnlocalizedName("crossbowBolt").setCreativeTab(CreativeTabs.tabCombat);
     
     @Instance("Spacetime")
     public static Spacetime instance;
