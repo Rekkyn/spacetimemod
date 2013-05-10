@@ -107,9 +107,13 @@ public class HUDHandler implements ITickHandler {
             
             int scaledAmount = (int) ((float) SpacetimeChargeHandler.getCurrentCharge(player)
                     / (float) SpacetimeChargeHandler.getMaxCharge(player) * 34);
+            int currentCharge = SpacetimeChargeHandler.getCurrentCharge(player);
+            int useAmount = 0;
+            if (player.getCurrentItemOrArmor(0).getItem() instanceof ISpacetimeCharge) {
+                useAmount = ((ISpacetimeCharge) player.getCurrentItemOrArmor(0).getItem()).getUseAmount();
+            }
             
-            if (SpacetimeChargeHandler.getCurrentCharge(player) >= ((ISpacetimeCharge) player.getCurrentItemOrArmor(0)
-                    .getItem()).getUseAmount()) {
+            if (currentCharge >= useAmount) {
                 minecraft.ingameGUI.drawTexturedModalRect(width / 2 + 97, height - 2 - scaledAmount, 12, 170, 12,
                         scaledAmount - 2);
             } else {

@@ -15,6 +15,12 @@ import cpw.mods.fml.common.registry.LanguageRegistry;
 
 public class CommonProxy implements IGuiHandler {
     public void registerRenderInformation() {
+        
+        // EntityRegistry.registerGlobalEntityID(SpacetimeFluctuationEntity.class,
+        // "SpacetimeFluctuationEntity",
+        // EntityRegistry.findGlobalUniqueEntityId());
+        // EntityRegistry.registerModEntity(SpacetimeFluctuationEntity.class,
+        // "SpacetimeFluctuationEntity", 1, this, 128, 1, false);
     }
     
     @Override
@@ -70,6 +76,7 @@ public class CommonProxy implements IGuiHandler {
         LanguageRegistry.addName(Spacetime.spacetimeChest, "¤9Spacetime Chestplate");
         LanguageRegistry.addName(Spacetime.spacetimeLegs, "¤9Spacetime Leggings");
         LanguageRegistry.addName(Spacetime.spacetimeBoots, "¤9Spacetime Boots");
+        LanguageRegistry.addName(Spacetime.spacetimeCrossbow, "¤9Spacetime Crossbow");
         
     }
     
@@ -93,6 +100,9 @@ public class CommonProxy implements IGuiHandler {
         GameRegistry
                 .addRecipe(new ItemStack(Spacetime.spacetimeLegs), "xxx", "x x", "x x", 'x', Spacetime.spacetimeGem);
         GameRegistry.addRecipe(new ItemStack(Spacetime.spacetimeBoots), "x x", "x x", 'x', Spacetime.spacetimeGem);
+        
+        GameRegistry.addRecipe(new ItemStack(Spacetime.spacetimeCrossbow), "XX|", "S|X", "|SX", 'X',
+                Spacetime.spacetimeGem, '|', Spacetime.ironRod, 'S', Item.silk);
         
     }
 }

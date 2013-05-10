@@ -18,6 +18,7 @@ import rekkyn.spacetime.item.ItemIronRod;
 import rekkyn.spacetime.item.ItemSpacetimeFluctuation;
 import rekkyn.spacetime.item.ItemSpacetimeGem;
 import rekkyn.spacetime.item.SpacetimeArmor;
+import rekkyn.spacetime.item.SpacetimeCrossbow;
 import rekkyn.spacetime.item.tool.ItemSpacetimeAxe;
 import rekkyn.spacetime.item.tool.ItemSpacetimeHoe;
 import rekkyn.spacetime.item.tool.ItemSpacetimePickaxe;
@@ -91,6 +92,8 @@ public class Spacetime {
             ModLoader.addArmor("SpacetimeArmor"), 2).setUnlocalizedName("spacetimeLegs");
     public static final Item spacetimeBoots = new SpacetimeArmor(1011, spacetimeArmorMaterial,
             ModLoader.addArmor("SpacetimeArmor"), 3).setUnlocalizedName("spacetimeBoots");
+    
+    public static final SpacetimeCrossbow spacetimeCrossbow = (SpacetimeCrossbow) new SpacetimeCrossbow(1012).setUnlocalizedName("spacetimeBow").setFull3D();
     
     @Instance("Spacetime")
     public static Spacetime instance;
