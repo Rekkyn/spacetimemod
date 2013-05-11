@@ -116,7 +116,7 @@ public class Spacetime {
         proxy.registerBlocks();
         proxy.addNames();
         proxy.addRecipes();
-        proxy.registerRenderInformation();
+        proxy.registerStuffNJazz();
         
         GameRegistry.registerWorldGenerator(new SpacetimeWorldGen());
         

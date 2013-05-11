@@ -1,12 +1,12 @@
 package rekkyn.spacetime.item;
 
 import rekkyn.spacetime.Spacetime;
+import rekkyn.spacetime.entity.EntityCrossbowBolt;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBow;
@@ -52,38 +52,38 @@ public class SpacetimeCrossbow extends ItemBow {
                 f = 1.0F;
             }
             
-            EntityArrow entityarrow = new EntityArrow(world, player, f * 2.0F);
+            EntityCrossbowBolt entitybolt = new EntityCrossbowBolt(world, player, f * 2.0F);
             
             if (f == 1.0F) {
-                entityarrow.setIsCritical(true);
+                entitybolt.setIsCritical(true);
             }
             
             int k = EnchantmentHelper.getEnchantmentLevel(Enchantment.power.effectId, item);
             
             if (k > 0) {
-                entityarrow.setDamage(entityarrow.getDamage() + k * 0.5D + 0.5D);
+                entitybolt.setDamage(entitybolt.getDamage() + k * 0.5D + 0.5D);
             }
             
             int l = EnchantmentHelper.getEnchantmentLevel(Enchantment.punch.effectId, item);
             
             if (l > 0) {
-                entityarrow.setKnockbackStrength(l);
+                entitybolt.setKnockbackStrength(l);
             }
             
             if (EnchantmentHelper.getEnchantmentLevel(Enchantment.flame.effectId, item) > 0) {
-                entityarrow.setFire(100);
+                entitybolt.setFire(100);
             }
             
             item.damageItem(1, player);
             world.playSoundAtEntity(player, "random.bow", 1.0F, 1.0F
                     / (itemRand.nextFloat() * 0.4F + 1.2F) + f * 0.5F);
             
-                entityarrow.canBePickedUp = 2;
+                entitybolt.canBePickedUp = 2;
                 player.inventory.consumeInventoryItem(Spacetime.crossbowBolt.itemID);
             
-            if (!world.isRemote) {
-                world.spawnEntityInWorld(entityarrow);
-            }
+            //if (!world.isRemote) {
+                world.spawnEntityInWorld(entitybolt);
+            //}
         }
     }
     

@@ -7,21 +7,24 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import rekkyn.spacetime.Spacetime;
+import rekkyn.spacetime.entity.EntityCrossbowBolt;
 import rekkyn.spacetime.inventory.ContainerSpacetimeInfuser;
 import rekkyn.spacetime.inventory.GuiSpacetimeInfuser;
 import rekkyn.spacetime.inventory.TileSpacetimeInfuser;
+import rekkyn.spacetime.item.SpacetimeFluctuationEntity;
 import cpw.mods.fml.common.network.IGuiHandler;
+import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
 public class CommonProxy implements IGuiHandler {
-    public void registerRenderInformation() {
+    public void registerStuffNJazz() {
         
-        // EntityRegistry.registerGlobalEntityID(SpacetimeFluctuationEntity.class,
-        // "SpacetimeFluctuationEntity",
-        // EntityRegistry.findGlobalUniqueEntityId());
-        // EntityRegistry.registerModEntity(SpacetimeFluctuationEntity.class,
-        // "SpacetimeFluctuationEntity", 1, this, 128, 1, false);
+        EntityRegistry.registerGlobalEntityID(EntityCrossbowBolt.class, "EntityCrossbowBolt",
+                EntityRegistry.findGlobalUniqueEntityId());
+        EntityRegistry.registerModEntity(EntityCrossbowBolt.class, "EntityCrossbowBolt", 1, this, 128,
+                1, true);
+        LanguageRegistry.instance().addStringLocalization("entity.CrossbowBolt.name", "Crossbow Bolt");
     }
     
     @Override
