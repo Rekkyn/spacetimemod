@@ -28,6 +28,11 @@ public class ParticleEffects {
             EntityFX effect = null;
             double maxDist = 16.0D;
             
+            if (particleName.equals("crossbowTrail")) {
+                mc.effectRenderer
+                        .addEffect(new EntityCrossbowTrail(theWorld, x, y, z, motionX, motionY, motionZ, 10.0F));
+            }
+            
             if (xdist * xdist + ydist * ydist + zdist * zdist > maxDist * maxDist) {
                 return null;
             } else if (particleSetting > 1) {
@@ -41,7 +46,9 @@ public class ParticleEffects {
                             0.81F + rand.nextFloat() / 8, 0.41F + rand.nextFloat() / 8, 0.05F + rand.nextFloat() / 8);
                 }
                 
-                mc.effectRenderer.addEffect(effect);
+                if (effect != null) {
+                    mc.effectRenderer.addEffect(effect);
+                }
                 return effect;
             }
         }

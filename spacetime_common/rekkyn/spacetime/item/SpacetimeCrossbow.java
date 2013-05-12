@@ -1,21 +1,18 @@
 package rekkyn.spacetime.item;
 
-import rekkyn.spacetime.Spacetime;
-import rekkyn.spacetime.entity.EntityCrossbowBolt;
 import net.minecraft.client.renderer.texture.IconRegister;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemBow;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.Icon;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.ArrowLooseEvent;
 import net.minecraftforge.event.entity.player.ArrowNockEvent;
+import rekkyn.spacetime.Spacetime;
+import rekkyn.spacetime.entity.EntityCrossbowBolt;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -46,17 +43,13 @@ public class SpacetimeCrossbow extends ItemBow {
             float f = j / 20.0F;
             f = (f * f + f * 2.0F) / 3.0F;
             
-            if (f < 0.1D) { return; }
+            if (f < 1.0D) { return; }
             
             if (f > 1.0F) {
                 f = 1.0F;
             }
             
             EntityCrossbowBolt entitybolt = new EntityCrossbowBolt(world, player, f * 2.0F);
-            
-            if (f == 1.0F) {
-                entitybolt.setIsCritical(true);
-            }
             
             int k = EnchantmentHelper.getEnchantmentLevel(Enchantment.power.effectId, item);
             
@@ -75,15 +68,13 @@ public class SpacetimeCrossbow extends ItemBow {
             }
             
             item.damageItem(1, player);
-            world.playSoundAtEntity(player, "random.bow", 1.0F, 1.0F
-                    / (itemRand.nextFloat() * 0.4F + 1.2F) + f * 0.5F);
+            world.playSoundAtEntity(player, "random.bow", 1.0F, 1.0F / (itemRand.nextFloat() * 0.4F + 1.2F) + f * 0.5F);
             
-                entitybolt.canBePickedUp = 2;
-                player.inventory.consumeInventoryItem(Spacetime.crossbowBolt.itemID);
+            player.inventory.consumeInventoryItem(Spacetime.crossbowBolt.itemID);
             
-            //if (!world.isRemote) {
+            if (!world.isRemote) {
                 world.spawnEntityInWorld(entitybolt);
-            //}
+            }
         }
     }
     
@@ -119,7 +110,8 @@ public class SpacetimeCrossbow extends ItemBow {
         MinecraftForge.EVENT_BUS.post(event);
         if (event.isCanceled()) { return event.result; }
         
-        if (par3EntityPlayer.capabilities.isCreativeMode || par3EntityPlayer.inventory.hasItem(Spacetime.crossbowBolt.itemID)) {
+        if (par3EntityPlayer.capabilities.isCreativeMode
+                || par3EntityPlayer.inventory.hasItem(Spacetime.crossbowBolt.itemID)) {
             par3EntityPlayer.setItemInUse(par1ItemStack, this.getMaxItemUseDuration(par1ItemStack));
         }
         
@@ -132,7 +124,7 @@ public class SpacetimeCrossbow extends ItemBow {
      */
     @Override
     public int getItemEnchantability() {
-        return 1;
+        return 0;
     }
     
     @Override
