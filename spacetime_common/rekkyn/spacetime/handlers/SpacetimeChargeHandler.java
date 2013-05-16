@@ -45,34 +45,34 @@ public class SpacetimeChargeHandler {
         if (getCurrentCharge(player) < amount) { return false; }
         int amountLeft = amount;
         while (amountLeft > 0) {
-        int numberOfItems = 0;
-        for (int i = 0; i <= 4; i++) {
-            if (player.getCurrentItemOrArmor(i) == null) {
-                continue;
-            }
-            Item item = player.getCurrentItemOrArmor(i).getItem();
-            if (item instanceof ISpacetimeCharge
-                    && ((ISpacetimeCharge) item).getSpacetimeCharge(player.getCurrentItemOrArmor(i)) > 0) {
-                numberOfItems++;
-            }
-        }
-        
-        int subtractFromEach = amountLeft / numberOfItems;
-        
-        for (int i = 0; i <= 4; i++) {
-            if (player.getCurrentItemOrArmor(i) == null) {
-                continue;
-            }
-            ItemStack itemstack = player.getCurrentItemOrArmor(i);
-            Item item = itemstack.getItem();
-            if (item instanceof ISpacetimeCharge) {
-                amountLeft -= ((ISpacetimeCharge) item).subtractToZero(itemstack, subtractFromEach);
-                if (subtractFromEach == 0) {
-                    amountLeft = 0;
+            int numberOfItems = 0;
+            for (int i = 0; i <= 4; i++) {
+                if (player.getCurrentItemOrArmor(i) == null) {
+                    continue;
+                }
+                Item item = player.getCurrentItemOrArmor(i).getItem();
+                if (item instanceof ISpacetimeCharge
+                        && ((ISpacetimeCharge) item).getSpacetimeCharge(player.getCurrentItemOrArmor(i)) > 0) {
+                    numberOfItems++;
                 }
             }
             
-        }
+            int subtractFromEach = amountLeft / numberOfItems;
+            
+            for (int i = 0; i <= 4; i++) {
+                if (player.getCurrentItemOrArmor(i) == null) {
+                    continue;
+                }
+                ItemStack itemstack = player.getCurrentItemOrArmor(i);
+                Item item = itemstack.getItem();
+                if (item instanceof ISpacetimeCharge) {
+                    amountLeft -= ((ISpacetimeCharge) item).subtractToZero(itemstack, subtractFromEach);
+                    if (subtractFromEach == 0) {
+                        amountLeft = 0;
+                    }
+                }
+                
+            }
         }
         return true;
     }

@@ -52,27 +52,19 @@ public class ContainerSpacetimeInfuser extends Container {
             itemstack = stack.copy();
             
             if (par2 == 2) {
-                if (!this.mergeItemStack(stack, 3, 39, true)) {
-                    return null;
-                }
+                if (!this.mergeItemStack(stack, 3, 39, true)) { return null; }
                 
                 slot.onSlotChange(stack, itemstack);
                 
             } else if (par2 != 1 && par2 != 0) {
-                if (!this.mergeItemStack(stack, 0, 2, false)) {
-                    return null;
-                }
+                if (!this.mergeItemStack(stack, 0, 2, false)) { return null; }
             } else if (par2 >= 3 && par2 < 30) {
-                if (!this.mergeItemStack(stack, 30, 39, false)) {
-                    return null;
-                }
+                if (!this.mergeItemStack(stack, 30, 39, false)) { return null; }
             } else if (par2 >= 30 && par2 < 39 && !this.mergeItemStack(stack, 3, 30, false)) {
                 return null;
             }
             
-            else if (!this.mergeItemStack(stack, 3, 39, false)) {
-                return null;
-            }
+            else if (!this.mergeItemStack(stack, 3, 39, false)) { return null; }
             
             if (stack.stackSize == 0) {
                 slot.putStack((ItemStack) null);
@@ -80,9 +72,7 @@ public class ContainerSpacetimeInfuser extends Container {
                 slot.onSlotChanged();
             }
             
-            if (stack.stackSize == itemstack.stackSize) {
-                return null;
-            }
+            if (stack.stackSize == itemstack.stackSize) { return null; }
             
             slot.onPickupFromSlot(par1EntityPlayer, stack);
         }

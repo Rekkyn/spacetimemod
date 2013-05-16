@@ -154,15 +154,9 @@ public class TileSpacetimeInfuser extends TileEntity implements ISidedInventory 
             return false;
         } else {
             ItemStack itemstack = InfuserRecipes.infusing().getInfusingResult(inventory[0], inventory[1]);
-            if (itemstack == null) {
-                return false;
-            }
-            if (inventory[2] == null) {
-                return true;
-            }
-            if (!inventory[2].isItemEqual(itemstack)) {
-                return false;
-            }
+            if (itemstack == null) { return false; }
+            if (inventory[2] == null) { return true; }
+            if (!inventory[2].isItemEqual(itemstack)) { return false; }
             int result = inventory[2].stackSize + itemstack.stackSize;
             return result <= getInventoryStackLimit() && result <= itemstack.getMaxStackSize();
         }

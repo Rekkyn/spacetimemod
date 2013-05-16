@@ -45,9 +45,7 @@ public class SpacetimeArmor extends ItemArmor implements IArmorTextureProvider, 
     
     @Override
     public String getArmorTextureFile(ItemStack itemstack) {
-        if (itemstack.getItem() == Spacetime.spacetimeLegs) {
-            return "/mods/Spacetime/textures/armor/spacetime_2.png";
-        }
+        if (itemstack.getItem() == Spacetime.spacetimeLegs) { return "/mods/Spacetime/textures/armor/spacetime_2.png"; }
         return "/mods/Spacetime/textures/armor/spacetime_1.png";
         
     }
@@ -79,9 +77,7 @@ public class SpacetimeArmor extends ItemArmor implements IArmorTextureProvider, 
         }
         
         int spacetimeCharge = getSpacetimeCharge(itemstack);
-        if (spacetimeCharge + x < 0) {
-            return false;
-        }
+        if (spacetimeCharge + x < 0) { return false; }
         spacetimeCharge += x;
         if (spacetimeCharge > spacetimeMaxCharge) {
             spacetimeCharge = spacetimeMaxCharge;
@@ -126,11 +122,10 @@ public class SpacetimeArmor extends ItemArmor implements IArmorTextureProvider, 
             return amountSubtracted;
         }
     }
-
+    
     @Override
     public int getUseAmount() {
         return 0;
     }
-
     
 }

@@ -6,7 +6,6 @@ import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumToolMaterial;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 import net.minecraft.nbt.NBTTagCompound;
@@ -93,9 +92,7 @@ public class ItemSpacetimeSword extends ItemSword implements ISpacetimeCharge {
     public boolean changeCharge(ItemStack itemstack, int x) {
         
         int spacetimeCharge = getSpacetimeCharge(itemstack);
-        if (spacetimeCharge + x < 0) {
-            return false;
-        }
+        if (spacetimeCharge + x < 0) { return false; }
         spacetimeCharge += x;
         if (spacetimeCharge > spacetimeMaxCharge) {
             spacetimeCharge = spacetimeMaxCharge;
@@ -123,7 +120,7 @@ public class ItemSpacetimeSword extends ItemSword implements ISpacetimeCharge {
     public void addInformation(ItemStack itemstack, EntityPlayer player, List list, boolean par4) {
         list.add(getSpacetimeCharge(itemstack) + "/" + spacetimeMaxCharge);
     }
-
+    
     @Override
     public int subtractToZero(ItemStack itemstack, int amount) {
         if (amount <= getSpacetimeCharge(itemstack)) {
@@ -135,7 +132,7 @@ public class ItemSpacetimeSword extends ItemSword implements ISpacetimeCharge {
             return amountSubtracted;
         }
     }
-
+    
     @Override
     public int getUseAmount() {
         return useAmount;

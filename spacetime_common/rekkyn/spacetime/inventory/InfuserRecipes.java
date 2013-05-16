@@ -22,9 +22,8 @@ public class InfuserRecipes {
         ItemStack spacetimeToolOutput = null;
         
         if (i.getItem() == Item.diamond || j.getItem() == Item.diamond) {
-            if (i.getItem() == Spacetime.spacetimeFluctuation || j.getItem() == Spacetime.spacetimeFluctuation) {
-                return new ItemStack(Spacetime.spacetimeGem);
-            }
+            if (i.getItem() == Spacetime.spacetimeFluctuation || j.getItem() == Spacetime.spacetimeFluctuation) { return new ItemStack(
+                    Spacetime.spacetimeGem); }
             
         }
         
@@ -56,9 +55,7 @@ public class InfuserRecipes {
         
         if (diamondTool != null && spacetimeTool != null) {
             Map enchants = EnchantmentHelper.getEnchantments(diamondTool);
-            if (enchants.isEmpty()) {
-                return null;
-            }
+            if (enchants.isEmpty()) { return null; }
             spacetimeToolOutput = spacetimeTool.copy();
             if (diamondTool.hasDisplayName() && !spacetimeTool.hasDisplayName()) {
                 String name = diamondTool.getDisplayName();

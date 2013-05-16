@@ -63,8 +63,8 @@ public class Spacetime {
     public static final ItemSpacetimeFluctuation spacetimeFluctuation = (ItemSpacetimeFluctuation) new ItemSpacetimeFluctuation(
             1000).setMaxStackSize(1).setCreativeTab(CreativeTabs.tabMaterials)
             .setUnlocalizedName("spacetimeFluctuation");
-    public static final Item spacetimeGem = new GenericItem(1001, true).setCreativeTab(
-            CreativeTabs.tabMaterials).setUnlocalizedName("spacetimeGem");
+    public static final Item spacetimeGem = new GenericItem(1001, true).setCreativeTab(CreativeTabs.tabMaterials)
+            .setUnlocalizedName("spacetimeGem");
     public static final Item ironRod = new GenericItem(1002, false).setUnlocalizedName("ironRod")
             .setCreativeTab(CreativeTabs.tabMaterials).setFull3D();
     
@@ -95,10 +95,10 @@ public class Spacetime {
     public static final SpacetimeCrossbow spacetimeCrossbow = (SpacetimeCrossbow) new SpacetimeCrossbow(1012)
             .setUnlocalizedName("spacetimeBow").setFull3D();
     
-    public static final Item obsidianShard = new GenericItem(1013, false)
-    .setUnlocalizedName("obsidianShard").setCreativeTab(CreativeTabs.tabMaterials);
-    public static final Item crossbowBolt = new GenericItem(1014, false)
-    .setUnlocalizedName("crossbowBolt").setCreativeTab(CreativeTabs.tabCombat);
+    public static final Item obsidianShard = new GenericItem(1013, false).setUnlocalizedName("obsidianShard")
+            .setCreativeTab(CreativeTabs.tabMaterials);
+    public static final Item crossbowBolt = new GenericItem(1014, false).setUnlocalizedName("crossbowBolt")
+            .setCreativeTab(CreativeTabs.tabCombat);
     
     @Instance("Spacetime")
     public static Spacetime instance;
@@ -108,6 +108,8 @@ public class Spacetime {
     
     @PreInit
     public void preInit(FMLPreInitializationEvent event) {
+        proxy.registerStuffNJazz();
+        
     }
     
     @Init
@@ -116,7 +118,6 @@ public class Spacetime {
         proxy.registerBlocks();
         proxy.addNames();
         proxy.addRecipes();
-        proxy.registerStuffNJazz();
         
         GameRegistry.registerWorldGenerator(new SpacetimeWorldGen());
         

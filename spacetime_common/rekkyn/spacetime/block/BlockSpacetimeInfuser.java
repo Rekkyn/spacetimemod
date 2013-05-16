@@ -24,9 +24,7 @@ public class BlockSpacetimeInfuser extends BlockContainer {
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int i, float f, float g,
             float t) {
         TileEntity tileEntity = world.getBlockTileEntity(x, y, z);
-        if (tileEntity == null || player.isSneaking()) {
-            return false;
-        }
+        if (tileEntity == null || player.isSneaking()) { return false; }
         player.openGui(Spacetime.instance, 0, world, x, y, z);
         return true;
     }
@@ -47,9 +45,7 @@ public class BlockSpacetimeInfuser extends BlockContainer {
         
         TileEntity tileEntity = world.getBlockTileEntity(x, y, z);
         
-        if (!(tileEntity instanceof IInventory)) {
-            return;
-        }
+        if (!(tileEntity instanceof IInventory)) { return; }
         
         IInventory inventory = (IInventory) tileEntity;
         

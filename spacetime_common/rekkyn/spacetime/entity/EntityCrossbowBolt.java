@@ -19,11 +19,10 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import rekkyn.spacetime.particles.ParticleEffects;
-import cpw.mods.fml.common.registry.IThrowableEntity;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class EntityCrossbowBolt extends Entity implements IProjectile, IThrowableEntity {
+public class EntityCrossbowBolt extends Entity implements IProjectile {
     private int xTile = -1;
     private int yTile = -1;
     private int zTile = -1;
@@ -99,7 +98,7 @@ public class EntityCrossbowBolt extends Entity implements IProjectile, IThrowabl
         motionZ = MathHelper.cos(rotationYaw / 180.0F * (float) Math.PI)
                 * MathHelper.cos(rotationPitch / 180.0F * (float) Math.PI);
         motionY = -MathHelper.sin(rotationPitch / 180.0F * (float) Math.PI);
-        this.setThrowableHeading(motionX, motionY, motionZ, power * 1.5F, 1.0F);
+        this.setThrowableHeading(motionX, motionY, motionZ, power * 5.0F, 1.0F);
     }
     
     @Override
@@ -195,6 +194,7 @@ public class EntityCrossbowBolt extends Entity implements IProjectile, IThrowabl
         }
         
         if (inGround) {
+            // this.setDead();
             int j = worldObj.getBlockId(xTile, yTile, zTile);
             int k = worldObj.getBlockMetadata(xTile, yTile, zTile);
             
@@ -217,6 +217,11 @@ public class EntityCrossbowBolt extends Entity implements IProjectile, IThrowabl
             if (ticksInAir == 1200) {
                 this.setDead();
             }
+            
+            if (posY >= 512) {
+                this.setDead();
+            }
+            
             Vec3 vec3 = worldObj.getWorldVec3Pool().getVecFromPool(posX, posY, posZ);
             Vec3 vec31 = worldObj.getWorldVec3Pool().getVecFromPool(posX + motionX, posY + motionY, posZ + motionZ);
             MovingObjectPosition movingobjectposition = worldObj.rayTraceBlocks_do_do(vec3, vec31, false, true);
@@ -388,11 +393,11 @@ public class EntityCrossbowBolt extends Entity implements IProjectile, IThrowabl
                 }
             }
             
-            for (int lmnop = 0; lmnop < 4; lmnop++) {
+            for (int lmnop = 0; lmnop < 50; lmnop++) {
                 float rand1 = (rand.nextFloat() - 0.5F) * 2;
-                System.out.println(rand1);
+                System.out.println(motionX);
                 ParticleEffects.spawnParticle("crossbowTrail", posX + motionX * l / 4.0D, posY + motionY * l / 4.0D,
-                        posZ + motionZ * l / 4.0D, -motionX * rand1, (-motionY) * rand1, -motionZ * rand1);
+                        posZ + motionZ * l / 4.0D, -motionX * rand1, -motionY * rand1, -motionZ * rand1);
             }
             
             this.setPosition(posX, posY, posZ);
@@ -470,15 +475,4 @@ public class EntityCrossbowBolt extends Entity implements IProjectile, IThrowabl
     public boolean canAttackWithItem() {
         return false;
     }
-
-    @Override
-    public Entity getThrower() {
-        return shootingEntity;
-    }
-
-    @Override
-    public void setThrower(Entity entity) {
-        this.shootingEntity = entity;
-    }
-    
 }

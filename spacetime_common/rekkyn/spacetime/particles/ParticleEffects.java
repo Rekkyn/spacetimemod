@@ -30,7 +30,7 @@ public class ParticleEffects {
             
             if (particleName.equals("crossbowTrail")) {
                 mc.effectRenderer
-                        .addEffect(new EntityCrossbowTrail(theWorld, x, y, z, motionX, motionY, motionZ, 10.0F));
+                        .addEffect(new EntityCrossbowTrail(theWorld, x, y, z, motionX, motionY, motionZ, 4.0F));
             }
             
             if (xdist * xdist + ydist * ydist + zdist * zdist > maxDist * maxDist) {

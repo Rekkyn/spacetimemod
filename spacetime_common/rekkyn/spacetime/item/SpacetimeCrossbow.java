@@ -36,10 +36,10 @@ public class SpacetimeCrossbow extends ItemBow {
         if (event.isCanceled()) { return; }
         j = event.charge;
         
-        boolean flag = player.capabilities.isCreativeMode
+        boolean inCreative = player.capabilities.isCreativeMode
                 || EnchantmentHelper.getEnchantmentLevel(Enchantment.infinity.effectId, item) > 0;
         
-        if (flag || player.inventory.hasItem(Spacetime.crossbowBolt.itemID)) {
+        if (inCreative || player.inventory.hasItem(Spacetime.crossbowBolt.itemID)) {
             float f = j / 20.0F;
             f = (f * f + f * 2.0F) / 3.0F;
             
@@ -70,7 +70,9 @@ public class SpacetimeCrossbow extends ItemBow {
             item.damageItem(1, player);
             world.playSoundAtEntity(player, "random.bow", 1.0F, 1.0F / (itemRand.nextFloat() * 0.4F + 1.2F) + f * 0.5F);
             
-            player.inventory.consumeInventoryItem(Spacetime.crossbowBolt.itemID);
+            if (!inCreative) {
+                player.inventory.consumeInventoryItem(Spacetime.crossbowBolt.itemID);
+            }
             
             if (!world.isRemote) {
                 world.spawnEntityInWorld(entitybolt);

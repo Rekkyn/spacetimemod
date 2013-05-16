@@ -11,7 +11,6 @@ import rekkyn.spacetime.entity.EntityCrossbowBolt;
 import rekkyn.spacetime.inventory.ContainerSpacetimeInfuser;
 import rekkyn.spacetime.inventory.GuiSpacetimeInfuser;
 import rekkyn.spacetime.inventory.TileSpacetimeInfuser;
-import rekkyn.spacetime.item.SpacetimeFluctuationEntity;
 import cpw.mods.fml.common.network.IGuiHandler;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -22,8 +21,7 @@ public class CommonProxy implements IGuiHandler {
         
         EntityRegistry.registerGlobalEntityID(EntityCrossbowBolt.class, "EntityCrossbowBolt",
                 EntityRegistry.findGlobalUniqueEntityId());
-        EntityRegistry.registerModEntity(EntityCrossbowBolt.class, "EntityCrossbowBolt", 1, this, 128,
-                1, true);
+        EntityRegistry.registerModEntity(EntityCrossbowBolt.class, "EntityCrossbowBolt", 1, this, 128, 1, true);
         LanguageRegistry.instance().addStringLocalization("entity.CrossbowBolt.name", "Crossbow Bolt");
     }
     
