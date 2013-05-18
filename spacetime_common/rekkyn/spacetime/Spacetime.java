@@ -11,6 +11,7 @@ import net.minecraftforge.common.MinecraftForge;
 import rekkyn.spacetime.block.BlockRekkynite;
 import rekkyn.spacetime.block.BlockSpacetimeInfuser;
 import rekkyn.spacetime.block.BlockSpacetimeOre;
+import rekkyn.spacetime.entity.EntityCrossbowBolt;
 import rekkyn.spacetime.handlers.ClientPacketHandler;
 import rekkyn.spacetime.handlers.EventHandler;
 import rekkyn.spacetime.handlers.ServerPacketHandler;
@@ -37,7 +38,9 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.network.NetworkMod.SidedPacketHandler;
 import cpw.mods.fml.common.network.NetworkRegistry;
+import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.common.registry.LanguageRegistry;
 
 @Mod(modid = Spacetime.modid, name = "Spacetime", version = "0.0")
 @NetworkMod(
@@ -109,6 +112,11 @@ public class Spacetime {
     @PreInit
     public void preInit(FMLPreInitializationEvent event) {
         proxy.registerStuffNJazz();
+        int entityID = EntityRegistry.findGlobalUniqueEntityId();
+        EntityRegistry.registerGlobalEntityID(EntityCrossbowBolt.class, "EntityCrossbowBolt",
+                entityID);
+        EntityRegistry.registerModEntity(EntityCrossbowBolt.class, "EntityCrossbowBolt", entityID, this, 128, 1, true);
+        LanguageRegistry.instance().addStringLocalization("entity.EntityCrossbowBolt.name", "Crossbow Bolt");
         
     }
     

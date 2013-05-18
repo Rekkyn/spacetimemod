@@ -213,18 +213,19 @@ public class TileSpacetimeInfuser extends TileEntity implements ISidedInventory 
     }
     
     @Override
-    public boolean func_102007_a(int slot, ItemStack item, int par3) {
+    public boolean canInsertItem(int slot, ItemStack item, int par3) {
         return this.isStackValidForSlot(slot, item);
     }
     
     @Override
-    public boolean func_102008_b(int par1, ItemStack par2ItemStack, int par3) {
+    public boolean canExtractItem(int par1, ItemStack par2ItemStack, int par3) {
         return par3 != 0 || par1 != 1 || par2ItemStack.itemID == Item.bucketEmpty.itemID;
     }
     
+
     @Override
-    public int[] getSizeInventorySide(int par1) {
-        return par1 == 0 ? side2 : par1 == 1 ? side1 : side3;
+    public int[] getAccessibleSlotsFromSide(int i) {
+        return i == 0 ? side2 : i == 1 ? side1 : side3;
     }
     
 }

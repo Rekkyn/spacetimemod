@@ -27,8 +27,8 @@ public class ItemSpacetimeHoe extends ItemHoe {
     }
     
     @Override
-    public void updateIcons(IconRegister iconRegister) {
-        iconIndex = iconRegister.registerIcon("Spacetime:spacetimeHoe");
+    public void registerIcons(IconRegister iconRegister) {
+        itemIcon = iconRegister.registerIcon("Spacetime:spacetimeHoe");
     }
     
     @Override

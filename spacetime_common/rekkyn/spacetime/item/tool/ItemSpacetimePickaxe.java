@@ -13,8 +13,8 @@ public class ItemSpacetimePickaxe extends ItemPickaxe {
     }
     
     @Override
-    public void updateIcons(IconRegister iconRegister) {
-        iconIndex = iconRegister.registerIcon("Spacetime:spacetimePick");
+    public void registerIcons(IconRegister iconRegister) {
+        itemIcon = iconRegister.registerIcon("Spacetime:spacetimePick");
     }
     
     @Override

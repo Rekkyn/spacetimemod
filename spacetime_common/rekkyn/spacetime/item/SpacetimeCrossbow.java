@@ -131,8 +131,8 @@ public class SpacetimeCrossbow extends ItemBow {
     
     @Override
     @SideOnly(Side.CLIENT)
-    public void updateIcons(IconRegister iconRegister) {
-        iconIndex = iconRegister.registerIcon("Spacetime:spacetimeCrossbow");
+    public void registerIcons(IconRegister iconRegister) {
+        itemIcon = iconRegister.registerIcon("Spacetime:spacetimeCrossbow");
     }
     
 }

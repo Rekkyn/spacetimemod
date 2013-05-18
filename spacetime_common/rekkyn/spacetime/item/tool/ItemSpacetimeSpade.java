@@ -13,8 +13,8 @@ public class ItemSpacetimeSpade extends ItemSpade {
     }
     
     @Override
-    public void updateIcons(IconRegister iconRegister) {
-        iconIndex = iconRegister.registerIcon("Spacetime:spacetimeShovel");
+    public void registerIcons(IconRegister iconRegister) {
+        itemIcon = iconRegister.registerIcon("Spacetime:spacetimeShovel");
     }
     
     @Override

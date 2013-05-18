@@ -13,8 +13,8 @@ public class ItemSpacetimeAxe extends ItemAxe {
     }
     
     @Override
-    public void updateIcons(IconRegister iconRegister) {
-        iconIndex = iconRegister.registerIcon("Spacetime:spacetimeAxe");
+    public void registerIcons(IconRegister iconRegister) {
+        itemIcon = iconRegister.registerIcon("Spacetime:spacetimeAxe");
     }
     
     @Override

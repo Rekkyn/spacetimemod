@@ -29,8 +29,8 @@ public class ItemSpacetimeSword extends ItemSword implements ISpacetimeCharge {
     }
     
     @Override
-    public void updateIcons(IconRegister iconRegister) {
-        iconIndex = iconRegister.registerIcon("Spacetime:spacetimeSword");
+    public void registerIcons(IconRegister iconRegister) {
+        itemIcon = iconRegister.registerIcon("Spacetime:spacetimeSword");
     }
     
     @Override

@@ -47,14 +47,13 @@ public class SpacetimeArmor extends ItemArmor implements IArmorTextureProvider, 
     public String getArmorTextureFile(ItemStack itemstack) {
         if (itemstack.getItem() == Spacetime.spacetimeLegs) { return "/mods/Spacetime/textures/armor/spacetime_2.png"; }
         return "/mods/Spacetime/textures/armor/spacetime_1.png";
-        
     }
     
     @Override
     @SideOnly(Side.CLIENT)
-    public void updateIcons(IconRegister iconRegister) {
+    public void registerIcons(IconRegister iconRegister) {
         
-        iconIndex = iconRegister.registerIcon("Spacetime:"
+        itemIcon = iconRegister.registerIcon("Spacetime:"
                 + this.getUnlocalizedName().substring(this.getUnlocalizedName().indexOf(".") + 1));
     }
     

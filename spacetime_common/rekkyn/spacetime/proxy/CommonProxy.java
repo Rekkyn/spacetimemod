@@ -19,10 +19,7 @@ import cpw.mods.fml.common.registry.LanguageRegistry;
 public class CommonProxy implements IGuiHandler {
     public void registerStuffNJazz() {
         
-        EntityRegistry.registerGlobalEntityID(EntityCrossbowBolt.class, "EntityCrossbowBolt",
-                EntityRegistry.findGlobalUniqueEntityId());
-        EntityRegistry.registerModEntity(EntityCrossbowBolt.class, "EntityCrossbowBolt", 1, this, 128, 1, true);
-        LanguageRegistry.instance().addStringLocalization("entity.CrossbowBolt.name", "Crossbow Bolt");
+        
     }
     
     @Override
