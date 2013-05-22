@@ -96,7 +96,7 @@ public class Spacetime {
             ModLoader.addArmor("SpacetimeArmor"), 3).setUnlocalizedName("spacetimeBoots");
     
     public static final SpacetimeCrossbow spacetimeCrossbow = (SpacetimeCrossbow) new SpacetimeCrossbow(1012)
-            .setUnlocalizedName("spacetimeBow").setFull3D();
+            .setUnlocalizedName("spacetimeBow")/*.setFull3D()*/;
     
     public static final Item obsidianShard = new GenericItem(1013, false).setUnlocalizedName("obsidianShard")
             .setCreativeTab(CreativeTabs.tabMaterials);

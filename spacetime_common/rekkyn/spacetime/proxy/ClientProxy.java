@@ -1,6 +1,9 @@
 package rekkyn.spacetime.proxy;
 
+import net.minecraftforge.client.MinecraftForgeClient;
+import rekkyn.spacetime.Spacetime;
 import rekkyn.spacetime.client.RenderCrossbowBolt;
+import rekkyn.spacetime.client.RenderItemCrossbow;
 import rekkyn.spacetime.entity.EntityCrossbowBolt;
 import rekkyn.spacetime.handlers.HUDHandler;
 import cpw.mods.fml.client.registry.RenderingRegistry;
@@ -12,6 +15,9 @@ public class ClientProxy extends CommonProxy {
     public void registerStuffNJazz() {
         TickRegistry.registerTickHandler(new HUDHandler(), Side.CLIENT);
         RenderingRegistry.registerEntityRenderingHandler(EntityCrossbowBolt.class, new RenderCrossbowBolt());
+        
+        MinecraftForgeClient.registerItemRenderer(Spacetime.spacetimeCrossbow.itemID, new RenderItemCrossbow());
+
     }
     
 }
