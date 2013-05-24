@@ -34,7 +34,7 @@ public class RenderCrossbowBolt extends Render {
         float f9 = (10 + b0 * 10) / 32.0F;
         float f10 = 0.05625F;
         GL11.glEnable(GL12.GL_RESCALE_NORMAL);
-        float f11 = entitybolt.arrowShake - par9;
+        float f11 = entitybolt.boltShake - par9;
         
         if (f11 > 0.0F) {
             float f12 = -MathHelper.sin(f11 * 3.0F) * f11;

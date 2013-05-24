@@ -111,17 +111,18 @@ public class Spacetime {
     
     @PreInit
     public void preInit(FMLPreInitializationEvent event) {
-        proxy.registerStuffNJazz();
+        
         int entityID = EntityRegistry.findGlobalUniqueEntityId();
         EntityRegistry.registerGlobalEntityID(EntityCrossbowBolt.class, "EntityCrossbowBolt",
                 entityID);
-        EntityRegistry.registerModEntity(EntityCrossbowBolt.class, "EntityCrossbowBolt", entityID, this, 128, 1, true);
+        EntityRegistry.registerModEntity(EntityCrossbowBolt.class, "EntityCrossbowBolt", entityID, Spacetime.instance, 128, 1, true);
         LanguageRegistry.instance().addStringLocalization("entity.EntityCrossbowBolt.name", "Crossbow Bolt");
-        
+
     }
     
     @Init
     public void load(FMLInitializationEvent event) {
+        proxy.registerStuffNJazz();
         proxy.registerTiles();
         proxy.registerBlocks();
         proxy.addNames();

@@ -10,6 +10,7 @@ import net.minecraft.entity.IProjectile;
 import net.minecraft.entity.monster.EntityEnderman;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.packet.Packet70GameEvent;
 import net.minecraft.util.AxisAlignedBB;
@@ -19,10 +20,11 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import rekkyn.spacetime.particles.ParticleEffects;
+import cpw.mods.fml.common.registry.IThrowableEntity;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class EntityCrossbowBolt extends Entity implements IProjectile {
+public class EntityCrossbowBolt extends EntityArrow implements IProjectile, IThrowableEntity {
     private int xTile = -1;
     private int yTile = -1;
     private int zTile = -1;
@@ -31,7 +33,7 @@ public class EntityCrossbowBolt extends Entity implements IProjectile {
     private boolean inGround = false;
     
     /** Seems to be some sort of timer for animating an arrow. */
-    public int arrowShake = 0;
+    public int boltShake = 0;
     
     /** The owner of this arrow. */
     public Entity shootingEntity;
@@ -168,7 +170,7 @@ public class EntityCrossbowBolt extends Entity implements IProjectile {
      */
     @Override
     public void onUpdate() {
-        super.onUpdate();
+        super.onEntityUpdate();
         
         if (prevRotationPitch == 0.0F && prevRotationYaw == 0.0F) {
             float f = MathHelper.sqrt_double(motionX * motionX + motionZ * motionZ);
@@ -189,8 +191,8 @@ public class EntityCrossbowBolt extends Entity implements IProjectile {
             }
         }
         
-        if (arrowShake > 0) {
-            --arrowShake;
+        if (boltShake > 0) {
+            --boltShake;
         }
         
         if (inGround) {
@@ -200,6 +202,15 @@ public class EntityCrossbowBolt extends Entity implements IProjectile {
             
             if (j == inTile && k == inData) {
                 ++ticksInGround;
+                
+                if (ticksInGround == 1) {
+                    for (int lmnop = 0; lmnop < 16; lmnop++) {
+                        float xVel = (rand.nextFloat() - 0.5F ) * 5;
+                        float yVel = (rand.nextFloat() - 0.5F ) * 5;
+                        float zVel = (rand.nextFloat() - 0.5F ) * 5;
+                        worldObj.spawnParticle("smoke", posX, posY, posZ, xVel, yVel, zVel);
+                    }
+                }
                 
                 if (ticksInGround == 1200) {
                     this.setDead();
@@ -351,7 +362,7 @@ public class EntityCrossbowBolt extends Entity implements IProjectile {
                     posZ -= motionZ / f2 * 0.05000000074505806D;
                     this.playSound("random.bowhit", 1.0F, 1.2F / (rand.nextFloat() * 0.2F + 0.9F));
                     inGround = true;
-                    arrowShake = 7;
+                    boltShake = 7;
                     
                     if (inTile != 0) {
                         Block.blocksList[inTile].onEntityCollidedWithBlock(worldObj, xTile, yTile, zTile, this);
@@ -393,11 +404,14 @@ public class EntityCrossbowBolt extends Entity implements IProjectile {
                 }
             }
             
-            for (int lmnop = 0; lmnop < 50; lmnop++) {
-                float rand1 = (rand.nextFloat() - 0.5F) * 2;
-                System.out.println(motionX);
-                ParticleEffects.spawnParticle("crossbowTrail", posX + motionX * l / 4.0D, posY + motionY * l / 4.0D,
-                        posZ + motionZ * l / 4.0D, -motionX * rand1, -motionY * rand1, -motionZ * rand1);
+            if (!worldObj.isRemote) {
+                for (int lmnop = 0; lmnop < 50; lmnop++) {
+                    float rand1 = (rand.nextFloat() - 0.5F) * 2;
+                    System.out.println(motionX);
+                    ParticleEffects.spawnParticle("crossbowTrail", posX + motionX * l / 4.0D,
+                            posY + motionY * l / 4.0D, posZ + motionZ * l / 4.0D, -motionX * rand1, -motionY * rand1,
+                            -motionZ * rand1);
+                }
             }
             
             this.setPosition(posX, posY, posZ);
@@ -415,7 +429,7 @@ public class EntityCrossbowBolt extends Entity implements IProjectile {
         tagcompound.setShort("zTile", (short) zTile);
         tagcompound.setByte("inTile", (byte) inTile);
         tagcompound.setByte("inData", (byte) inData);
-        tagcompound.setByte("shake", (byte) arrowShake);
+        tagcompound.setByte("shake", (byte) boltShake);
         tagcompound.setByte("inGround", (byte) (inGround ? 1 : 0));
         tagcompound.setDouble("damage", damage);
     }
@@ -430,7 +444,7 @@ public class EntityCrossbowBolt extends Entity implements IProjectile {
         zTile = tagcompound.getShort("zTile");
         inTile = tagcompound.getByte("inTile") & 255;
         inData = tagcompound.getByte("inData") & 255;
-        arrowShake = tagcompound.getByte("shake") & 255;
+        boltShake = tagcompound.getByte("shake") & 255;
         inGround = tagcompound.getByte("inGround") == 1;
         
         if (tagcompound.hasKey("damage")) {
@@ -453,10 +467,12 @@ public class EntityCrossbowBolt extends Entity implements IProjectile {
         return 0.0F;
     }
     
+    //@Override
     public void setDamage(double damage) {
         this.damage = damage;
     }
     
+    //@Override
     public double getDamage() {
         return damage;
     }
@@ -464,6 +480,7 @@ public class EntityCrossbowBolt extends Entity implements IProjectile {
     /**
      * Sets the amount of knockback the arrow applies when it hits a mob.
      */
+    //@Override
     public void setKnockbackStrength(int knockbackStrength) {
         this.knockbackStrength = knockbackStrength;
     }
@@ -475,4 +492,15 @@ public class EntityCrossbowBolt extends Entity implements IProjectile {
     public boolean canAttackWithItem() {
         return false;
     }
+    
+    @Override
+    public Entity getThrower() {
+        return shootingEntity;
+    }
+    
+    @Override
+    public void setThrower(Entity entity) {
+        shootingEntity = entity;
+    }
+    
 }
