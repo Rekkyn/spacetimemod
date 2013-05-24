@@ -15,6 +15,8 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.world.World;
 import rekkyn.spacetime.Spacetime;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemSpacetimeHoe extends ItemHoe {
     
@@ -107,6 +109,12 @@ public class ItemSpacetimeHoe extends ItemHoe {
         
         player.setItemInUse(item, this.getMaxItemUseDuration(item));
         return item;
+    }
+    
+    @Override
+    @SideOnly(Side.CLIENT)
+    public boolean isFull3D() {
+        return false;
     }
     
 }

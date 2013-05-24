@@ -1,22 +1,30 @@
 package rekkyn.spacetime.item;
 
+import java.util.List;
+
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemBow;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.ArrowLooseEvent;
 import net.minecraftforge.event.entity.player.ArrowNockEvent;
 import rekkyn.spacetime.Spacetime;
 import rekkyn.spacetime.entity.EntityCrossbowBolt;
+import rekkyn.spacetime.handlers.SpacetimeChargeHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class SpacetimeCrossbow extends ItemBow {
+public class SpacetimeCrossbow extends ItemBow implements ISpacetimeCharge {
+    
+    public static final int spacetimeMaxCharge = 100;
+    public static final int useAmount = 700;
     
     public SpacetimeCrossbow(int id) {
         super(id);
@@ -77,6 +85,7 @@ public class SpacetimeCrossbow extends ItemBow {
             if (!world.isRemote) {
                 world.spawnEntityInWorld(entitybolt);
             }
+            SpacetimeChargeHandler.subChargeFromTotal(player, useAmount);
         }
     }
     
@@ -107,17 +116,18 @@ public class SpacetimeCrossbow extends ItemBow {
      * pressed. Args: itemStack, world, entityPlayer
      */
     @Override
-    public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer) {
-        ArrowNockEvent event = new ArrowNockEvent(par3EntityPlayer, par1ItemStack);
-        MinecraftForge.EVENT_BUS.post(event);
-        if (event.isCanceled()) { return event.result; }
-        
-        if (par3EntityPlayer.capabilities.isCreativeMode
-                || par3EntityPlayer.inventory.hasItem(Spacetime.crossbowBolt.itemID)) {
-            par3EntityPlayer.setItemInUse(par1ItemStack, this.getMaxItemUseDuration(par1ItemStack));
+    public ItemStack onItemRightClick(ItemStack item, World world, EntityPlayer player) {
+        if (SpacetimeChargeHandler.getCurrentCharge(player) >= useAmount) {
+            ArrowNockEvent event = new ArrowNockEvent(player, item);
+            MinecraftForge.EVENT_BUS.post(event);
+            if (event.isCanceled()) { return event.result; }
+            
+            if (player.capabilities.isCreativeMode || player.inventory.hasItem(Spacetime.crossbowBolt.itemID)) {
+                player.setItemInUse(item, this.getMaxItemUseDuration(item));
+            }
         }
         
-        return par1ItemStack;
+        return item;
     }
     
     /**
@@ -133,6 +143,62 @@ public class SpacetimeCrossbow extends ItemBow {
     @SideOnly(Side.CLIENT)
     public void registerIcons(IconRegister iconRegister) {
         itemIcon = iconRegister.registerIcon("Spacetime:spacetimeCrossbow");
+    }
+    
+    @Override
+    public void onUpdate(ItemStack itemstack, World world, Entity player, int par4, boolean par5) {
+        changeCharge(itemstack, 1);
+    }
+
+    
+    @Override
+    public boolean changeCharge(ItemStack itemstack, int x) {
+        
+        int spacetimeCharge = getSpacetimeCharge(itemstack);
+        if (spacetimeCharge + x < 0) { return false; }
+        spacetimeCharge += x;
+        if (spacetimeCharge > spacetimeMaxCharge) {
+            spacetimeCharge = spacetimeMaxCharge;
+        }
+        itemstack.stackTagCompound.setInteger("SpacetimeCharge", spacetimeCharge);
+        return true;
+    }
+    
+    @Override
+    public int getSpacetimeCharge(ItemStack itemstack) {
+        if (itemstack.stackTagCompound == null) {
+            itemstack.setTagCompound(new NBTTagCompound());
+            itemstack.stackTagCompound.setInteger("SpacetimeCharge", spacetimeMaxCharge);
+        }
+        return itemstack.stackTagCompound.getInteger("SpacetimeCharge");
+    }
+    
+    @Override
+    public int getSpacetimeMaxCharge() {
+        return spacetimeMaxCharge;
+    }
+    
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void addInformation(ItemStack itemstack, EntityPlayer player, List list, boolean par4) {
+        list.add(getSpacetimeCharge(itemstack) + "/" + spacetimeMaxCharge);
+    }
+    
+    @Override
+    public int subtractToZero(ItemStack itemstack, int amount) {
+        if (amount <= getSpacetimeCharge(itemstack)) {
+            changeCharge(itemstack, -amount);
+            return amount;
+        } else {
+            int amountSubtracted = getSpacetimeCharge(itemstack);
+            changeCharge(itemstack, -getSpacetimeCharge(itemstack));
+            return amountSubtracted;
+        }
+    }
+    
+    @Override
+    public int getUseAmount() {
+        return useAmount;
     }
     
 }

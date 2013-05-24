@@ -25,7 +25,6 @@ public class ItemSpacetimeSword extends ItemSword implements ISpacetimeCharge {
     
     public ItemSpacetimeSword(int id, EnumToolMaterial material) {
         super(id, material);
-        int spacetimeCharge = spacetimeMaxCharge;
     }
     
     @Override
@@ -55,7 +54,12 @@ public class ItemSpacetimeSword extends ItemSword implements ISpacetimeCharge {
                 double d5 = world.rand.nextFloat() * 2.0F * randz;
                 
                 ParticleEffects.spawnParticle("blue", d0, d1, d2, d3, d4, d5);
-                world.spawnParticle("smoke", d0, d1, d2, d3, d4, d5);
+                
+                    float xVel = (world.rand.nextFloat() - 0.5F) * 5;
+                    float yVel = (world.rand.nextFloat() - 0.5F) * 5;
+                    float zVel = (world.rand.nextFloat() - 0.5F) * 5;
+                    ParticleEffects.spawnParticle("crossbowTrail", player.posX, player.posY, player.posZ, xVel, yVel, zVel);
+                
                 if (l % 4 == 0) {
                     ParticleEffects.spawnParticle("orange", d0, d1, d2, d3, d4, d5);
                 }
