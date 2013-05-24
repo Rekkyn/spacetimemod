@@ -203,12 +203,12 @@ public class EntityCrossbowBolt extends EntityArrow implements IProjectile, IThr
             if (j == inTile && k == inData) {
                 ++ticksInGround;
                 
-                if (ticksInGround == 1) {
-                    for (int lmnop = 0; lmnop < 16; lmnop++) {
-                        float xVel = (rand.nextFloat() - 0.5F ) * 5;
-                        float yVel = (rand.nextFloat() - 0.5F ) * 5;
-                        float zVel = (rand.nextFloat() - 0.5F ) * 5;
-                        worldObj.spawnParticle("smoke", posX, posY, posZ, xVel, yVel, zVel);
+                if (ticksInGround == 1 && ticksExisted > 1) {
+                    for (int lmnop = 0; lmnop < 64; lmnop++) {
+                        float xVel = (rand.nextFloat() - 0.5F) * 5;
+                        float yVel = (rand.nextFloat() - 0.5F) * 5;
+                        float zVel = (rand.nextFloat() - 0.5F) * 5;
+                        ParticleEffects.spawnParticle("crossbowTrail", posX, posY, posZ, xVel, yVel, zVel);
                     }
                 }
                 
@@ -226,10 +226,22 @@ public class EntityCrossbowBolt extends EntityArrow implements IProjectile, IThr
         } else {
             ++ticksInAir;
             if (ticksInAir == 1200) {
+                for (int lmnop = 0; lmnop < 64; lmnop++) {
+                    float xVel = (rand.nextFloat() - 0.5F) * 5;
+                    float yVel = (rand.nextFloat() - 0.5F) * 5;
+                    float zVel = (rand.nextFloat() - 0.5F) * 5;
+                    ParticleEffects.spawnParticle("crossbowTrail", posX, posY, posZ, xVel, yVel, zVel);
+                }
                 this.setDead();
             }
             
             if (posY >= 512) {
+                for (int lmnop = 0; lmnop < 64; lmnop++) {
+                    float xVel = (rand.nextFloat() - 0.5F) * 5;
+                    float yVel = (rand.nextFloat() - 0.5F) * 5;
+                    float zVel = (rand.nextFloat() - 0.5F) * 5;
+                    ParticleEffects.spawnParticle("crossbowTrail", posX, posY, posZ, xVel, yVel, zVel);
+                }
                 this.setDead();
             }
             
@@ -337,6 +349,14 @@ public class EntityCrossbowBolt extends EntityArrow implements IProjectile, IThr
                         this.playSound("random.bowhit", 1.0F, 1.2F / (rand.nextFloat() * 0.2F + 0.9F));
                         
                         if (!(movingobjectposition.entityHit instanceof EntityEnderman)) {
+                            for (int lmnop = 0; lmnop < 64; lmnop++) {
+                                float xVel = (rand.nextFloat() - 0.5F) * 5;
+                                float yVel = (rand.nextFloat() - 0.5F) * 5;
+                                float zVel = (rand.nextFloat() - 0.5F) * 5;
+                                ParticleEffects.spawnParticle("crossbowTrail", movingobjectposition.entityHit.posX,
+                                        movingobjectposition.entityHit.posY, movingobjectposition.entityHit.posZ, xVel,
+                                        yVel, zVel);
+                            }
                             this.setDead();
                         }
                     } else {
@@ -467,12 +487,14 @@ public class EntityCrossbowBolt extends EntityArrow implements IProjectile, IThr
         return 0.0F;
     }
     
-    //@Override
+    // @Override
+    @Override
     public void setDamage(double damage) {
         this.damage = damage;
     }
     
-    //@Override
+    // @Override
+    @Override
     public double getDamage() {
         return damage;
     }
@@ -480,7 +502,8 @@ public class EntityCrossbowBolt extends EntityArrow implements IProjectile, IThr
     /**
      * Sets the amount of knockback the arrow applies when it hits a mob.
      */
-    //@Override
+    // @Override
+    @Override
     public void setKnockbackStrength(int knockbackStrength) {
         this.knockbackStrength = knockbackStrength;
     }
