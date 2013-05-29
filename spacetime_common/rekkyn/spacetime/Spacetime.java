@@ -87,13 +87,13 @@ public class Spacetime {
             .setUnlocalizedName("spacetimeHoe");
     
     public static final Item spacetimeHelmet = new SpacetimeArmor(1008, spacetimeArmorMaterial,
-            ModLoader.addArmor("SpacetimeArmor"), 0).setUnlocalizedName("spacetimeHelmet");
+            0, 0).setUnlocalizedName("spacetimeHelmet");
     public static final Item spacetimeChest = new SpacetimeArmor(1009, spacetimeArmorMaterial,
-            ModLoader.addArmor("SpacetimeArmor"), 1).setUnlocalizedName("spacetimeChest");
+            0, 1).setUnlocalizedName("spacetimeChest");
     public static final Item spacetimeLegs = new SpacetimeArmor(1010, spacetimeArmorMaterial,
-            ModLoader.addArmor("SpacetimeArmor"), 2).setUnlocalizedName("spacetimeLegs");
+            0, 2).setUnlocalizedName("spacetimeLegs");
     public static final Item spacetimeBoots = new SpacetimeArmor(1011, spacetimeArmorMaterial,
-            ModLoader.addArmor("SpacetimeArmor"), 3).setUnlocalizedName("spacetimeBoots");
+            0, 3).setUnlocalizedName("spacetimeBoots");
     
     public static final SpacetimeCrossbow spacetimeCrossbow = (SpacetimeCrossbow) new SpacetimeCrossbow(1012)
             .setUnlocalizedName("spacetimeBow")/*.setFull3D()*/;

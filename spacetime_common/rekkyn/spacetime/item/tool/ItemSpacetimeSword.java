@@ -53,7 +53,9 @@ public class ItemSpacetimeSword extends ItemSword implements ISpacetimeCharge {
                 double d2 = player.posZ + 0.5D + 0.25D * randz;
                 double d5 = world.rand.nextFloat() * 2.0F * randz;
                 
+                if (world.isRemote) {
                 ParticleEffects.spawnParticle("blue", d0, d1, d2, d3, d4, d5);
+                
                 
                     float xVel = (world.rand.nextFloat() - 0.5F) * 5;
                     float yVel = (world.rand.nextFloat() - 0.5F) * 5;
@@ -62,6 +64,7 @@ public class ItemSpacetimeSword extends ItemSword implements ISpacetimeCharge {
                 
                 if (l % 4 == 0) {
                     ParticleEffects.spawnParticle("orange", d0, d1, d2, d3, d4, d5);
+                }
                 }
                 
             }
