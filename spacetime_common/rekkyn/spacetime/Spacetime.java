@@ -12,9 +12,7 @@ import rekkyn.spacetime.block.BlockRekkynite;
 import rekkyn.spacetime.block.BlockSpacetimeInfuser;
 import rekkyn.spacetime.block.BlockSpacetimeOre;
 import rekkyn.spacetime.entity.EntityCrossbowBolt;
-import rekkyn.spacetime.handlers.ClientPacketHandler;
 import rekkyn.spacetime.handlers.EventHandler;
-import rekkyn.spacetime.handlers.ServerPacketHandler;
 import rekkyn.spacetime.item.GenericItem;
 import rekkyn.spacetime.item.ItemSpacetimeFluctuation;
 import rekkyn.spacetime.item.SpacetimeArmor;
@@ -24,6 +22,7 @@ import rekkyn.spacetime.item.tool.ItemSpacetimeHoe;
 import rekkyn.spacetime.item.tool.ItemSpacetimePickaxe;
 import rekkyn.spacetime.item.tool.ItemSpacetimeSpade;
 import rekkyn.spacetime.item.tool.ItemSpacetimeSword;
+import rekkyn.spacetime.packets.PacketHandler;
 import rekkyn.spacetime.proxy.CommonProxy;
 import rekkyn.spacetime.world.SpacetimeWorldGen;
 import cpw.mods.fml.common.Mod;
@@ -42,12 +41,10 @@ import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
+import rekkyn.spacetime.packets.SpacetimePacket;
+
 @Mod(modid = Spacetime.modid, name = "Spacetime", version = "0.0")
-@NetworkMod(
-        clientSideRequired = true, serverSideRequired = false, clientPacketHandlerSpec = @SidedPacketHandler(
-                channels = { "Spacetime" }, packetHandler = ClientPacketHandler.class),
-        serverPacketHandlerSpec = @SidedPacketHandler(
-                channels = { "Spacetime" }, packetHandler = ServerPacketHandler.class))
+@NetworkMod(channels = { SpacetimePacket.CHANNEL }, clientSideRequired = true, serverSideRequired = false, packetHandler = PacketHandler.class)
 public class Spacetime {
     
     public static final String modid = "Spacetime";

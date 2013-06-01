@@ -19,7 +19,10 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
+import rekkyn.spacetime.packets.ParticlePacket;
+import rekkyn.spacetime.packets.TestPacket;
 import rekkyn.spacetime.particles.ParticleEffects;
+import cpw.mods.fml.common.network.PacketDispatcher;
 import cpw.mods.fml.common.registry.IThrowableEntity;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -342,8 +345,21 @@ public class EntityCrossbowBolt extends EntityArrow implements IProjectile, IThr
                         this.playSound("random.bowhit", 1.0F, 1.2F / (rand.nextFloat() * 0.2F + 0.9F));
                         
                         if (!(movingobjectposition.entityHit instanceof EntityEnderman)) {
-                                particleHit(movingobjectposition.entityHit.posX, movingobjectposition.entityHit.posY,
-                                        movingobjectposition.entityHit.posZ);
+                            double x = movingobjectposition.entityHit.posX;
+                            double y = movingobjectposition.entityHit.posY;
+                            double z = movingobjectposition.entityHit.posZ;
+                            
+                            for (int lmnop = 0; lmnop < 64; lmnop++) {
+                                float xVel = (rand.nextFloat() - 0.5F) * 5;
+                                float yVel = (rand.nextFloat() - 0.5F) * 5;
+                                float zVel = (rand.nextFloat() - 0.5F) * 5;
+                                
+                                // Spacetime.proxy.crossbowHit(x, y, z);
+                                PacketDispatcher.sendPacketToAllAround(x, y, z, 64D,
+                                        movingobjectposition.entityHit.worldObj.provider.dimensionId,
+                                        new ParticlePacket("crossbowTrail", posX, posY, posZ, xVel, yVel, zVel)
+                                                .makePacket());
+                            }
                             this.setDead();
                         }
                     } else {
@@ -375,6 +391,7 @@ public class EntityCrossbowBolt extends EntityArrow implements IProjectile, IThr
                         Block.blocksList[inTile].onEntityCollidedWithBlock(worldObj, xTile, yTile, zTile, this);
                     }
                 }
+                
             }
             
             posX += motionX;
@@ -414,11 +431,20 @@ public class EntityCrossbowBolt extends EntityArrow implements IProjectile, IThr
             if (worldObj.isRemote) {
                 for (int lmnop = 0; lmnop < 50; lmnop++) {
                     float rand1 = (rand.nextFloat() - 0.5F) * 2;
-                    ParticleEffects.spawnParticle("crossbowTrail", posX + motionX * l / 4.0D,
-                            posY + motionY * l / 4.0D, posZ + motionZ * l / 4.0D, -motionX * rand1, -motionY * rand1,
-                            -motionZ * rand1);
+                    // ParticleEffects.spawnParticle("crossbowTrail", posX +
+                    // motionX * l / 4.0D,
+                    // posY + motionY * l / 4.0D, posZ + motionZ * l / 4.0D,
+                    // -motionX * rand1, -motionY * rand1,
+                    // -motionZ * rand1);
+                    
+                    PacketDispatcher.sendPacketToAllAround(posX, posY, posZ, 64D, worldObj.provider.dimensionId,
+                            new ParticlePacket("crossbowTrail", posX + motionX * l / 4.0D, posY + motionY * l / 4.0D,
+                                    posZ + motionZ * l / 4.0D, -motionX * rand1, -motionY * rand1, -motionZ * rand1)
+                                    .makePacket());
+                    
                 }
             }
+            
             
             this.setPosition(posX, posY, posZ);
             this.doBlockCollisions();
