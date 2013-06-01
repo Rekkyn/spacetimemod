@@ -14,12 +14,13 @@ import cpw.mods.fml.relauncher.Side;
 public class ClientProxy extends CommonProxy {
     @Override
     public void registerStuffNJazz() {
+        super.registerStuffNJazz();
         TickRegistry.registerTickHandler(new HUDHandler(), Side.CLIENT);
         RenderingRegistry.registerEntityRenderingHandler(EntityCrossbowBolt.class, new RenderCrossbowBolt());
         
         MinecraftForgeClient.registerItemRenderer(Spacetime.spacetimeCrossbow.itemID, new RenderItemCrossbow());
         MinecraftForgeClient.registerItemRenderer(Spacetime.spacetimeHoe.itemID, new RenderItemHoe());
-
+        
     }
     
 }

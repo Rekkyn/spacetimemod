@@ -4,22 +4,36 @@ import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.WeightedRandomChestContent;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ChestGenHooks;
 import net.minecraftforge.common.MinecraftForge;
 import rekkyn.spacetime.Spacetime;
-import rekkyn.spacetime.entity.EntityCrossbowBolt;
 import rekkyn.spacetime.inventory.ContainerSpacetimeInfuser;
 import rekkyn.spacetime.inventory.GuiSpacetimeInfuser;
 import rekkyn.spacetime.inventory.TileSpacetimeInfuser;
 import cpw.mods.fml.common.network.IGuiHandler;
-import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
 public class CommonProxy implements IGuiHandler {
     public void registerStuffNJazz() {
-        
-        
+        ChestGenHooks.getInfo(ChestGenHooks.DUNGEON_CHEST).addItem(
+                new WeightedRandomChestContent(new ItemStack(Spacetime.spacetimeFluctuation), 1, 1, 50));
+        ChestGenHooks.getInfo(ChestGenHooks.MINESHAFT_CORRIDOR).addItem(
+                new WeightedRandomChestContent(new ItemStack(Spacetime.spacetimeFluctuation), 1, 1, 3));
+        ChestGenHooks.getInfo(ChestGenHooks.PYRAMID_DESERT_CHEST).addItem(
+                new WeightedRandomChestContent(new ItemStack(Spacetime.spacetimeFluctuation), 1, 1, 3));
+        ChestGenHooks.getInfo(ChestGenHooks.PYRAMID_JUNGLE_CHEST).addItem(
+                new WeightedRandomChestContent(new ItemStack(Spacetime.spacetimeFluctuation), 1, 1, 3));
+        ChestGenHooks.getInfo(ChestGenHooks.STRONGHOLD_CORRIDOR).addItem(
+                new WeightedRandomChestContent(new ItemStack(Spacetime.spacetimeFluctuation), 1, 1, 6));
+        ChestGenHooks.getInfo(ChestGenHooks.STRONGHOLD_LIBRARY).addItem(
+                new WeightedRandomChestContent(new ItemStack(Spacetime.spacetimeFluctuation), 1, 1, 5));
+        ChestGenHooks.getInfo(ChestGenHooks.STRONGHOLD_CROSSING).addItem(
+                new WeightedRandomChestContent(new ItemStack(Spacetime.spacetimeFluctuation), 1, 1, 6));
+        ChestGenHooks.getInfo(ChestGenHooks.VILLAGE_BLACKSMITH).addItem(
+                new WeightedRandomChestContent(new ItemStack(Spacetime.spacetimeFluctuation), 1, 1, 3));
     }
     
     @Override
