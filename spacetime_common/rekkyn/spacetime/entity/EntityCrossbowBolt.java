@@ -354,10 +354,9 @@ public class EntityCrossbowBolt extends EntityArrow implements IProjectile, IThr
                                 float yVel = (rand.nextFloat() - 0.5F) * 5;
                                 float zVel = (rand.nextFloat() - 0.5F) * 5;
                                 
-                                // Spacetime.proxy.crossbowHit(x, y, z);
                                 PacketDispatcher.sendPacketToAllAround(x, y, z, 64D,
                                         movingobjectposition.entityHit.worldObj.provider.dimensionId,
-                                        new ParticlePacket("crossbowTrail", posX, posY, posZ, xVel, yVel, zVel)
+                                        new ParticlePacket("crossbowTrail", x, y, z, xVel, yVel, zVel)
                                                 .makePacket());
                             }
                             this.setDead();
@@ -428,14 +427,9 @@ public class EntityCrossbowBolt extends EntityArrow implements IProjectile, IThr
                 }
             }
             
-            if (worldObj.isRemote) {
+            if (!worldObj.isRemote) {
                 for (int lmnop = 0; lmnop < 50; lmnop++) {
                     float rand1 = (rand.nextFloat() - 0.5F) * 2;
-                    // ParticleEffects.spawnParticle("crossbowTrail", posX +
-                    // motionX * l / 4.0D,
-                    // posY + motionY * l / 4.0D, posZ + motionZ * l / 4.0D,
-                    // -motionX * rand1, -motionY * rand1,
-                    // -motionZ * rand1);
                     
                     PacketDispatcher.sendPacketToAllAround(posX, posY, posZ, 64D, worldObj.provider.dimensionId,
                             new ParticlePacket("crossbowTrail", posX + motionX * l / 4.0D, posY + motionY * l / 4.0D,

@@ -14,14 +14,13 @@ import cpw.mods.fml.relauncher.Side;
 
 public abstract class SpacetimePacket {
 
-        public static final String CHANNEL = "demomod";
+        public static final String CHANNEL = "Spacetime";
         private static final BiMap<Integer, Class<? extends SpacetimePacket>> idMap;
                 
         static {
                 ImmutableBiMap.Builder<Integer, Class<? extends SpacetimePacket>> builder = ImmutableBiMap.builder();
                 
                 builder.put(Integer.valueOf(0), ParticlePacket.class);
-                // more packets like this:
                 builder.put(Integer.valueOf(1), TestPacket.class);
                 // builder.put(Integer.valueOf(2), YetAnotherPacket.class);
                 
