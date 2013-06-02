@@ -1,10 +1,12 @@
 package rekkyn.spacetime.item;
 
+import cpw.mods.fml.common.network.PacketDispatcher;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
+import rekkyn.spacetime.packets.ParticlePacket;
 import rekkyn.spacetime.particles.ParticleEffects;
 
 public class SpacetimeFluctuationEntity extends EntityItem {
@@ -48,9 +50,12 @@ public class SpacetimeFluctuationEntity extends EntityItem {
             double d2 = posZ + 0.5D + 0.25D * randz;
             double d5 = rand.nextFloat() * 2.0F * randz;
             
-            ParticleEffects.spawnParticle("blue", d0, d1, d2, d3, d4, d5);
+            PacketDispatcher.sendPacketToAllAround(posX, posY, posZ, 64D, worldObj.provider.dimensionId, new ParticlePacket("blue",
+                    d0, d1, d2, d3, d4, d5).makePacket());
+            
             if (l % 4 == 0) {
-                ParticleEffects.spawnParticle("orange", d0, d1, d2, d3, d4, d5);
+                PacketDispatcher.sendPacketToAllAround(posX, posY, posZ, 64D, worldObj.provider.dimensionId, new ParticlePacket(
+                        "orange", d0, d1, d2, d3, d4, d5).makePacket());
             }
             
         }

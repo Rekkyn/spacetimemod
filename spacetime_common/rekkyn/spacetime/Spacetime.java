@@ -101,7 +101,7 @@ public class Spacetime {
             .setCreativeTab(CreativeTabs.tabCombat);
     
     public static final Item spacetimeJar = new ItemSpacetimeJar(1015).setUnlocalizedName("spacetimeJar")
-            .setCreativeTab(CreativeTabs.tabMisc);
+            .setCreativeTab(CreativeTabs.tabMisc).setMaxStackSize(1);
     
     @Instance("Spacetime")
     public static Spacetime instance;

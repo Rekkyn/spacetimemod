@@ -10,7 +10,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
-import rekkyn.spacetime.particles.ParticleEffects;
+import rekkyn.spacetime.packets.ParticlePacket;
+import cpw.mods.fml.common.network.PacketDispatcher;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -47,20 +48,9 @@ public class ItemSpacetimeFluctuation extends Item {
                     world.addWeatherEffect(new EntityLightningBolt(world, randX, randY, randZ));
                 }
             }
-            
-            /*
-             * if (entity instanceof EntityPlayer) { EntityPlayer player =
-             * (EntityPlayer) entity; if (rand.nextInt(10) == 0) { if
-             * (world.getBlockId(randX, randY, randZ) == 0 &&
-             * world.getBlockId(randX, randY + 1, randZ) == 0) { boolean safe =
-             * false; for (int i = 1; i < 4; i++) { if (world.getBlockId(randZ,
-             * randY - i, randZ) != 0) { safe = true; } } if (safe) {
-             * player.setPositionAndUpdate(randX, randY, randZ);
-             * System.out.println("Teleport!"); } } } }
-             */
         }
         
-        for (int l = 0; l < 4; ++l) {
+        for (int l = 0; l < 8; ++l) {
             double d1 = y + rand.nextFloat();
             int randx = rand.nextInt(2) * 2 - 1;
             int randz = rand.nextInt(2) * 2 - 1;
@@ -71,9 +61,12 @@ public class ItemSpacetimeFluctuation extends Item {
             double d2 = z + 0.5D + 0.25D * randz;
             double d5 = rand.nextFloat() * 2.0F * randz;
             
-            ParticleEffects.spawnParticle("blue", d0, d1, d2, d3, d4, d5);
+            PacketDispatcher.sendPacketToAllAround(x, y, z, 64D, world.provider.dimensionId, new ParticlePacket("blue",
+                    d0, d1, d2, d3, d4, d5).makePacket());
+            
             if (l % 4 == 0) {
-                ParticleEffects.spawnParticle("orange", d0, d1, d2, d3, d4, d5);
+                PacketDispatcher.sendPacketToAllAround(x, y, z, 64D, world.provider.dimensionId, new ParticlePacket(
+                        "orange", d0, d1, d2, d3, d4, d5).makePacket());
             }
             
         }
