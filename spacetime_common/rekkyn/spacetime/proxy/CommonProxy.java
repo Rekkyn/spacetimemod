@@ -93,6 +93,8 @@ public class CommonProxy implements IGuiHandler {
         LanguageRegistry.addName(Spacetime.spacetimeCrossbow, "\u00a79Spacetime Crossbow");
         LanguageRegistry.addName(Spacetime.obsidianShard, "Obsidian Shard");
         LanguageRegistry.addName(Spacetime.crossbowBolt, "Crossbow Bolt");
+        LanguageRegistry.instance().addStringLocalization("item.spacetimeJar.name", "Spacetime Jar");
+        LanguageRegistry.instance().addStringLocalization("item.spacetimeJar.full.name", "Spacetime Jar");
         
     }
     
@@ -136,6 +138,9 @@ public class CommonProxy implements IGuiHandler {
         
         GameRegistry.addRecipe(rekkynHead, new Object[] { "xxx", "xFx", "xxx", Character.valueOf('x'),
                 Item.rottenFlesh, Character.valueOf('F'), Spacetime.spacetimeFluctuation });
+        
+        GameRegistry.addShapelessRecipe(new ItemStack(Spacetime.spacetimeJar, 1, 1), Spacetime.spacetimeFluctuation,
+                Spacetime.spacetimeJar);
         
     }
 }

@@ -102,7 +102,14 @@ public class ItemSpacetimeFluctuation extends Item {
     
     @Override
     public Entity createEntity(World world, Entity location, ItemStack itemstack) {
-        return new SpacetimeFluctuationEntity(world, location.posX, location.posY, location.posZ, itemstack);
+        SpacetimeFluctuationEntity entityitem = new SpacetimeFluctuationEntity(world, location.posX, location.posY,
+                location.posZ, itemstack);
+        
+        entityitem.motionX = location.motionX;
+        entityitem.motionY = location.motionY;
+        entityitem.motionZ = location.motionZ;
+        
+        return entityitem;
     }
     
 }

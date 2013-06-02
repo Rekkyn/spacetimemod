@@ -5,7 +5,6 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.EnumArmorMaterial;
 import net.minecraft.item.EnumToolMaterial;
 import net.minecraft.item.Item;
-import net.minecraft.src.ModLoader;
 import net.minecraftforge.common.EnumHelper;
 import net.minecraftforge.common.MinecraftForge;
 import rekkyn.spacetime.block.BlockRekkynite;
@@ -15,6 +14,7 @@ import rekkyn.spacetime.entity.EntityCrossbowBolt;
 import rekkyn.spacetime.handlers.EventHandler;
 import rekkyn.spacetime.item.GenericItem;
 import rekkyn.spacetime.item.ItemSpacetimeFluctuation;
+import rekkyn.spacetime.item.ItemSpacetimeJar;
 import rekkyn.spacetime.item.SpacetimeArmor;
 import rekkyn.spacetime.item.SpacetimeCrossbow;
 import rekkyn.spacetime.item.tool.ItemSpacetimeAxe;
@@ -23,6 +23,7 @@ import rekkyn.spacetime.item.tool.ItemSpacetimePickaxe;
 import rekkyn.spacetime.item.tool.ItemSpacetimeSpade;
 import rekkyn.spacetime.item.tool.ItemSpacetimeSword;
 import rekkyn.spacetime.packets.PacketHandler;
+import rekkyn.spacetime.packets.SpacetimePacket;
 import rekkyn.spacetime.proxy.CommonProxy;
 import rekkyn.spacetime.world.SpacetimeWorldGen;
 import cpw.mods.fml.common.Mod;
@@ -35,16 +36,15 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkMod;
-import cpw.mods.fml.common.network.NetworkMod.SidedPacketHandler;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
-import rekkyn.spacetime.packets.SpacetimePacket;
-
 @Mod(modid = Spacetime.modid, name = "Spacetime", version = "0.0")
-@NetworkMod(channels = { SpacetimePacket.CHANNEL }, clientSideRequired = true, serverSideRequired = false, packetHandler = PacketHandler.class)
+@NetworkMod(
+        channels = { SpacetimePacket.CHANNEL }, clientSideRequired = true, serverSideRequired = false,
+        packetHandler = PacketHandler.class)
 public class Spacetime {
     
     public static final String modid = "Spacetime";
@@ -83,22 +83,25 @@ public class Spacetime {
     public static final Item spacetimeHoe = new ItemSpacetimeHoe(1007, spacetimeMaterial)
             .setUnlocalizedName("spacetimeHoe");
     
-    public static final Item spacetimeHelmet = new SpacetimeArmor(1008, spacetimeArmorMaterial,
-            0, 0).setUnlocalizedName("spacetimeHelmet");
-    public static final Item spacetimeChest = new SpacetimeArmor(1009, spacetimeArmorMaterial,
-            0, 1).setUnlocalizedName("spacetimeChest");
-    public static final Item spacetimeLegs = new SpacetimeArmor(1010, spacetimeArmorMaterial,
-            0, 2).setUnlocalizedName("spacetimeLegs");
-    public static final Item spacetimeBoots = new SpacetimeArmor(1011, spacetimeArmorMaterial,
-            0, 3).setUnlocalizedName("spacetimeBoots");
+    public static final Item spacetimeHelmet = new SpacetimeArmor(1008, spacetimeArmorMaterial, 0, 0)
+            .setUnlocalizedName("spacetimeHelmet");
+    public static final Item spacetimeChest = new SpacetimeArmor(1009, spacetimeArmorMaterial, 0, 1)
+            .setUnlocalizedName("spacetimeChest");
+    public static final Item spacetimeLegs = new SpacetimeArmor(1010, spacetimeArmorMaterial, 0, 2)
+            .setUnlocalizedName("spacetimeLegs");
+    public static final Item spacetimeBoots = new SpacetimeArmor(1011, spacetimeArmorMaterial, 0, 3)
+            .setUnlocalizedName("spacetimeBoots");
     
     public static final SpacetimeCrossbow spacetimeCrossbow = (SpacetimeCrossbow) new SpacetimeCrossbow(1012)
-            .setUnlocalizedName("spacetimeBow")/*.setFull3D()*/;
+            .setUnlocalizedName("spacetimeBow")/* .setFull3D() */;
     
     public static final Item obsidianShard = new GenericItem(1013, false).setUnlocalizedName("obsidianShard")
             .setCreativeTab(CreativeTabs.tabMaterials);
     public static final Item crossbowBolt = new GenericItem(1014, false).setUnlocalizedName("crossbowBolt")
             .setCreativeTab(CreativeTabs.tabCombat);
+    
+    public static final Item spacetimeJar = new ItemSpacetimeJar(1015).setUnlocalizedName("spacetimeJar")
+            .setCreativeTab(CreativeTabs.tabMisc);
     
     @Instance("Spacetime")
     public static Spacetime instance;
@@ -109,9 +112,10 @@ public class Spacetime {
     @PreInit
     public void preInit(FMLPreInitializationEvent event) {
         
-        EntityRegistry.registerModEntity(EntityCrossbowBolt.class, "EntityCrossbowBolt", 1, Spacetime.instance, 128, 1, true);
+        EntityRegistry.registerModEntity(EntityCrossbowBolt.class, "EntityCrossbowBolt", 1, Spacetime.instance, 128, 1,
+                true);
         LanguageRegistry.instance().addStringLocalization("entity.EntityCrossbowBolt.name", "Crossbow Bolt");
-
+        
     }
     
     @Init
