@@ -117,7 +117,7 @@ public class SpacetimeCrossbow extends ItemBow implements ISpacetimeCharge {
      */
     @Override
     public ItemStack onItemRightClick(ItemStack item, World world, EntityPlayer player) {
-        if (SpacetimeChargeHandler.getCurrentCharge(player) >= useAmount) {
+        if (SpacetimeChargeHandler.getCurrentCharge(player) >= useAmount || player.capabilities.isCreativeMode) {
             ArrowNockEvent event = new ArrowNockEvent(player, item);
             MinecraftForge.EVENT_BUS.post(event);
             if (event.isCanceled()) { return event.result; }
@@ -149,7 +149,6 @@ public class SpacetimeCrossbow extends ItemBow implements ISpacetimeCharge {
     public void onUpdate(ItemStack itemstack, World world, Entity player, int par4, boolean par5) {
         changeCharge(itemstack, 1);
     }
-
     
     @Override
     public boolean changeCharge(ItemStack itemstack, int x) {

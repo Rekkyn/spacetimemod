@@ -42,8 +42,8 @@ public class SpacetimeChargeHandler {
     }
     
     public static boolean subChargeFromTotal(EntityPlayer player, int amount) {
-        if (getCurrentCharge(player) < amount) { return false; }
         if (player.capabilities.isCreativeMode) { return true; }
+        if (getCurrentCharge(player) < amount) { return false; }
         int amountLeft = amount;
         while (amountLeft > 0) {
             int numberOfItems = 0;

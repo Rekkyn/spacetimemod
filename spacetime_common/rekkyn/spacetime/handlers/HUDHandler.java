@@ -59,6 +59,10 @@ public class HUDHandler implements ITickHandler {
             }
         }
         
+        if (player.capabilities.isCreativeMode) {
+            display = false;
+        }
+        
         /*
          * if ( (player.getCurrentItemOrArmor(0).getItem() != null &&
          * player.getCurrentItemOrArmor(0).getItem() instanceof

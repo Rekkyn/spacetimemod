@@ -20,7 +20,6 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import rekkyn.spacetime.packets.ParticlePacket;
-import rekkyn.spacetime.packets.TestPacket;
 import rekkyn.spacetime.particles.ParticleEffects;
 import cpw.mods.fml.common.network.PacketDispatcher;
 import cpw.mods.fml.common.registry.IThrowableEntity;
@@ -42,7 +41,7 @@ public class EntityCrossbowBolt extends EntityArrow implements IProjectile, IThr
     public Entity shootingEntity;
     private int ticksInGround;
     private int ticksInAir = 0;
-    private double damage = 2.0D;
+    private int damage = 40;
     
     /** The amount of knockback an arrow applies when it hits a mob. */
     private int knockbackStrength;
@@ -297,8 +296,6 @@ public class EntityCrossbowBolt extends EntityArrow implements IProjectile, IThr
             
             if (movingobjectposition != null) {
                 if (movingobjectposition.entityHit != null) {
-                    f2 = MathHelper.sqrt_double(motionX * motionX + motionY * motionY + motionZ * motionZ);
-                    int i1 = MathHelper.ceiling_double_int(f2 * damage);
                     
                     DamageSource damagesource = null;
                     
@@ -312,7 +309,7 @@ public class EntityCrossbowBolt extends EntityArrow implements IProjectile, IThr
                         movingobjectposition.entityHit.setFire(5);
                     }
                     
-                    if (movingobjectposition.entityHit.attackEntityFrom(damagesource, i1)) {
+                    if (movingobjectposition.entityHit.attackEntityFrom(damagesource, damage)) {
                         if (movingobjectposition.entityHit instanceof EntityLiving) {
                             EntityLiving entityliving = (EntityLiving) movingobjectposition.entityHit;
                             
@@ -356,8 +353,7 @@ public class EntityCrossbowBolt extends EntityArrow implements IProjectile, IThr
                                 
                                 PacketDispatcher.sendPacketToAllAround(x, y, z, 64D,
                                         movingobjectposition.entityHit.worldObj.provider.dimensionId,
-                                        new ParticlePacket("crossbowTrail", x, y, z, xVel, yVel, zVel)
-                                                .makePacket());
+                                        new ParticlePacket("crossbowTrail", x, y, z, xVel, yVel, zVel).makePacket());
                             }
                             this.setDead();
                         }
@@ -439,7 +435,6 @@ public class EntityCrossbowBolt extends EntityArrow implements IProjectile, IThr
                 }
             }
             
-            
             this.setPosition(posX, posY, posZ);
             this.doBlockCollisions();
         }
@@ -457,7 +452,6 @@ public class EntityCrossbowBolt extends EntityArrow implements IProjectile, IThr
         tagcompound.setByte("inData", (byte) inData);
         tagcompound.setByte("shake", (byte) boltShake);
         tagcompound.setByte("inGround", (byte) (inGround ? 1 : 0));
-        tagcompound.setDouble("damage", damage);
     }
     
     /**
@@ -472,10 +466,6 @@ public class EntityCrossbowBolt extends EntityArrow implements IProjectile, IThr
         inData = tagcompound.getByte("inData") & 255;
         boltShake = tagcompound.getByte("shake") & 255;
         inGround = tagcompound.getByte("inGround") == 1;
-        
-        if (tagcompound.hasKey("damage")) {
-            damage = tagcompound.getDouble("damage");
-        }
     }
     
     /**
@@ -491,11 +481,6 @@ public class EntityCrossbowBolt extends EntityArrow implements IProjectile, IThr
     @SideOnly(Side.CLIENT)
     public float getShadowSize() {
         return 0.0F;
-    }
-    
-    @Override
-    public void setDamage(double damage) {
-        this.damage = damage;
     }
     
     @Override
