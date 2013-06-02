@@ -24,7 +24,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class SpacetimeCrossbow extends ItemBow implements ISpacetimeCharge {
     
     public static final int spacetimeMaxCharge = 100;
-    public static final int useAmount = 700;
+    public static final int useAmount = 350;
     
     public SpacetimeCrossbow(int id) {
         super(id);
@@ -147,31 +147,13 @@ public class SpacetimeCrossbow extends ItemBow implements ISpacetimeCharge {
     
     @Override
     public void onUpdate(ItemStack itemstack, World world, Entity player, int par4, boolean par5) {
-        changeCharge(itemstack, 1);
+        if (((EntityPlayer) player).getItemInUse() != itemstack) {
+            if (player.ticksExisted % 5 == 0) {
+                SpacetimeChargeHandler.changeCharge(itemstack, 1);
+            }
+        }
     }
-    
-    @Override
-    public boolean changeCharge(ItemStack itemstack, int x) {
         
-        int spacetimeCharge = getSpacetimeCharge(itemstack);
-        if (spacetimeCharge + x < 0) { return false; }
-        spacetimeCharge += x;
-        if (spacetimeCharge > spacetimeMaxCharge) {
-            spacetimeCharge = spacetimeMaxCharge;
-        }
-        itemstack.stackTagCompound.setInteger("SpacetimeCharge", spacetimeCharge);
-        return true;
-    }
-    
-    @Override
-    public int getSpacetimeCharge(ItemStack itemstack) {
-        if (itemstack.stackTagCompound == null) {
-            itemstack.setTagCompound(new NBTTagCompound());
-            itemstack.stackTagCompound.setInteger("SpacetimeCharge", spacetimeMaxCharge);
-        }
-        return itemstack.stackTagCompound.getInteger("SpacetimeCharge");
-    }
-    
     @Override
     public int getSpacetimeMaxCharge() {
         return spacetimeMaxCharge;
@@ -180,21 +162,9 @@ public class SpacetimeCrossbow extends ItemBow implements ISpacetimeCharge {
     @Override
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack itemstack, EntityPlayer player, List list, boolean par4) {
-        list.add(getSpacetimeCharge(itemstack) + "/" + spacetimeMaxCharge);
+        list.add(SpacetimeChargeHandler.getSpacetimeCharge(itemstack) + "/" + spacetimeMaxCharge);
     }
-    
-    @Override
-    public int subtractToZero(ItemStack itemstack, int amount) {
-        if (amount <= getSpacetimeCharge(itemstack)) {
-            changeCharge(itemstack, -amount);
-            return amount;
-        } else {
-            int amountSubtracted = getSpacetimeCharge(itemstack);
-            changeCharge(itemstack, -getSpacetimeCharge(itemstack));
-            return amountSubtracted;
-        }
-    }
-    
+        
     @Override
     public int getUseAmount() {
         return useAmount;

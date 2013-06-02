@@ -1,8 +1,10 @@
 package rekkyn.spacetime.item.tool;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityFireworkRocket;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
@@ -15,14 +17,15 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.world.World;
 import rekkyn.spacetime.Spacetime;
+import rekkyn.spacetime.handlers.SpacetimeChargeHandler;
+import rekkyn.spacetime.item.ISpacetimeCharge;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class ItemSpacetimeHoe extends ItemHoe {
+public class ItemSpacetimeHoe extends ItemHoe implements ISpacetimeCharge {
     
-    public static final int spacetimeMaxCharge = 100;
-    public static final int useAmount = -50;
-    public int spacetimeCharge = 100;
+    public static final int spacetimeMaxCharge = 50;
+    public static final int useAmount = 200;
     
     public ItemSpacetimeHoe(int id, EnumToolMaterial material) {
         super(id, material);
@@ -43,6 +46,9 @@ public class ItemSpacetimeHoe extends ItemHoe {
         int i = this.getMaxItemUseDuration(item) - chargetime;
         float charge = i / 20.0F;
         charge = (charge * charge + charge * 2.0F) / 3.0F;
+        
+        if (charge < 1.0D) { return; }
+
         if (charge > 1.0F) {
             charge = 1.0F;
         }
@@ -85,8 +91,10 @@ public class ItemSpacetimeHoe extends ItemHoe {
                 world.spawnEntityInWorld(entityfireworkrocket);
             }
             player.mountEntity(entityfireworkrocket);
-            
         }
+        
+        SpacetimeChargeHandler.subChargeFromTotal(player, useAmount);
+
     }
     
     /*
@@ -106,8 +114,9 @@ public class ItemSpacetimeHoe extends ItemHoe {
     
     @Override
     public ItemStack onItemRightClick(ItemStack item, World world, EntityPlayer player) {
-        
+        if (SpacetimeChargeHandler.getCurrentCharge(player) >= useAmount || player.capabilities.isCreativeMode) {
         player.setItemInUse(item, this.getMaxItemUseDuration(item));
+        }
         return item;
     }
     
@@ -116,5 +125,30 @@ public class ItemSpacetimeHoe extends ItemHoe {
     public boolean isFull3D() {
         return false;
     }
+
+    @Override
+    public int getSpacetimeMaxCharge() {
+        return spacetimeMaxCharge;
+    }
+    
+    @Override
+    public int getUseAmount() {
+        return useAmount;
+    }
+    
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void addInformation(ItemStack itemstack, EntityPlayer player, List list, boolean par4) {
+        list.add(SpacetimeChargeHandler.getSpacetimeCharge(itemstack) + "/" + spacetimeMaxCharge);
+    }
+    
+    @Override
+    public void onUpdate(ItemStack itemstack, World world, Entity player, int par4, boolean par5) {
+        if (((EntityPlayer) player).getItemInUse() != itemstack) {
+                SpacetimeChargeHandler.changeCharge(itemstack, 1);
+        }
+    }
+
+
     
 }

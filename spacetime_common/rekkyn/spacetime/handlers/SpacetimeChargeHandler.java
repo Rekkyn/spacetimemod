@@ -3,6 +3,7 @@ package rekkyn.spacetime.handlers;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import rekkyn.spacetime.item.ISpacetimeCharge;
 
 public class SpacetimeChargeHandler {
@@ -33,7 +34,7 @@ public class SpacetimeChargeHandler {
             }
             Item item = player.getCurrentItemOrArmor(i).getItem();
             if (player.getCurrentItemOrArmor(i).getItem() instanceof ISpacetimeCharge) {
-                charge += ((ISpacetimeCharge) item).getSpacetimeCharge(player.getCurrentItemOrArmor(i));
+                charge += getSpacetimeCharge(player.getCurrentItemOrArmor(i));
             }
         }
         
@@ -53,7 +54,7 @@ public class SpacetimeChargeHandler {
                 }
                 Item item = player.getCurrentItemOrArmor(i).getItem();
                 if (item instanceof ISpacetimeCharge
-                        && ((ISpacetimeCharge) item).getSpacetimeCharge(player.getCurrentItemOrArmor(i)) > 0) {
+                        && getSpacetimeCharge(player.getCurrentItemOrArmor(i)) > 0) {
                     numberOfItems++;
                 }
             }
@@ -67,7 +68,7 @@ public class SpacetimeChargeHandler {
                 ItemStack itemstack = player.getCurrentItemOrArmor(i);
                 Item item = itemstack.getItem();
                 if (item instanceof ISpacetimeCharge) {
-                    amountLeft -= ((ISpacetimeCharge) item).subtractToZero(itemstack, subtractFromEach);
+                    amountLeft -= subtractToZero(itemstack, subtractFromEach);
                     if (subtractFromEach == 0) {
                         amountLeft = 0;
                     }
@@ -77,5 +78,42 @@ public class SpacetimeChargeHandler {
         }
         return true;
     }
+    
+    public static boolean changeCharge(ItemStack itemstack, int x) {
+        if (itemstack.stackTagCompound == null) {
+            itemstack.setTagCompound(new NBTTagCompound());
+            itemstack.stackTagCompound.setInteger("SpacetimeCharge", ((ISpacetimeCharge) itemstack.getItem()).getSpacetimeMaxCharge());
+        }
+        
+        int spacetimeCharge = getSpacetimeCharge(itemstack);
+        if (spacetimeCharge + x < 0) { return false; }
+        spacetimeCharge += x;
+        if (spacetimeCharge > ((ISpacetimeCharge) itemstack.getItem()).getSpacetimeMaxCharge()) {
+            spacetimeCharge = ((ISpacetimeCharge) itemstack.getItem()).getSpacetimeMaxCharge();
+        }
+        itemstack.stackTagCompound.setInteger("SpacetimeCharge", spacetimeCharge);
+        return true;
+    }
+    
+    public static int getSpacetimeCharge(ItemStack itemstack) {
+        if (itemstack.stackTagCompound == null) {
+            itemstack.setTagCompound(new NBTTagCompound());
+            itemstack.stackTagCompound.setInteger("SpacetimeCharge", ((ISpacetimeCharge) itemstack.getItem()).getSpacetimeMaxCharge());
+        }
+        return itemstack.stackTagCompound.getInteger("SpacetimeCharge");
+    }
+    
+    public static int subtractToZero(ItemStack itemstack, int amount) {
+        if (amount <= getSpacetimeCharge(itemstack)) {
+            changeCharge(itemstack, -amount);
+            return amount;
+        } else {
+            int amountSubtracted = getSpacetimeCharge(itemstack);
+            changeCharge(itemstack, -getSpacetimeCharge(itemstack));
+            return amountSubtracted;
+        }
+    }
+
+
     
 }

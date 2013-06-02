@@ -12,6 +12,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IArmorTextureProvider;
 import rekkyn.spacetime.Spacetime;
+import rekkyn.spacetime.handlers.SpacetimeChargeHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -59,8 +60,9 @@ public class SpacetimeArmor extends ItemArmor implements IArmorTextureProvider, 
     
     @Override
     public void onUpdate(ItemStack itemstack, World world, Entity player, int par4, boolean par5) {
-        
-        changeCharge(itemstack, 1);
+        if (player.ticksExisted % 7 == 0) {
+            SpacetimeChargeHandler.changeCharge(itemstack, 1);
+        }
     }
     
     @Override
@@ -68,31 +70,6 @@ public class SpacetimeArmor extends ItemArmor implements IArmorTextureProvider, 
         return true;
     }
     
-    @Override
-    public boolean changeCharge(ItemStack itemstack, int x) {
-        if (itemstack.stackTagCompound == null) {
-            itemstack.setTagCompound(new NBTTagCompound());
-            itemstack.stackTagCompound.setInteger("SpacetimeCharge", spacetimeMaxCharge);
-        }
-        
-        int spacetimeCharge = getSpacetimeCharge(itemstack);
-        if (spacetimeCharge + x < 0) { return false; }
-        spacetimeCharge += x;
-        if (spacetimeCharge > spacetimeMaxCharge) {
-            spacetimeCharge = spacetimeMaxCharge;
-        }
-        itemstack.stackTagCompound.setInteger("SpacetimeCharge", spacetimeCharge);
-        return true;
-    }
-    
-    @Override
-    public int getSpacetimeCharge(ItemStack itemstack) {
-        if (itemstack.stackTagCompound == null) {
-            itemstack.setTagCompound(new NBTTagCompound());
-            itemstack.stackTagCompound.setInteger("SpacetimeCharge", spacetimeMaxCharge);
-        }
-        return itemstack.stackTagCompound.getInteger("SpacetimeCharge");
-    }
     
     @Override
     public int getSpacetimeMaxCharge() {
@@ -102,26 +79,16 @@ public class SpacetimeArmor extends ItemArmor implements IArmorTextureProvider, 
     @Override
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack itemstack, EntityPlayer player, List list, boolean par4) {
-        list.add(getSpacetimeCharge(itemstack) + "/" + spacetimeMaxCharge);
+        list.add(SpacetimeChargeHandler.getSpacetimeCharge(itemstack) + "/" + spacetimeMaxCharge);
     }
     
     @Override
     public void onArmorTickUpdate(World worldObj, EntityPlayer player, ItemStack itemstack) {
-        changeCharge(itemstack, 1);
-    }
-    
-    @Override
-    public int subtractToZero(ItemStack itemstack, int amount) {
-        if (amount <= getSpacetimeCharge(itemstack)) {
-            changeCharge(itemstack, -amount);
-            return amount;
-        } else {
-            int amountSubtracted = getSpacetimeCharge(itemstack);
-            changeCharge(itemstack, -getSpacetimeCharge(itemstack));
-            return amountSubtracted;
+        if (player.ticksExisted % 7 == 0) {
+            SpacetimeChargeHandler.changeCharge(itemstack, 1);
         }
     }
-    
+        
     @Override
     public int getUseAmount() {
         return 0;

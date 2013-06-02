@@ -21,7 +21,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class ItemSpacetimeSword extends ItemSword implements ISpacetimeCharge {
     
     public static final int spacetimeMaxCharge = 50;
-    public static final int useAmount = 100;
+    public static final int useAmount = 165;
     
     public ItemSpacetimeSword(int id, EnumToolMaterial material) {
         super(id, material);
@@ -78,7 +78,7 @@ public class ItemSpacetimeSword extends ItemSword implements ISpacetimeCharge {
                         MathHelper.sin(player.rotationPitch / 180.0F * (float) Math.PI) * 0.2F + 0.4,
                         -MathHelper.cos(player.rotationYaw * (float) Math.PI / 180.0F) * 0.7F);
             }
-            player.fallDistance = 0;
+            player.fallDistance *= 0.4;
         }
         
         return itemstack;
@@ -86,37 +86,14 @@ public class ItemSpacetimeSword extends ItemSword implements ISpacetimeCharge {
     
     @Override
     public void onUpdate(ItemStack itemstack, World world, Entity player, int par4, boolean par5) {
-        
-        changeCharge(itemstack, 1);
+        SpacetimeChargeHandler.changeCharge(itemstack, 1);
     }
     
     @Override
     public boolean getShareTag() {
         return true;
     }
-    
-    @Override
-    public boolean changeCharge(ItemStack itemstack, int x) {
-        
-        int spacetimeCharge = getSpacetimeCharge(itemstack);
-        if (spacetimeCharge + x < 0) { return false; }
-        spacetimeCharge += x;
-        if (spacetimeCharge > spacetimeMaxCharge) {
-            spacetimeCharge = spacetimeMaxCharge;
-        }
-        itemstack.stackTagCompound.setInteger("SpacetimeCharge", spacetimeCharge);
-        return true;
-    }
-    
-    @Override
-    public int getSpacetimeCharge(ItemStack itemstack) {
-        if (itemstack.stackTagCompound == null) {
-            itemstack.setTagCompound(new NBTTagCompound());
-            itemstack.stackTagCompound.setInteger("SpacetimeCharge", spacetimeMaxCharge);
-        }
-        return itemstack.stackTagCompound.getInteger("SpacetimeCharge");
-    }
-    
+            
     @Override
     public int getSpacetimeMaxCharge() {
         return spacetimeMaxCharge;
@@ -125,21 +102,9 @@ public class ItemSpacetimeSword extends ItemSword implements ISpacetimeCharge {
     @Override
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack itemstack, EntityPlayer player, List list, boolean par4) {
-        list.add(getSpacetimeCharge(itemstack) + "/" + spacetimeMaxCharge);
+        list.add(SpacetimeChargeHandler.getSpacetimeCharge(itemstack) + "/" + spacetimeMaxCharge);
     }
-    
-    @Override
-    public int subtractToZero(ItemStack itemstack, int amount) {
-        if (amount <= getSpacetimeCharge(itemstack)) {
-            changeCharge(itemstack, -amount);
-            return amount;
-        } else {
-            int amountSubtracted = getSpacetimeCharge(itemstack);
-            changeCharge(itemstack, -getSpacetimeCharge(itemstack));
-            return amountSubtracted;
-        }
-    }
-    
+        
     @Override
     public int getUseAmount() {
         return useAmount;
