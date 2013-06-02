@@ -4,6 +4,7 @@ import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.WeightedRandomChestContent;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ChestGenHooks;
@@ -127,6 +128,14 @@ public class CommonProxy implements IGuiHandler {
         GameRegistry.addRecipe(new ItemStack(Spacetime.crossbowBolt, 1),
                 new Object[] { "^", "|", "|", Character.valueOf('^'), Spacetime.obsidianShard, Character.valueOf('|'),
                         Spacetime.ironRod });
+        
+        NBTTagCompound compound = new NBTTagCompound();
+        compound.setString("SkullOwner", "Rekkyn");
+        ItemStack rekkynHead = new ItemStack(Item.skull, 1, 3);
+        rekkynHead.setTagCompound(compound);
+        
+        GameRegistry.addRecipe(rekkynHead, new Object[] { "xxx", "xFx", "xxx", Character.valueOf('x'),
+                Item.rottenFlesh, Character.valueOf('F'), Spacetime.spacetimeFluctuation });
         
     }
 }
