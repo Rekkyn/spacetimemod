@@ -4,6 +4,7 @@ import java.util.List;
 
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumToolMaterial;
 import net.minecraft.item.ItemStack;
@@ -40,7 +41,7 @@ public class ItemSpacetimeSword extends ItemSword implements ISpacetimeCharge {
     @Override
     public ItemStack onItemRightClick(ItemStack itemstack, World world, EntityPlayer player) {
         
-        if (SpacetimeChargeHandler.subChargeFromTotal(player, useAmount)) {
+        if (SpacetimeChargeHandler.addChargeToTotal(player, -useAmount)) {
             
             for (int l = 0; l < 32; ++l) {
                 double d1 = player.posY + world.rand.nextFloat();
@@ -109,5 +110,14 @@ public class ItemSpacetimeSword extends ItemSword implements ISpacetimeCharge {
     public int getUseAmount() {
         return useAmount;
     }
+    
+    public boolean hitEntity(ItemStack item, EntityLiving hitentity, EntityLiving entity) {
+        super.hitEntity(item, hitentity, entity);
+        if (hitentity.getHealth() <= 0) {
+            SpacetimeChargeHandler.addChargeToTotal((EntityPlayer) entity, 100);
+        }
+        return true;
+    }
+
     
 }

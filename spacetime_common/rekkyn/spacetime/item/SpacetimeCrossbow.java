@@ -85,7 +85,7 @@ public class SpacetimeCrossbow extends ItemBow implements ISpacetimeCharge {
             if (!world.isRemote) {
                 world.spawnEntityInWorld(entitybolt);
             }
-            SpacetimeChargeHandler.subChargeFromTotal(player, useAmount);
+            SpacetimeChargeHandler.addChargeToTotal(player, -useAmount);
         }
     }
     

@@ -93,7 +93,7 @@ public class ItemSpacetimeHoe extends ItemHoe implements ISpacetimeCharge {
             player.mountEntity(entityfireworkrocket);
         }
         
-        SpacetimeChargeHandler.subChargeFromTotal(player, useAmount);
+        SpacetimeChargeHandler.addChargeToTotal(player, -useAmount);
 
     }
     
