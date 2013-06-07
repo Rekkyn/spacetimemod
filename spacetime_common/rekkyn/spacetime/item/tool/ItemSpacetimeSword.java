@@ -114,7 +114,7 @@ public class ItemSpacetimeSword extends ItemSword implements ISpacetimeCharge {
     public boolean hitEntity(ItemStack item, EntityLiving hitentity, EntityLiving entity) {
         super.hitEntity(item, hitentity, entity);
         if (hitentity.getHealth() <= 0) {
-            SpacetimeChargeHandler.addChargeToTotal((EntityPlayer) entity, 100);
+            SpacetimeChargeHandler.addChargeToTotal((EntityPlayer) entity, (int) (hitentity.experienceValue/0.05));
         }
         return true;
     }

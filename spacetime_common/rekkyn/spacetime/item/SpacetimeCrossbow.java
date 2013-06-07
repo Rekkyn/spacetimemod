@@ -24,7 +24,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class SpacetimeCrossbow extends ItemBow implements ISpacetimeCharge {
     
     public static final int spacetimeMaxCharge = 100;
-    public static final int useAmount = 350;
+    public static final int useAmount = 400;
     
     public SpacetimeCrossbow(int id) {
         super(id);

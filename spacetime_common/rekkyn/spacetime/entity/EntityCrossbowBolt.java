@@ -19,6 +19,7 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
+import rekkyn.spacetime.handlers.SpacetimeChargeHandler;
 import rekkyn.spacetime.packets.ParticlePacket;
 import rekkyn.spacetime.particles.ParticleEffects;
 import cpw.mods.fml.common.network.PacketDispatcher;
@@ -336,6 +337,12 @@ public class EntityCrossbowBolt extends EntityArrow implements IProjectile, IThr
                                     && shootingEntity instanceof EntityPlayerMP) {
                                 ((EntityPlayerMP) shootingEntity).playerNetServerHandler
                                         .sendPacketToPlayer(new Packet70GameEvent(6, 0));
+                            }
+                            
+                            if (shootingEntity instanceof EntityPlayer) {
+                                float distance = movingobjectposition.entityHit.getDistanceToEntity(shootingEntity);
+                                float amount = MathHelper.clamp_float(((25F / 54F) * (-16F + 7F * distance)), 25, 200);
+                                SpacetimeChargeHandler.addChargeToTotal((EntityPlayer) shootingEntity, (int) amount);
                             }
                         }
                         
