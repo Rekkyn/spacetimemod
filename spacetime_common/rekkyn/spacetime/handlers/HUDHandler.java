@@ -22,6 +22,9 @@ import cpw.mods.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class HUDHandler implements ITickHandler {
     
+    static int displayAmount = 0;
+
+    
     @Override
     public void tickStart(EnumSet<TickType> type, Object... tickData) {
     }
@@ -38,7 +41,22 @@ public class HUDHandler implements ITickHandler {
                 currentItemStack = player.inventory.getCurrentItem();
                 
                 if (Minecraft.isGuiEnabled()) {
-                    if (currentItemStack != null) {
+                    
+                    boolean display = false;
+                    
+                    for (int i = 0; i <= 4; i++) {
+                        if (player.getCurrentItemOrArmor(i) != null
+                                && player.getCurrentItemOrArmor(i).getItem() instanceof ISpacetimeCharge) {
+                            display = true;
+                            break;
+                        }
+                    }
+                    
+                    if (player.capabilities.isCreativeMode) {
+                        display = false;
+                    }
+
+                    if (display) {
                         renderSpacetimeCharge(minecraft, player, currentItemStack, (Float) tickData[0]);
                     }
                 }
@@ -48,36 +66,7 @@ public class HUDHandler implements ITickHandler {
     
     private static void renderSpacetimeCharge(Minecraft minecraft, EntityPlayer player, ItemStack currentItemStack,
             float partialTicks) {
-        
-        boolean display = false;
-        
-        for (int i = 0; i <= 4; i++) {
-            if (player.getCurrentItemOrArmor(i) != null
-                    && player.getCurrentItemOrArmor(i).getItem() instanceof ISpacetimeCharge) {
-                display = true;
-                break;
-            }
-        }
-        
-        if (player.capabilities.isCreativeMode) {
-            display = false;
-        }
-        
-        /*
-         * if ( (player.getCurrentItemOrArmor(0).getItem() != null &&
-         * player.getCurrentItemOrArmor(0).getItem() instanceof
-         * ISpacetimeCharge) || (player.getCurrentItemOrArmor(1).getItem() !=
-         * null && player.getCurrentItemOrArmor(0).getItem() instanceof
-         * ISpacetimeCharge) || (player.getCurrentItemOrArmor(2).getItem() !=
-         * null && player.getCurrentItemOrArmor(0).getItem() instanceof
-         * ISpacetimeCharge) || (player.getCurrentItemOrArmor(3).getItem() !=
-         * null && player.getCurrentItemOrArmor(0).getItem() instanceof
-         * ISpacetimeCharge) || (player.getCurrentItemOrArmor(4).getItem() !=
-         * null && player.getCurrentItemOrArmor(0).getItem() instanceof
-         * ISpacetimeCharge))
-         */
-        
-        if (display) {
+               
             // setup render
             GL11.glPushMatrix();
             ScaledResolution res = new ScaledResolution(minecraft.gameSettings, minecraft.displayWidth,
@@ -108,21 +97,34 @@ public class HUDHandler implements ITickHandler {
             GL11.glBindTexture(3553,
                     minecraft.renderEngine.getTexture("/mods/Spacetime/textures/gui/spacetimeInfuser.png"));
             minecraft.ingameGUI.drawTexturedModalRect(width / 2 + 97, height - 40, 0, 166, 12, 40);
-            
+                        
             int scaledAmount = (int) ((float) SpacetimeChargeHandler.getCurrentCharge(player)
                     / (float) SpacetimeChargeHandler.getMaxCharge(player) * 34);
-            int currentCharge = SpacetimeChargeHandler.getCurrentCharge(player);
-            int useAmount = 0;
-            if (player.getCurrentItemOrArmor(0).getItem() instanceof ISpacetimeCharge) {
-                useAmount = ((ISpacetimeCharge) player.getCurrentItemOrArmor(0).getItem()).getUseAmount();
+            
+
+            if (displayAmount >= scaledAmount) {
+            displayAmount -= (displayAmount - scaledAmount)/2;
+            } else {
+                displayAmount -= (displayAmount - scaledAmount)/2;
             }
             
+            if (Math.abs((displayAmount) - scaledAmount) <=1) {
+                displayAmount = scaledAmount;
+            }
+            
+            int currentCharge = SpacetimeChargeHandler.getCurrentCharge(player);
+            int useAmount = 0;
+            if (player.getCurrentItemOrArmor(0) != null) {
+                if (player.getCurrentItemOrArmor(0).getItem() instanceof ISpacetimeCharge) {
+                    useAmount = ((ISpacetimeCharge) player.getCurrentItemOrArmor(0).getItem()).getUseAmount();
+                }
+            }
             if (currentCharge >= useAmount) {
-                minecraft.ingameGUI.drawTexturedModalRect(width / 2 + 97, height - 2 - scaledAmount, 12, 170, 12,
-                        scaledAmount - 2);
+                minecraft.ingameGUI.drawTexturedModalRect(width / 2 + 97, height - 2 - displayAmount, 12, 170, 12,
+                        displayAmount - 2);
             } else {
-                minecraft.ingameGUI.drawTexturedModalRect(width / 2 + 97, height - 2 - scaledAmount, 24, 170, 12,
-                        scaledAmount - 2);
+                minecraft.ingameGUI.drawTexturedModalRect(width / 2 + 97, height - 2 - displayAmount, 24, 170, 12,
+                        displayAmount - 2);
             }
             
             GL11.glDisable(GL11.GL_LIGHTING);
@@ -131,7 +133,6 @@ public class HUDHandler implements ITickHandler {
             GL11.glPopMatrix();
             GL11.glPopMatrix();
             
-        }
     }
     
     @Override

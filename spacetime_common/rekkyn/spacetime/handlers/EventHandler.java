@@ -5,6 +5,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.ForgeSubscribe;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import rekkyn.spacetime.Spacetime;
 
@@ -55,6 +56,18 @@ public class EventHandler {
                     if (!target.worldObj.isRemote) {
                         target.worldObj.spawnEntityInWorld(item);
                     }
+                }
+            }
+        }
+    }
+    
+    @ForgeSubscribe
+    public void DeathCheck(LivingDeathEvent event) {
+        if (event.source.damageType == "player") {
+            EntityPlayer player = (EntityPlayer) event.source.getEntity();
+            if (player.getCurrentEquippedItem() != null) {
+                if (player.getCurrentEquippedItem().getItem() == Spacetime.spacetimeSword) {
+                    SpacetimeChargeHandler.addChargeToTotal(player, (int) (event.entityLiving.experienceValue / 0.05));
                 }
             }
         }
