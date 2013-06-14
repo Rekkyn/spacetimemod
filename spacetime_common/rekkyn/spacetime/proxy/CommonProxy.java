@@ -72,6 +72,9 @@ public class CommonProxy implements IGuiHandler {
         MinecraftForge.setBlockHarvestLevel(Spacetime.spacetimeInfuser, "pickaxe", 2);
         GameRegistry.registerBlock(Spacetime.spacetimeInfuser, "spacetimeInfuser");
         
+        MinecraftForge.setBlockHarvestLevel(Spacetime.spacetimePlating, "pickaxe", 1);
+        GameRegistry.registerBlock(Spacetime.spacetimePlating, "spacetimePlating");
+        
     }
     
     public void addNames() {
@@ -95,6 +98,7 @@ public class CommonProxy implements IGuiHandler {
         LanguageRegistry.addName(Spacetime.crossbowBolt, "Crossbow Bolt");
         LanguageRegistry.instance().addStringLocalization("item.spacetimeJar.name", "Spacetime Jar");
         LanguageRegistry.instance().addStringLocalization("item.spacetimeJar.full.name", "Spacetime Jar");
+        LanguageRegistry.addName(Spacetime.spacetimePlating, "Spacetime Plating");
         
     }
     

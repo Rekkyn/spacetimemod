@@ -1,5 +1,7 @@
 package rekkyn.spacetime;
 
+import net.minecraft.block.Block;
+import net.minecraft.block.StepSound;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.EnumArmorMaterial;
@@ -7,6 +9,7 @@ import net.minecraft.item.EnumToolMaterial;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.EnumHelper;
 import net.minecraftforge.common.MinecraftForge;
+import rekkyn.spacetime.block.BlockPlating;
 import rekkyn.spacetime.block.BlockRekkynite;
 import rekkyn.spacetime.block.BlockSpacetimeInfuser;
 import rekkyn.spacetime.block.BlockSpacetimeOre;
@@ -102,6 +105,12 @@ public class Spacetime {
     
     public static final Item spacetimeJar = new ItemSpacetimeJar(1015).setUnlocalizedName("spacetimeJar")
             .setCreativeTab(CreativeTabs.tabMisc).setMaxStackSize(1);
+    
+    public static final StepSound soundMetalFootstep = new StepSound("stone", 1.0F, 1.5F);
+    
+    public static final Block spacetimePlating = new BlockPlating(454, "spacetimePlating", "spacetimePlating",
+            Material.iron, true).setHardness(5.0F).setResistance(10.0F).setStepSound(soundMetalFootstep)
+            .setUnlocalizedName("spacetimePlating");
     
     @Instance("Spacetime")
     public static Spacetime instance;
