@@ -72,8 +72,8 @@ public class CommonProxy implements IGuiHandler {
         MinecraftForge.setBlockHarvestLevel(Spacetime.spacetimeInfuser, "pickaxe", 2);
         GameRegistry.registerBlock(Spacetime.spacetimeInfuser, "spacetimeInfuser");
         
-        MinecraftForge.setBlockHarvestLevel(Spacetime.spacetimePlating, "pickaxe", 1);
-        GameRegistry.registerBlock(Spacetime.spacetimePlating, "spacetimePlating");
+        MinecraftForge.setBlockHarvestLevel(Spacetime.spacetimePanel, "pickaxe", 1);
+        GameRegistry.registerBlock(Spacetime.spacetimePanel, "spacetimePanel");
         
     }
     
@@ -98,11 +98,14 @@ public class CommonProxy implements IGuiHandler {
         LanguageRegistry.addName(Spacetime.crossbowBolt, "Crossbow Bolt");
         LanguageRegistry.instance().addStringLocalization("item.spacetimeJar.name", "Spacetime Jar");
         LanguageRegistry.instance().addStringLocalization("item.spacetimeJar.full.name", "Spacetime Jar");
-        LanguageRegistry.addName(Spacetime.spacetimePlating, "Spacetime Plating");
+        LanguageRegistry.addName(Spacetime.spacetimePanel, "Spacetime Panel");
         
     }
     
     public void addRecipes() {
+        GameRegistry.addRecipe(new ItemStack(Spacetime.rekkynite), "sss", "sFs", "sss", 's', Block.stone, 'F',
+                Spacetime.spacetimeFluctuation);
+        
         GameRegistry.addRecipe(new ItemStack(Spacetime.ironRod), "x", "x", "x", 'x', Item.ingotIron);
         
         GameRegistry.addRecipe(new ItemStack(Spacetime.spacetimeSword), "x", "x", "|", 'x', Spacetime.spacetimeGem,
@@ -145,6 +148,15 @@ public class CommonProxy implements IGuiHandler {
         
         GameRegistry.addShapelessRecipe(new ItemStack(Spacetime.spacetimeJar, 1, 1), Spacetime.spacetimeFluctuation,
                 Spacetime.spacetimeJar);
+        
+        GameRegistry.addRecipe(new ItemStack(Spacetime.spacetimeInfuser), "PPP", "PFP", "OOO", 'P',
+                Spacetime.spacetimePanel, 'F', Spacetime.spacetimeFluctuation, 'O', Block.obsidian);
+        
+        GameRegistry.addRecipe(new ItemStack(Spacetime.spacetimePanel), "OIO", "IDI", "OIO", 'I', Item.ingotIron, 'D',
+                Item.diamond, 'O', Block.obsidian);
+        
+        GameRegistry.addRecipe(new ItemStack(Spacetime.spacetimeJar), "GGG", "P P", "PPP", 'G', Spacetime.spacetimeGem, 'P',
+                Spacetime.spacetimePanel);
         
     }
 }

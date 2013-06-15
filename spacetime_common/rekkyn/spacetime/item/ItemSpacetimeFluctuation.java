@@ -3,6 +3,7 @@ package rekkyn.spacetime.item;
 import java.util.List;
 import java.util.Random;
 
+import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.player.EntityPlayer;
@@ -104,5 +105,12 @@ public class ItemSpacetimeFluctuation extends Item {
         
         return entityitem;
     }
+    
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void registerIcons(IconRegister iconRegister) {
+        itemIcon = iconRegister.registerIcon("Spacetime:spacetimeFluctuation");
+    }
+
     
 }

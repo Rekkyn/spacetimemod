@@ -65,6 +65,10 @@ public class BlockSpacetimeOre extends BlockOre {
             d5 = rand.nextFloat() * 2.0F * randz;
             
             ParticleEffects.spawnParticle("blue", d0, d1, d2, d3, d4, d5);
+            if (l % 8 == 0) {
+                ParticleEffects.spawnParticle("lightblue", d0, d1, d2, d3, d4, d5);
+            }
+            
             if (l % 4 == 0) {
                 ParticleEffects.spawnParticle("orange", d0, d1, d2, d3, d4, d5);
             }

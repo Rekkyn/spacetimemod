@@ -30,7 +30,7 @@ public class SpacetimeWorldGen implements IWorldGenerator {
     }
     
     private void generateSurface(World world, Random rand, int chunkX, int chunkZ) {
-        for (int k = 0; k < 1; k++) {
+        for (int k = 0; k < 7; k++) {
             int posX = chunkX + rand.nextInt(16);
             int posY = rand.nextInt(64);
             int posZ = chunkZ + rand.nextInt(16);
