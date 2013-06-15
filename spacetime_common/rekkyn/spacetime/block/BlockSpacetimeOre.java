@@ -29,6 +29,16 @@ public class BlockSpacetimeOre extends BlockOre {
     }
     
     @Override
+    public int quantityDropped(Random par1Random) {
+        return 1;
+    }
+    
+    @Override
+    public int quantityDroppedWithBonus(int i, Random random) {
+        return this.quantityDropped(random);
+    }
+    
+    @Override
     @SideOnly(Side.CLIENT)
     public void registerIcons(IconRegister iconRegister) {
         
@@ -42,7 +52,7 @@ public class BlockSpacetimeOre extends BlockOre {
      * A randomly called display update to be able to add particles or other items for display
      */
     public void randomDisplayTick(World world, int x, int y, int z, Random rand) {
-        if (rand.nextInt(100) == 0) {
+        if (rand.nextInt(60) == 0) {
             world.playSound(x + 0.5D, y + 0.5D, z + 0.5D, "portal.portal", 0.5F, rand.nextFloat() * 0.4F + 0.8F, false);
         }
         
@@ -65,9 +75,6 @@ public class BlockSpacetimeOre extends BlockOre {
             d5 = rand.nextFloat() * 2.0F * randz;
             
             ParticleEffects.spawnParticle("blue", d0, d1, d2, d3, d4, d5);
-            if (l % 8 == 0) {
-                ParticleEffects.spawnParticle("lightblue", d0, d1, d2, d3, d4, d5);
-            }
             
             if (l % 4 == 0) {
                 ParticleEffects.spawnParticle("orange", d0, d1, d2, d3, d4, d5);
