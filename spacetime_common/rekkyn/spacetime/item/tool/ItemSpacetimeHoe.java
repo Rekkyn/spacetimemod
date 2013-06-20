@@ -48,7 +48,7 @@ public class ItemSpacetimeHoe extends ItemHoe implements ISpacetimeCharge {
         charge = (charge * charge + charge * 2.0F) / 3.0F;
         
         if (charge < 1.0D) { return; }
-
+        
         if (charge > 1.0F) {
             charge = 1.0F;
         }
@@ -94,7 +94,7 @@ public class ItemSpacetimeHoe extends ItemHoe implements ISpacetimeCharge {
         }
         
         SpacetimeChargeHandler.addChargeToTotal(player, -useAmount);
-
+        
     }
     
     /*
@@ -115,7 +115,7 @@ public class ItemSpacetimeHoe extends ItemHoe implements ISpacetimeCharge {
     @Override
     public ItemStack onItemRightClick(ItemStack item, World world, EntityPlayer player) {
         if (SpacetimeChargeHandler.getCurrentCharge(player) >= useAmount || player.capabilities.isCreativeMode) {
-        player.setItemInUse(item, this.getMaxItemUseDuration(item));
+            player.setItemInUse(item, this.getMaxItemUseDuration(item));
         }
         return item;
     }
@@ -125,7 +125,7 @@ public class ItemSpacetimeHoe extends ItemHoe implements ISpacetimeCharge {
     public boolean isFull3D() {
         return false;
     }
-
+    
     @Override
     public int getSpacetimeMaxCharge() {
         return spacetimeMaxCharge;
@@ -144,11 +144,15 @@ public class ItemSpacetimeHoe extends ItemHoe implements ISpacetimeCharge {
     
     @Override
     public void onUpdate(ItemStack itemstack, World world, Entity player, int par4, boolean par5) {
-        if (((EntityPlayer) player).getItemInUse() != itemstack) {
+        if (!world.isRemote) {
+            if (((EntityPlayer) player).isUsingItem()) {
+                if (((EntityPlayer) player).getCurrentEquippedItem() != itemstack) {
+                    SpacetimeChargeHandler.changeCharge(itemstack, 1);
+                }
+            } else {
                 SpacetimeChargeHandler.changeCharge(itemstack, 1);
+            }
         }
     }
-
-
     
 }

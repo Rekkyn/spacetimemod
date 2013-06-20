@@ -4,12 +4,10 @@ import java.util.List;
 
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumToolMaterial;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import rekkyn.spacetime.Spacetime;
@@ -55,17 +53,17 @@ public class ItemSpacetimeSword extends ItemSword implements ISpacetimeCharge {
                 double d5 = world.rand.nextFloat() * 2.0F * randz;
                 
                 if (world.isRemote) {
-                ParticleEffects.spawnParticle("blue", d0, d1, d2, d3, d4, d5);
-                
-                
+                    ParticleEffects.spawnParticle("blue", d0, d1, d2, d3, d4, d5);
+                    
                     float xVel = (world.rand.nextFloat() - 0.5F) * 5;
                     float yVel = (world.rand.nextFloat() - 0.5F) * 5;
                     float zVel = (world.rand.nextFloat() - 0.5F) * 5;
-                    ParticleEffects.spawnParticle("crossbowTrail", player.posX, player.posY, player.posZ, xVel, yVel, zVel);
-                
-                if (l % 4 == 0) {
-                    ParticleEffects.spawnParticle("orange", d0, d1, d2, d3, d4, d5);
-                }
+                    ParticleEffects.spawnParticle("crossbowTrail", player.posX, player.posY, player.posZ, xVel, yVel,
+                            zVel);
+                    
+                    if (l % 4 == 0) {
+                        ParticleEffects.spawnParticle("orange", d0, d1, d2, d3, d4, d5);
+                    }
                 }
                 
             }
@@ -87,14 +85,16 @@ public class ItemSpacetimeSword extends ItemSword implements ISpacetimeCharge {
     
     @Override
     public void onUpdate(ItemStack itemstack, World world, Entity player, int par4, boolean par5) {
-        SpacetimeChargeHandler.changeCharge(itemstack, 1);
+        if (!world.isRemote) {
+            SpacetimeChargeHandler.changeCharge(itemstack, 1);
+        }
     }
     
     @Override
     public boolean getShareTag() {
         return true;
     }
-            
+    
     @Override
     public int getSpacetimeMaxCharge() {
         return spacetimeMaxCharge;
@@ -105,10 +105,10 @@ public class ItemSpacetimeSword extends ItemSword implements ISpacetimeCharge {
     public void addInformation(ItemStack itemstack, EntityPlayer player, List list, boolean par4) {
         list.add(SpacetimeChargeHandler.getSpacetimeCharge(itemstack) + "/" + spacetimeMaxCharge);
     }
-        
+    
     @Override
     public int getUseAmount() {
         return useAmount;
     }
-        
+    
 }

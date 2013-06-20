@@ -60,7 +60,7 @@ public class SpacetimeArmor extends ItemArmor implements IArmorTextureProvider, 
     
     @Override
     public void onUpdate(ItemStack itemstack, World world, Entity player, int par4, boolean par5) {
-        if (player.ticksExisted % 7 == 0) {
+        if (player.ticksExisted % 7 == 0 && !world.isRemote) {
             SpacetimeChargeHandler.changeCharge(itemstack, 1);
         }
     }
@@ -84,7 +84,7 @@ public class SpacetimeArmor extends ItemArmor implements IArmorTextureProvider, 
     
     @Override
     public void onArmorTickUpdate(World worldObj, EntityPlayer player, ItemStack itemstack) {
-        if (player.ticksExisted % 7 == 0) {
+        if (player.ticksExisted % 7 == 0 && !worldObj.isRemote) {
             SpacetimeChargeHandler.changeCharge(itemstack, 1);
         }
     }

@@ -10,7 +10,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemBow;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.ArrowLooseEvent;
@@ -147,13 +146,19 @@ public class SpacetimeCrossbow extends ItemBow implements ISpacetimeCharge {
     
     @Override
     public void onUpdate(ItemStack itemstack, World world, Entity player, int par4, boolean par5) {
-        if (((EntityPlayer) player).getItemInUse() != itemstack) {
-            if (player.ticksExisted % 5 == 0) {
+        if (!world.isRemote) {
+            if (((EntityPlayer) player).isUsingItem()) {
+                if (((EntityPlayer) player).getCurrentEquippedItem() != itemstack) {
+                    if (player.ticksExisted % 5 == 0) {
+                        SpacetimeChargeHandler.changeCharge(itemstack, 1);
+                    }
+                }
+            } else if (player.ticksExisted % 5 == 0) {
                 SpacetimeChargeHandler.changeCharge(itemstack, 1);
             }
         }
     }
-        
+    
     @Override
     public int getSpacetimeMaxCharge() {
         return spacetimeMaxCharge;
@@ -164,7 +169,7 @@ public class SpacetimeCrossbow extends ItemBow implements ISpacetimeCharge {
     public void addInformation(ItemStack itemstack, EntityPlayer player, List list, boolean par4) {
         list.add(SpacetimeChargeHandler.getSpacetimeCharge(itemstack) + "/" + spacetimeMaxCharge);
     }
-        
+    
     @Override
     public int getUseAmount() {
         return useAmount;
