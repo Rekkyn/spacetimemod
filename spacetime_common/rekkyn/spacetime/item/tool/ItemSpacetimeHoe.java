@@ -24,8 +24,8 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemSpacetimeHoe extends ItemHoe implements ISpacetimeCharge {
     
-    public static final int spacetimeMaxCharge = 50;
-    public static final int useAmount = 200;
+    public static final int spacetimeMaxCharge = 500;
+    public static final int useAmount = 2000;
     
     public ItemSpacetimeHoe(int id, EnumToolMaterial material) {
         super(id, material);
@@ -147,10 +147,10 @@ public class ItemSpacetimeHoe extends ItemHoe implements ISpacetimeCharge {
         if (!world.isRemote) {
             if (((EntityPlayer) player).isUsingItem()) {
                 if (((EntityPlayer) player).getCurrentEquippedItem() != itemstack) {
-                    SpacetimeChargeHandler.changeCharge(itemstack, 1);
+                    SpacetimeChargeHandler.changeCharge(itemstack, 10);
                 }
             } else {
-                SpacetimeChargeHandler.changeCharge(itemstack, 1);
+                SpacetimeChargeHandler.changeCharge(itemstack, 10);
             }
         }
     }

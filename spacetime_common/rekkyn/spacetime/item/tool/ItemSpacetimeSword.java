@@ -19,8 +19,8 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemSpacetimeSword extends ItemSword implements ISpacetimeCharge {
     
-    public static final int spacetimeMaxCharge = 50;
-    public static final int useAmount = 165;
+    public static final int spacetimeMaxCharge = 500;
+    public static final int useAmount = 1650;
     
     public ItemSpacetimeSword(int id, EnumToolMaterial material) {
         super(id, material);
@@ -86,7 +86,7 @@ public class ItemSpacetimeSword extends ItemSword implements ISpacetimeCharge {
     @Override
     public void onUpdate(ItemStack itemstack, World world, Entity player, int par4, boolean par5) {
         if (!world.isRemote) {
-            SpacetimeChargeHandler.changeCharge(itemstack, 1);
+            SpacetimeChargeHandler.changeCharge(itemstack, 10);
         }
     }
     

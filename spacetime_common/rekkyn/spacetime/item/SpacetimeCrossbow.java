@@ -22,8 +22,8 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class SpacetimeCrossbow extends ItemBow implements ISpacetimeCharge {
     
-    public static final int spacetimeMaxCharge = 100;
-    public static final int useAmount = 400;
+    public static final int spacetimeMaxCharge = 1000;
+    public static final int useAmount = 4000;
     
     public SpacetimeCrossbow(int id) {
         super(id);
@@ -149,12 +149,10 @@ public class SpacetimeCrossbow extends ItemBow implements ISpacetimeCharge {
         if (!world.isRemote) {
             if (((EntityPlayer) player).isUsingItem()) {
                 if (((EntityPlayer) player).getCurrentEquippedItem() != itemstack) {
-                    if (player.ticksExisted % 5 == 0) {
-                        SpacetimeChargeHandler.changeCharge(itemstack, 1);
-                    }
+                    SpacetimeChargeHandler.changeCharge(itemstack, 2);
                 }
-            } else if (player.ticksExisted % 5 == 0) {
-                SpacetimeChargeHandler.changeCharge(itemstack, 1);
+            } else {
+                SpacetimeChargeHandler.changeCharge(itemstack, 2);
             }
         }
     }

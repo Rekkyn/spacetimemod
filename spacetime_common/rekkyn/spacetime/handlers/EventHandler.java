@@ -67,7 +67,7 @@ public class EventHandler {
             EntityPlayer player = (EntityPlayer) event.source.getEntity();
             if (player.getCurrentEquippedItem() != null) {
                 if (player.getCurrentEquippedItem().getItem() == Spacetime.spacetimeSword) {
-                    SpacetimeChargeHandler.addChargeToTotal(player, (int) (event.entityLiving.experienceValue / 0.05));
+                    SpacetimeChargeHandler.addChargeToTotal(player, (int) (event.entityLiving.experienceValue / 0.005));
                 }
             }
         }

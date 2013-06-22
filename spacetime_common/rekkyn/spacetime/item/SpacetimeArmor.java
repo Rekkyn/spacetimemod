@@ -19,23 +19,22 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class SpacetimeArmor extends ItemArmor implements IArmorTextureProvider, ISpacetimeCharge {
     
     public int spacetimeMaxCharge;
-    public final int useAmount = -50;
     
     public SpacetimeArmor(int id, EnumArmorMaterial material, int armor, int slot) {
         super(id, material, armor, slot);
         
         switch (slot) {
             case 0:
-                spacetimeMaxCharge = 125;
+                spacetimeMaxCharge = 1250;
                 break;
             case 1:
-                spacetimeMaxCharge = 200;
+                spacetimeMaxCharge = 2000;
                 break;
             case 2:
-                spacetimeMaxCharge = 175;
+                spacetimeMaxCharge = 1750;
                 break;
             case 3:
-                spacetimeMaxCharge = 100;
+                spacetimeMaxCharge = 1000;
                 break;
             default:
                 spacetimeMaxCharge = 0;
@@ -60,8 +59,8 @@ public class SpacetimeArmor extends ItemArmor implements IArmorTextureProvider, 
     
     @Override
     public void onUpdate(ItemStack itemstack, World world, Entity player, int par4, boolean par5) {
-        if (player.ticksExisted % 7 == 0 && !world.isRemote) {
-            SpacetimeChargeHandler.changeCharge(itemstack, 1);
+        if (!world.isRemote) {
+            SpacetimeChargeHandler.changeCharge(itemstack, 2);
         }
     }
     
@@ -84,8 +83,8 @@ public class SpacetimeArmor extends ItemArmor implements IArmorTextureProvider, 
     
     @Override
     public void onArmorTickUpdate(World worldObj, EntityPlayer player, ItemStack itemstack) {
-        if (player.ticksExisted % 7 == 0 && !worldObj.isRemote) {
-            SpacetimeChargeHandler.changeCharge(itemstack, 1);
+        if (!worldObj.isRemote) {
+            SpacetimeChargeHandler.changeCharge(itemstack, 2);
         }
     }
         

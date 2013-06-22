@@ -341,7 +341,7 @@ public class EntityCrossbowBolt extends EntityArrow implements IProjectile, IThr
                             
                             if (shootingEntity instanceof EntityPlayer) {
                                 float distance = movingobjectposition.entityHit.getDistanceToEntity(shootingEntity);
-                                float amount = MathHelper.clamp_float(((25F / 54F) * (-16F + 7F * distance)), 25, 200);
+                                float amount = clamp_float(((25F / 54F) * (-16F + 7F * distance)), 25, 200)*10;
                                 SpacetimeChargeHandler.addChargeToTotal((EntityPlayer) shootingEntity, (int) amount);
                             }
                         }
@@ -522,5 +522,11 @@ public class EntityCrossbowBolt extends EntityArrow implements IProjectile, IThr
         }
         
     }
+    
+    public static float clamp_float(float par0, float par1, float par2)
+    {
+        return par0 < par1 ? par1 : (par0 > par2 ? par2 : par0);
+    }
+
     
 }
