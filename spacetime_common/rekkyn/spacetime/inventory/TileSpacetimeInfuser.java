@@ -12,7 +12,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class TileSpacetimeInfuser extends TileEntity implements ISidedInventory {
     
-    private static final int totalInfuseTime = 20 * 10;
+    private static final int totalInfuseTime = 20 * 60 * 10;
     
     private ItemStack[] inventory = new ItemStack[3];
     
@@ -210,7 +210,23 @@ public class TileSpacetimeInfuser extends TileEntity implements ISidedInventory 
             this.onInventoryChanged();
         }
         
+        /*List list = worldObj.getEntitiesWithinAABBExcludingEntity(null, AxisAlignedBB.getBoundingBox(xCoord - 10,
+                yCoord - 10, zCoord - 10, xCoord + 10, yCoord + 10, zCoord + 10));
+        Entity ientity;
+        for (Iterator iterator = list.iterator(); iterator.hasNext(); slowEntities(ientity)) {
+            ientity = (Entity) iterator.next();
+        }*/
     }
+    
+    /*public void slowEntities(Entity ientity) {
+        if (ientity instanceof EntityItem || ientity instanceof EntityXPOrb) { return; }
+        int chargeLevel = 4;
+        ientity.motionX /= chargeLevel * chargeLevel * chargeLevel * chargeLevel + 1;
+        ientity.motionZ /= chargeLevel * chargeLevel * chargeLevel * chargeLevel + 1;
+        if (ientity.motionY < 0.0D) {
+            ientity.motionY /= 1.0D + 0.002D * (chargeLevel * chargeLevel + 1);
+        }
+    }*/
     
     @Override
     public boolean canInsertItem(int slot, ItemStack item, int par3) {
@@ -222,7 +238,6 @@ public class TileSpacetimeInfuser extends TileEntity implements ISidedInventory 
         return par3 != 0 || par1 != 1 || par2ItemStack.itemID == Item.bucketEmpty.itemID;
     }
     
-
     @Override
     public int[] getAccessibleSlotsFromSide(int i) {
         return i == 0 ? side2 : i == 1 ? side1 : side3;
