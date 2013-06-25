@@ -45,8 +45,7 @@ public class BlockRekkynite extends Block {
     @SideOnly(Side.CLIENT)
     public void registerIcons(IconRegister iconRegister) {
         
-        blockIcon = iconRegister.registerIcon(Spacetime.modid.toLowerCase() + ":"
-                + this.getUnlocalizedName().substring(this.getUnlocalizedName().indexOf(".") + 1));
+        blockIcon = iconRegister.registerIcon("Spacetime:rekkynite");
     }
     
     private boolean isActive;
