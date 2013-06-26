@@ -15,6 +15,7 @@ import rekkyn.spacetime.block.BlockSpacetimeInfuser;
 import rekkyn.spacetime.block.BlockSpacetimeOre;
 import rekkyn.spacetime.entity.EntityCrossbowBolt;
 import rekkyn.spacetime.handlers.EventHandler;
+import rekkyn.spacetime.handlers.TimeSpeedCommand;
 import rekkyn.spacetime.item.GenericItem;
 import rekkyn.spacetime.item.ItemSpacetimeFluctuation;
 import rekkyn.spacetime.item.ItemSpacetimeJar;
@@ -34,10 +35,12 @@ import cpw.mods.fml.common.Mod.Init;
 import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.Mod.PostInit;
 import cpw.mods.fml.common.Mod.PreInit;
+import cpw.mods.fml.common.Mod.ServerStarting;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.EntityRegistry;
@@ -146,4 +149,11 @@ public class Spacetime {
     @PostInit
     public void postInit(FMLPostInitializationEvent event) {
     }
+    
+    @ServerStarting
+    public void serverLoad(FMLServerStartingEvent event)
+    {
+      event.registerServerCommand(new TimeSpeedCommand());
+    }
+
 }
