@@ -66,7 +66,7 @@ public class CommonProxy implements IGuiHandler {
         MinecraftForge.setBlockHarvestLevel(Spacetime.rekkynite, "pickaxe", 0);
         GameRegistry.registerBlock(Spacetime.rekkynite, "rekkynite");
         
-        MinecraftForge.setBlockHarvestLevel(Spacetime.spacetimeOre, "pickaxe", 2);
+        MinecraftForge.setBlockHarvestLevel(Spacetime.spacetimeOre, "pickaxe", 3);
         GameRegistry.registerBlock(Spacetime.spacetimeOre, "spacetimeOre");
         
         MinecraftForge.setBlockHarvestLevel(Spacetime.spacetimeInfuser, "pickaxe", 2);

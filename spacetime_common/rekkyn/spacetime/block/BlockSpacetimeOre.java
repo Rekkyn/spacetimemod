@@ -6,7 +6,6 @@ import net.minecraft.block.BlockOre;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.renderer.texture.IconRegister;
-import net.minecraft.entity.Entity;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 import rekkyn.spacetime.Spacetime;
@@ -47,9 +46,6 @@ public class BlockSpacetimeOre extends BlockOre {
     
     @Override
     @SideOnly(Side.CLIENT)
-    /**
-     * A randomly called display update to be able to add particles or other items for display
-     */
     public void randomDisplayTick(World world, int x, int y, int z, Random rand) {
         if (rand.nextInt(60) == 0) {
             world.playSound(x + 0.5D, y + 0.5D, z + 0.5D, "portal.portal", 0.5F, rand.nextFloat() * 0.4F + 0.8F, false);
@@ -80,14 +76,6 @@ public class BlockSpacetimeOre extends BlockOre {
             }
             
         }
-    }
-    
-    @Override
-    public void onFallenUpon(World world, int x, int y, int z, Entity entity, float fallDistance) {
-        if (!world.isRemote) {
-            world.createExplosion(entity, x, y, z, fallDistance + 7, true);
-        }
-        
     }
     
     @Override
