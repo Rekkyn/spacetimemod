@@ -35,7 +35,7 @@ public class TimeSpeedPacket extends SpacetimePacket {
     @Override
     public void execute(EntityPlayer player, Side side) throws ProtocolException {
         if (side.isClient()) {
-            mc.timer.timerSpeed = multiplier;
+            mc.timer.timerSpeed = multiplier;            
         } else {
             throw new ProtocolException("Cannot send this packet to the server!");
         }

@@ -20,6 +20,6 @@ public class SpacetimeModContainer extends DummyModContainer {
         
         public boolean registerBus(EventBus bus, LoadController controller) {
         bus.register(this);
-        return true;
+        return false;
         }
 }

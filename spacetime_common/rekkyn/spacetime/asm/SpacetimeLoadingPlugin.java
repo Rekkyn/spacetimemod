@@ -20,7 +20,7 @@ public class SpacetimeLoadingPlugin implements IFMLLoadingPlugin {
     
     @Override
     public String getModContainerClass() {
-        return "rekkyn.spacetime.SpacetimeModContainer";
+        return "rekkyn.spacetime.asm.SpacetimeModContainer";
     }
     
     @Override
