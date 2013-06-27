@@ -30,12 +30,12 @@ public class SpacetimeWorldGen implements IWorldGenerator {
     }
     
     private void generateSurface(World world, Random rand, int chunkX, int chunkZ) {
-        for (int k = 0; k < 3; k++) {
+        for (int k = 0; k < /*3*/ 5; k++) {
             int posX = chunkX + rand.nextInt(16);
-            int posY = rand.nextInt(64);
+            int posY = rand.nextInt(128);
             int posZ = chunkZ + rand.nextInt(16);
             
-            new WorldGenMinable(Spacetime.spacetimeOre.blockID, 3).generate(world, rand, posX, posY, posZ);
+            new WorldGenFluctuation(Spacetime.spacetimeOre.blockID, 4).generate(world, rand, posX, posY, posZ);
         }
     }
     
