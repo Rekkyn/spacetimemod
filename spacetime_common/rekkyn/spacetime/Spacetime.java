@@ -44,7 +44,7 @@ import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
-@Mod(modid = Spacetime.modid, name = "Spacetime", version = "pre1.1.1")
+@Mod(modid = Spacetime.modid, name = "Spacetime", version = "pre1.1.2")
 @NetworkMod(
         channels = { SpacetimePacket.CHANNEL }, clientSideRequired = true, serverSideRequired = false,
         packetHandler = PacketHandler.class)
