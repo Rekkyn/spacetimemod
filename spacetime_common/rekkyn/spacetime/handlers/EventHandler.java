@@ -50,22 +50,20 @@ public class EventHandler {
                         }
                     }
                 } else if (target.username.equals("epic_lion")) {
+                    EntitySheep sheep = new EntitySheep(event.target.worldObj);
+                    sheep.setPosition(event.target.posX, event.target.posY, event.target.posZ);
+                    sheep.motionX = (float) (Math.random() * 0.40000000298023224D - 0.20000000149011612D);
+                    sheep.motionY = 1;
+                    sheep.motionZ = (float) (Math.random() * 0.40000000298023224D - 0.20000000149011612D);
+                    sheep.setSheared(true);
+                    sheep.setEntityHealth(1);
+                    sheep.addPotionEffect(new PotionEffect(20, 100));
+                    if (!event.target.worldObj.isRemote) {
+                        event.target.worldObj.spawnEntityInWorld(sheep);
+                    }
                 }
             }
         }
-        
-        EntitySheep sheep = new EntitySheep(event.target.worldObj);
-        sheep.setPosition(event.target.posX, event.target.posY, event.target.posZ);
-        sheep.motionX = (float) (Math.random() * 0.40000000298023224D - 0.20000000149011612D);
-        sheep.motionY = 1;
-        sheep.motionZ = (float) (Math.random() * 0.40000000298023224D - 0.20000000149011612D);
-        sheep.setSheared(true);
-        sheep.setEntityHealth(1);
-        sheep.addPotionEffect(new PotionEffect(20, 100));
-        if (!event.target.worldObj.isRemote) {
-            event.target.worldObj.spawnEntityInWorld(sheep);
-        }
-
     }
     
     @ForgeSubscribe
