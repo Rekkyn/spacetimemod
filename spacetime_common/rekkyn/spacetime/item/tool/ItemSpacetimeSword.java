@@ -42,28 +42,12 @@ public class ItemSpacetimeSword extends ItemSword implements ISpacetimeCharge {
         if (SpacetimeChargeHandler.addChargeToTotal(player, -useAmount)) {
             
             for (int l = 0; l < 32; ++l) {
-                double d1 = player.posY + world.rand.nextFloat();
-                int randx = world.rand.nextInt(2) * 2 - 1;
-                int randz = world.rand.nextInt(2) * 2 - 1;
-                double d4 = (world.rand.nextFloat() - 0.5D) * 0.5D;
-                
-                double d0 = player.posX + 0.5D + 0.25D * randx;
-                double d3 = world.rand.nextFloat() * 2.0F * randx;
-                double d2 = player.posZ + 0.5D + 0.25D * randz;
-                double d5 = world.rand.nextFloat() * 2.0F * randz;
-                
-                if (world.isRemote) {
-                    ParticleEffects.spawnParticle("blue", d0, d1, d2, d3, d4, d5);
-                    
+                if (world.isRemote) {                    
                     float xVel = (world.rand.nextFloat() - 0.5F) * 5;
                     float yVel = (world.rand.nextFloat() - 0.5F) * 5;
                     float zVel = (world.rand.nextFloat() - 0.5F) * 5;
                     ParticleEffects.spawnParticle("crossbowTrail", player.posX, player.posY, player.posZ, xVel, yVel,
                             zVel);
-                    
-                    if (l % 4 == 0) {
-                        ParticleEffects.spawnParticle("orange", d0, d1, d2, d3, d4, d5);
-                    }
                 }
                 
             }
