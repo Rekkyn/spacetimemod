@@ -99,6 +99,7 @@ public class CommonProxy implements IGuiHandler {
         LanguageRegistry.instance().addStringLocalization("item.spacetimeJar.name", "Spacetime Jar");
         LanguageRegistry.instance().addStringLocalization("item.spacetimeJar.full.name", "Spacetime Jar");
         LanguageRegistry.addName(Spacetime.spacetimePanel, "Spacetime Panel");
+        LanguageRegistry.addName(Spacetime.spacetimePearl, "Spacetime Pearl");
         
     }
     

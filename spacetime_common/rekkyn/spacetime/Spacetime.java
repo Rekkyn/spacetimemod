@@ -18,6 +18,7 @@ import rekkyn.spacetime.handlers.EventHandler;
 import rekkyn.spacetime.item.GenericItem;
 import rekkyn.spacetime.item.ItemSpacetimeFluctuation;
 import rekkyn.spacetime.item.ItemSpacetimeJar;
+import rekkyn.spacetime.item.ItemSpacetimePearl;
 import rekkyn.spacetime.item.SpacetimeArmor;
 import rekkyn.spacetime.item.SpacetimeCrossbow;
 import rekkyn.spacetime.item.tool.ItemSpacetimeAxe;
@@ -113,6 +114,9 @@ public class Spacetime {
     public static final Block spacetimePanel = new BlockPanel(455, "spacetimePanel", "spacetimePanel",
             Material.iron, true).setHardness(5.0F).setResistance(10.0F).setStepSound(soundMetalFootstep)
             .setUnlocalizedName("spacetimePanel");
+    
+    public static final Item spacetimePearl = new ItemSpacetimePearl(1016).setUnlocalizedName("spacetimePearl")
+            .setCreativeTab(CreativeTabs.tabTransport).setMaxStackSize(1);
     
     @Instance("Spacetime")
     public static Spacetime instance;
