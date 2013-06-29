@@ -13,6 +13,7 @@ import rekkyn.spacetime.block.BlockPanel;
 import rekkyn.spacetime.block.BlockRekkynite;
 import rekkyn.spacetime.block.BlockSpacetimeInfuser;
 import rekkyn.spacetime.block.BlockSpacetimeOre;
+import rekkyn.spacetime.block.BlockSpacetimeChest;
 import rekkyn.spacetime.entity.EntityCrossbowBolt;
 import rekkyn.spacetime.handlers.EventHandler;
 import rekkyn.spacetime.item.GenericItem;
@@ -88,8 +89,8 @@ public class Spacetime {
     
     public static final Item spacetimeHelmet = new SpacetimeArmor(1008, spacetimeArmorMaterial, 0, 0)
             .setUnlocalizedName("spacetimeHelmet");
-    public static final Item spacetimeChest = new SpacetimeArmor(1009, spacetimeArmorMaterial, 0, 1)
-            .setUnlocalizedName("spacetimeChest");
+    public static final Item spacetimeChestplate = new SpacetimeArmor(1009, spacetimeArmorMaterial, 0, 1)
+            .setUnlocalizedName("spacetimeChestplate");
     public static final Item spacetimeLegs = new SpacetimeArmor(1010, spacetimeArmorMaterial, 0, 2)
             .setUnlocalizedName("spacetimeLegs");
     public static final Item spacetimeBoots = new SpacetimeArmor(1011, spacetimeArmorMaterial, 0, 3)
@@ -111,6 +112,8 @@ public class Spacetime {
     public static final Block spacetimePanel = new BlockPanel(454, "spacetimePanel", "spacetimePanel",
             Material.iron, true).setHardness(5.0F).setResistance(10.0F).setStepSound(soundMetalFootstep)
             .setUnlocalizedName("spacetimePanel");
+    
+    public static final Block spacetimeChest = new BlockSpacetimeChest(456).setUnlocalizedName("spacetimeChest");
     
     @Instance("Spacetime")
     public static Spacetime instance;

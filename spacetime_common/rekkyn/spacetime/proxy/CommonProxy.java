@@ -12,6 +12,7 @@ import net.minecraftforge.common.MinecraftForge;
 import rekkyn.spacetime.Spacetime;
 import rekkyn.spacetime.inventory.ContainerSpacetimeInfuser;
 import rekkyn.spacetime.inventory.GuiSpacetimeInfuser;
+import rekkyn.spacetime.inventory.TileSpacetimeChest;
 import rekkyn.spacetime.inventory.TileSpacetimeInfuser;
 import cpw.mods.fml.common.network.IGuiHandler;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -59,7 +60,7 @@ public class CommonProxy implements IGuiHandler {
     
     public void registerTiles() {
         GameRegistry.registerTileEntity(TileSpacetimeInfuser.class, "tileSpacetimeInfuser");
-        
+        GameRegistry.registerTileEntity(TileSpacetimeChest.class, "tileSpacetimeChest");
     }
     
     public void registerBlocks() {
@@ -74,6 +75,8 @@ public class CommonProxy implements IGuiHandler {
         
         MinecraftForge.setBlockHarvestLevel(Spacetime.spacetimePanel, "pickaxe", 1);
         GameRegistry.registerBlock(Spacetime.spacetimePanel, "spacetimePanel");
+        
+        GameRegistry.registerBlock(Spacetime.spacetimeChest, "spacetimeChest");
         
     }
     
@@ -90,7 +93,7 @@ public class CommonProxy implements IGuiHandler {
         LanguageRegistry.addName(Spacetime.spacetimeAxe, "\u00a79Spacetime Axe");
         LanguageRegistry.addName(Spacetime.spacetimeHoe, "\u00a79Spacetime Hoe");
         LanguageRegistry.addName(Spacetime.spacetimeHelmet, "\u00a79Spacetime Helmet");
-        LanguageRegistry.addName(Spacetime.spacetimeChest, "\u00a79Spacetime Chestplate");
+        LanguageRegistry.addName(Spacetime.spacetimeChestplate, "\u00a79Spacetime Chestplate");
         LanguageRegistry.addName(Spacetime.spacetimeLegs, "\u00a79Spacetime Leggings");
         LanguageRegistry.addName(Spacetime.spacetimeBoots, "\u00a79Spacetime Boots");
         LanguageRegistry.addName(Spacetime.spacetimeCrossbow, "\u00a79Spacetime Crossbow");
@@ -99,6 +102,7 @@ public class CommonProxy implements IGuiHandler {
         LanguageRegistry.instance().addStringLocalization("item.spacetimeJar.name", "Spacetime Jar");
         LanguageRegistry.instance().addStringLocalization("item.spacetimeJar.full.name", "Spacetime Jar");
         LanguageRegistry.addName(Spacetime.spacetimePanel, "Spacetime Panel");
+        LanguageRegistry.addName(Spacetime.spacetimeChest, "Spacetime Chest");
         
     }
     
@@ -120,7 +124,7 @@ public class CommonProxy implements IGuiHandler {
                 '|', Spacetime.ironRod);
         
         GameRegistry.addRecipe(new ItemStack(Spacetime.spacetimeHelmet), "xxx", "x x", 'x', Spacetime.spacetimeGem);
-        GameRegistry.addRecipe(new ItemStack(Spacetime.spacetimeChest), "x x", "xxx", "xxx", 'x',
+        GameRegistry.addRecipe(new ItemStack(Spacetime.spacetimeChestplate), "x x", "xxx", "xxx", 'x',
                 Spacetime.spacetimeGem);
         GameRegistry
                 .addRecipe(new ItemStack(Spacetime.spacetimeLegs), "xxx", "x x", "x x", 'x', Spacetime.spacetimeGem);
