@@ -19,6 +19,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import rekkyn.spacetime.Spacetime;
 import rekkyn.spacetime.inventory.TileSpacetimeInfuser;
+import rekkyn.spacetime.particles.ParticleEffects;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -154,28 +155,33 @@ public class BlockSpacetimeInfuser extends BlockContainer {
     @SideOnly(Side.CLIENT)
     public void randomDisplayTick(World world, int x, int y, int z, Random rand) {
         if (isActive) {
-            if (rand.nextInt(20) == 0) {
+            if (rand.nextInt(10) == 0) {
                 playSound(x + 0.5D, y + 0.5D, z + 0.5D, "portal.travel", 0.05F, rand.nextFloat() * 0.4F + 0.8F, false);
             }
-            int meta = world.getBlockMetadata(x, y, z);
-            float f = x + 0.5F;
-            float f1 = y + 0.0F + rand.nextFloat() * 6.0F / 16.0F;
-            float f2 = z + 0.5F;
-            float f3 = 0.52F;
-            float f4 = rand.nextFloat() * 0.6F - 0.3F;
             
-            if (meta == 4) {
-                world.spawnParticle("smoke", (f - f3), f1, (f2 + f4), 0.0D, 0.0D, 0.0D);
-                world.spawnParticle("flame", (f - f3), f1, (f2 + f4), 0.0D, 0.0D, 0.0D);
-            } else if (meta == 5) {
-                world.spawnParticle("smoke", (f + f3), f1, (f2 + f4), 0.0D, 0.0D, 0.0D);
-                world.spawnParticle("flame", (f + f3), f1, (f2 + f4), 0.0D, 0.0D, 0.0D);
-            } else if (meta == 2) {
-                world.spawnParticle("smoke", (f + f4), f1, (f2 - f3), 0.0D, 0.0D, 0.0D);
-                world.spawnParticle("flame", (f + f4), f1, (f2 - f3), 0.0D, 0.0D, 0.0D);
-            } else if (meta == 3) {
-                world.spawnParticle("smoke", (f + f4), f1, (f2 + f3), 0.0D, 0.0D, 0.0D);
-                world.spawnParticle("flame", (f + f4), f1, (f2 + f3), 0.0D, 0.0D, 0.0D);
+            for (int l = 0; l < 16; ++l) {
+                double d0 = x + rand.nextFloat();
+                double d1 = y + rand.nextFloat();
+                double d2 = z + rand.nextFloat();
+                double d3 = 0.0D;
+                double d4 = 0.0D;
+                double d5 = 0.0D;
+                int randx = rand.nextInt(2) * 2 - 1;
+                int randz = rand.nextInt(2) * 2 - 1;
+                d3 = (rand.nextFloat() - 0.5D) * 0.5D;
+                d4 = (rand.nextFloat() - 0.5D) * 0.5D;
+                d5 = (rand.nextFloat() - 0.5D) * 0.5D;
+                
+                d0 = x + 0.5D + 0.25D * randx;
+                d3 = rand.nextFloat() * 2.0F * randx;
+                d2 = z + 0.5D + 0.25D * randz;
+                d5 = rand.nextFloat() * 2.0F * randz;
+                
+                ParticleEffects.spawnParticle("blue", d0, d1, d2, d3, d4, d5);
+                
+                if (l % 4 == 0) {
+                    ParticleEffects.spawnParticle("purple", d0, d1, d2, d3, d4, d5);
+                }
             }
         }
     }
