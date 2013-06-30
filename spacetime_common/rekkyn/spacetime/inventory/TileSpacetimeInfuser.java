@@ -1,5 +1,7 @@
 package rekkyn.spacetime.inventory;
 
+import rekkyn.spacetime.block.BlockSpacetimeInfuser;
+import net.minecraft.block.BlockFurnace;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.Item;
@@ -21,6 +23,8 @@ public class TileSpacetimeInfuser extends TileEntity implements ISidedInventory 
     private static final int[] side1 = new int[] { 0 };
     private static final int[] side2 = new int[] { 2, 1 };
     private static final int[] side3 = new int[] { 1 };
+    
+    private String displayName;
     
     @Override
     public int getSizeInventory() {
@@ -110,6 +114,9 @@ public class TileSpacetimeInfuser extends TileEntity implements ISidedInventory 
         
         infuseTime = tagCompound.getShort("InfuseTime");
         
+        if (tagCompound.hasKey("CustomName")) {
+            displayName = tagCompound.getString("CustomName");
+        }
     }
     
     @Override
@@ -132,16 +139,11 @@ public class TileSpacetimeInfuser extends TileEntity implements ISidedInventory 
         }
         
         tagCompound.setTag("Inventory", itemList);
-    }
-    
-    @Override
-    public String getInvName() {
-        return "TileSpacetimeInfuser";
-    }
-    
-    @Override
-    public boolean isInvNameLocalized() {
-        return true;
+        
+        if (this.isInvNameLocalized()) {
+            tagCompound.setString("CustomName", displayName);
+        }
+        
     }
     
     @Override
@@ -193,6 +195,7 @@ public class TileSpacetimeInfuser extends TileEntity implements ISidedInventory 
     @Override
     public void updateEntity() {
         boolean infusing = false;
+        boolean wasInfusing = infuseTime > 0;
         if (!worldObj.isRemote) {
             if (this.canInfuse()) {
                 ++infuseTime;
@@ -205,28 +208,16 @@ public class TileSpacetimeInfuser extends TileEntity implements ISidedInventory 
             } else {
                 infuseTime = 0;
             }
+            
+            if (wasInfusing != infuseTime > 0) {
+                BlockSpacetimeInfuser.updateBlockState(infuseTime > 0, worldObj, xCoord, yCoord, zCoord);
+            }
+            
         }
         if (infusing) {
             this.onInventoryChanged();
         }
-        
-        /*List list = worldObj.getEntitiesWithinAABBExcludingEntity(null, AxisAlignedBB.getBoundingBox(xCoord - 10,
-                yCoord - 10, zCoord - 10, xCoord + 10, yCoord + 10, zCoord + 10));
-        Entity ientity;
-        for (Iterator iterator = list.iterator(); iterator.hasNext(); slowEntities(ientity)) {
-            ientity = (Entity) iterator.next();
-        }*/
     }
-    
-    /*public void slowEntities(Entity ientity) {
-        if (ientity instanceof EntityItem || ientity instanceof EntityXPOrb) { return; }
-        int chargeLevel = 4;
-        ientity.motionX /= chargeLevel * chargeLevel * chargeLevel * chargeLevel + 1;
-        ientity.motionZ /= chargeLevel * chargeLevel * chargeLevel * chargeLevel + 1;
-        if (ientity.motionY < 0.0D) {
-            ientity.motionY /= 1.0D + 0.002D * (chargeLevel * chargeLevel + 1);
-        }
-    }*/
     
     @Override
     public boolean canInsertItem(int slot, ItemStack item, int par3) {
@@ -241,6 +232,20 @@ public class TileSpacetimeInfuser extends TileEntity implements ISidedInventory 
     @Override
     public int[] getAccessibleSlotsFromSide(int i) {
         return i == 0 ? side2 : i == 1 ? side1 : side3;
+    }
+    
+    @Override
+    public String getInvName() {
+        return this.isInvNameLocalized() ? displayName : "Spacetime Infuser";
+    }
+    
+    @Override
+    public boolean isInvNameLocalized() {
+        return displayName != null && displayName.length() > 0;
+    }
+    
+    public void setDisplayName(String name) {
+        displayName = name;
     }
     
 }

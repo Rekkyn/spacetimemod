@@ -4,20 +4,43 @@ import java.util.Random;
 
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.Icon;
+import net.minecraft.util.MathHelper;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import rekkyn.spacetime.Spacetime;
 import rekkyn.spacetime.inventory.TileSpacetimeInfuser;
+import rekkyn.spacetime.particles.ParticleEffects;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockSpacetimeInfuser extends BlockContainer {
     
-    public BlockSpacetimeInfuser(int id) {
+    private final boolean isActive;
+    private static boolean keepInventory = false;
+    @SideOnly(Side.CLIENT)
+    private Icon iconTop;
+    @SideOnly(Side.CLIENT)
+    private Icon iconFront;
+    private final Minecraft mc = Minecraft.getMinecraft();
+    
+    public BlockSpacetimeInfuser(int id, boolean isActive) {
         super(id, Material.rock);
+        this.isActive = isActive;
+    }
+    
+    @Override
+    public int idDropped(int par1, Random par2Random, int par3) {
+        return Spacetime.spacetimeInfuser.blockID;
     }
     
     @Override
@@ -36,7 +59,9 @@ public class BlockSpacetimeInfuser extends BlockContainer {
     
     @Override
     public void breakBlock(World world, int x, int y, int z, int i, int j) {
-        dropItems(world, x, y, z);
+        if (!keepInventory) {
+            dropItems(world, x, y, z);
+        }
         super.breakBlock(world, x, y, z, i, j);
     }
     
@@ -74,5 +99,127 @@ public class BlockSpacetimeInfuser extends BlockContainer {
             }
         }
     }
+    
+    @Override
+    public void onBlockPlacedBy(World world, int x, int y, int z, EntityLiving entity, ItemStack item) {
+        int l = MathHelper.floor_double(entity.rotationYaw * 4.0F / 360.0F + 0.5D) & 3;
+        
+        if (l == 0) {
+            world.setBlockMetadataWithNotify(x, y, z, 2, 2);
+        }
+        
+        if (l == 1) {
+            world.setBlockMetadataWithNotify(x, y, z, 5, 2);
+        }
+        
+        if (l == 2) {
+            world.setBlockMetadataWithNotify(x, y, z, 3, 2);
+        }
+        
+        if (l == 3) {
+            world.setBlockMetadataWithNotify(x, y, z, 4, 2);
+        }
+        
+        if (item.hasDisplayName()) {
+            ((TileSpacetimeInfuser) world.getBlockTileEntity(x, y, z)).setDisplayName(item.getDisplayName());
+        }
+    }
+    
+    public static void updateBlockState(boolean active, World world, int x, int y, int z) {
+        int meta = world.getBlockMetadata(x, y, z);
+        TileEntity tileentity = world.getBlockTileEntity(x, y, z);
+        keepInventory = true;
+        
+        if (active) {
+            world.setBlock(x, y, z, Spacetime.spacetimeInfuserActive.blockID);
+        } else {
+            world.setBlock(x, y, z, Spacetime.spacetimeInfuser.blockID);
+        }
+        
+        keepInventory = false;
+        world.setBlockMetadataWithNotify(x, y, z, meta, 2);
+        
+        if (tileentity != null) {
+            tileentity.validate();
+            world.setBlockTileEntity(x, y, z, tileentity);
+        }
+    }
+    
+    @Override
+    @SideOnly(Side.CLIENT)
+    public int idPicked(World world, int par2, int par3, int par4) {
+        return Spacetime.spacetimeInfuser.blockID;
+    }
+    
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void randomDisplayTick(World world, int x, int y, int z, Random rand) {
+        if (isActive) {
+            if (rand.nextInt(10) == 0) {
+                playSound(x + 0.5D, y + 0.5D, z + 0.5D, "portal.travel", 0.05F, rand.nextFloat() * 0.4F + 0.8F, false);
+            }
+            
+            for (int l = 0; l < 16; ++l) {
+                double d0 = x + rand.nextFloat();
+                double d1 = y + rand.nextFloat();
+                double d2 = z + rand.nextFloat();
+                double d3 = 0.0D;
+                double d4 = 0.0D;
+                double d5 = 0.0D;
+                int randx = rand.nextInt(2) * 2 - 1;
+                int randz = rand.nextInt(2) * 2 - 1;
+                d3 = (rand.nextFloat() - 0.5D) * 0.5D;
+                d4 = (rand.nextFloat() - 0.5D) * 0.5D;
+                d5 = (rand.nextFloat() - 0.5D) * 0.5D;
+                
+                d0 = x + 0.5D + 0.25D * randx;
+                d3 = rand.nextFloat() * 2.0F * randx;
+                d2 = z + 0.5D + 0.25D * randz;
+                d5 = rand.nextFloat() * 2.0F * randz;
+                
+                ParticleEffects.spawnParticle("blue", d0, d1, d2, d3, d4, d5);
+                
+                if (l % 4 == 0) {
+                    ParticleEffects.spawnParticle("purple", d0, d1, d2, d3, d4, d5);
+                }
+            }
+        }
+    }
+    
+    @SideOnly(Side.CLIENT)
+    public void playSound(double x, double y, double z, String sound, float volume, float pitch, boolean par10) {
+        float distanceLimit = 2.0F;
+        
+        double distanceSq = mc.renderViewEntity.getDistanceSq(x, y, z);
+        
+        if (distanceSq < (distanceLimit * distanceLimit)) {
+            mc.sndManager.playSound(sound, (float) x, (float) y, (float) z, volume, pitch);
+        }
+    }
+    
+    @Override
+    @SideOnly(Side.CLIENT)
+    public Icon getIcon(int side, int meta) {
+        return side == 1 ? iconTop : side == 0 ? iconTop : side == 3 ? iconFront : blockIcon;
+    }
+    
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void registerIcons(IconRegister par1IconRegister) {
+        blockIcon = par1IconRegister.registerIcon("Spacetime:infuser_side");
+        iconFront = par1IconRegister.registerIcon(isActive ? "Spacetime:infuser_front_active"
+                : "Spacetime:infuser_front");
+        iconTop = par1IconRegister.registerIcon("Spacetime:infuser_top");
+    }
+    
+    @Override
+    @SideOnly(Side.CLIENT)
+    public Icon getBlockTexture(IBlockAccess world, int x, int y, int z, int side)
+    {
+        int meta = world.getBlockMetadata(x, y, z);
+        
+        return side == 1 ? iconTop : side == 0 ? iconTop : side != meta ? blockIcon : iconFront;
+    }
+
     
 }
