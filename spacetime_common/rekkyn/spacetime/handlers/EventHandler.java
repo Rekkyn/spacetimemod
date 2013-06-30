@@ -7,9 +7,11 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraftforge.event.ForgeSubscribe;
+import net.minecraftforge.event.entity.EntityEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import rekkyn.spacetime.Spacetime;
+import rekkyn.spacetime.proxy.CommonProxy;
 
 public class EventHandler {
     
@@ -43,7 +45,6 @@ public class EventHandler {
                         item.motionX = (float) (Math.random() * 0.40000000298023224D - 0.20000000149011612D);
                         item.motionY = 0.40000000298023224D;
                         item.motionZ = (float) (Math.random() * 0.40000000298023224D - 0.20000000149011612D);
-                        System.out.println(item.motionX);
                         
                         if (!target.worldObj.isRemote) {
                             target.worldObj.spawnEntityInWorld(item);
@@ -75,6 +76,13 @@ public class EventHandler {
                     SpacetimeChargeHandler.addChargeToTotal(player, (int) (event.entityLiving.experienceValue / 0.005));
                 }
             }
+        }
+    }
+    
+    @ForgeSubscribe
+    public void onEntityConstructing(EntityEvent.EntityConstructing event) {
+        if (event.entity instanceof EntityPlayer) {
+            event.entity.registerExtendedProperties(CommonProxy.extendedPropertiesIdentifier, new PlayerInformation());
         }
     }
     

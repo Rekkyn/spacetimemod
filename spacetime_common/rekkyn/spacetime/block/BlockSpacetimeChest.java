@@ -13,6 +13,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import rekkyn.spacetime.Spacetime;
+import rekkyn.spacetime.handlers.PlayerInformation;
 import rekkyn.spacetime.inventory.InventorySpacetimeChest;
 import rekkyn.spacetime.inventory.TileSpacetimeChest;
 import cpw.mods.fml.relauncher.Side;
@@ -54,7 +55,7 @@ public class BlockSpacetimeChest extends BlockContainer {
     public void onBlockPlacedBy(World par1World, int par2, int par3, int par4, EntityLiving par5EntityLiving,
             ItemStack par6ItemStack) {
         byte b0 = 0;
-        int l = MathHelper.floor_double((par5EntityLiving.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
+        int l = MathHelper.floor_double(par5EntityLiving.rotationYaw * 4.0F / 360.0F + 0.5D) & 3;
         
         if (l == 0) {
             b0 = 2;
@@ -78,23 +79,26 @@ public class BlockSpacetimeChest extends BlockContainer {
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int par6, float par7,
             float par8, float par9) {
-        //TODO: MAKE THIS WORK YO
-        InventorySpacetimeChest inventoryspacetime = new InventorySpacetimeChest();
-        TileSpacetimeChest spacetimechest = (TileSpacetimeChest) world.getBlockTileEntity(x, y, z);
-        
-        if (inventoryspacetime != null && spacetimechest != null) {
-            if (world.isBlockNormalCube(x, y + 1, z)) {
-                return true;
-            } else if (world.isRemote) {
-                return true;
+        PlayerInformation pi = PlayerInformation.forPlayer(player);
+        if (pi != null) {
+            InventorySpacetimeChest inventoryspacetime = pi.getSpacetimeChest();
+            TileSpacetimeChest spacetimechest = (TileSpacetimeChest) world.getBlockTileEntity(x, y, z);
+            
+            if (inventoryspacetime != null && spacetimechest != null) {
+                if (world.isBlockNormalCube(x, y + 1, z)) {
+                    return true;
+                } else if (world.isRemote) {
+                    return true;
+                } else {
+                    inventoryspacetime.setAssociatedChest(spacetimechest);
+                    player.displayGUIChest(inventoryspacetime);
+                    return true;
+                }
             } else {
-                inventoryspacetime.setAssociatedChest(spacetimechest);
-                player.displayGUIChest(inventoryspacetime);
                 return true;
             }
-        } else {
-            return true;
         }
+        return true;
     }
     
     @Override
@@ -104,24 +108,24 @@ public class BlockSpacetimeChest extends BlockContainer {
     
     @Override
     @SideOnly(Side.CLIENT)
-    public void randomDisplayTick(World par1World, int par2, int par3, int par4, Random par5Random) {
+    public void randomDisplayTick(World world, int x, int y, int z, Random rand) {
         for (int l = 0; l < 3; ++l) {
-            double d0 = (par2 + par5Random.nextFloat());
-            double d1 = (par3 + par5Random.nextFloat());
-            d0 = (par4 + par5Random.nextFloat());
+            double d0 = x + rand.nextFloat();
+            double d1 = y + rand.nextFloat();
+            d0 = z + rand.nextFloat();
             double d2 = 0.0D;
             double d3 = 0.0D;
             double d4 = 0.0D;
-            int i1 = par5Random.nextInt(2) * 2 - 1;
-            int j1 = par5Random.nextInt(2) * 2 - 1;
-            d2 = (par5Random.nextFloat() - 0.5D) * 0.125D;
-            d3 = (par5Random.nextFloat() - 0.5D) * 0.125D;
-            d4 = (par5Random.nextFloat() - 0.5D) * 0.125D;
-            double d5 = par4 + 0.5D + 0.25D * j1;
-            d4 = (par5Random.nextFloat() * 1.0F * j1);
-            double d6 = par2 + 0.5D + 0.25D * i1;
-            d2 = (par5Random.nextFloat() * 1.0F * i1);
-            par1World.spawnParticle("portal", d6, d1, d5, d2, d3, d4);
+            int i1 = rand.nextInt(2) * 2 - 1;
+            int j1 = rand.nextInt(2) * 2 - 1;
+            d2 = (rand.nextFloat() - 0.5D) * 0.125D;
+            d3 = (rand.nextFloat() - 0.5D) * 0.125D;
+            d4 = (rand.nextFloat() - 0.5D) * 0.125D;
+            double d5 = z + 0.5D + 0.25D * j1;
+            d4 = rand.nextFloat() * 1.0F * j1;
+            double d6 = x + 0.5D + 0.25D * i1;
+            d2 = rand.nextFloat() * 1.0F * i1;
+            world.spawnParticle("portal", d6, d1, d5, d2, d3, d4);
         }
     }
     

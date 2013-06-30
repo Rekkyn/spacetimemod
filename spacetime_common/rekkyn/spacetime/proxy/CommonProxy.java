@@ -19,6 +19,8 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
 public class CommonProxy implements IGuiHandler {
+    public static final String extendedPropertiesIdentifier = "spacetime";
+
     public void registerStuffNJazz() {
         ChestGenHooks.getInfo(ChestGenHooks.DUNGEON_CHEST).addItem(
                 new WeightedRandomChestContent(new ItemStack(Spacetime.spacetimeFluctuation), 1, 1, 50));

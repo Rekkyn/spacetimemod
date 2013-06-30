@@ -17,15 +17,14 @@ public class InventorySpacetimeChest extends InventoryBasic {
         associatedChest = chest;
     }
     
-    public void loadInventoryFromNBT(NBTTagList par1NBTTagList) {
-        int i;
-        
+    public void loadInventoryFromNBT(NBTTagList taglist) {
+        int i;        
         for (i = 0; i < this.getSizeInventory(); ++i) {
             this.setInventorySlotContents(i, (ItemStack) null);
         }
         
-        for (i = 0; i < par1NBTTagList.tagCount(); ++i) {
-            NBTTagCompound nbttagcompound = (NBTTagCompound) par1NBTTagList.tagAt(i);
+        for (i = 0; i < taglist.tagCount(); ++i) {
+            NBTTagCompound nbttagcompound = (NBTTagCompound) taglist.tagAt(i);
             int j = nbttagcompound.getByte("Slot") & 255;
             
             if (j >= 0 && j < this.getSizeInventory()) {
