@@ -16,6 +16,7 @@ import rekkyn.spacetime.Spacetime;
 import rekkyn.spacetime.handlers.PlayerInformation;
 import rekkyn.spacetime.inventory.InventorySpacetimeChest;
 import rekkyn.spacetime.inventory.TileSpacetimeChest;
+import rekkyn.spacetime.particles.ParticleEffects;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -109,7 +110,7 @@ public class BlockSpacetimeChest extends BlockContainer {
     @Override
     @SideOnly(Side.CLIENT)
     public void randomDisplayTick(World world, int x, int y, int z, Random rand) {
-        for (int l = 0; l < 3; ++l) {
+        for (int l = 0; l < 16; ++l) {
             double d0 = x + rand.nextFloat();
             double d1 = y + rand.nextFloat();
             d0 = z + rand.nextFloat();
@@ -125,7 +126,11 @@ public class BlockSpacetimeChest extends BlockContainer {
             d4 = rand.nextFloat() * 1.0F * j1;
             double d6 = x + 0.5D + 0.25D * i1;
             d2 = rand.nextFloat() * 1.0F * i1;
-            world.spawnParticle("portal", d6, d1, d5, d2, d3, d4);
+            ParticleEffects.spawnParticle("blue", d6, d1, d5, d2, d3, d4);
+            
+            if (l % 4 == 0) {
+                ParticleEffects.spawnParticle("purple", d6, d1, d5, d2, d3, d4);
+            }
         }
     }
     

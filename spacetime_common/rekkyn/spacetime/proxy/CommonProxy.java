@@ -103,9 +103,9 @@ public class CommonProxy implements IGuiHandler {
         LanguageRegistry.addName(Spacetime.crossbowBolt, "Crossbow Bolt");
         LanguageRegistry.instance().addStringLocalization("item.spacetimeJar.name", "Spacetime Jar");
         LanguageRegistry.instance().addStringLocalization("item.spacetimeJar.full.name", "Spacetime Jar");
-        LanguageRegistry.addName(Spacetime.spacetimePanel, "Spacetime Panel");
-        LanguageRegistry.addName(Spacetime.spacetimeChest, "Spacetime Chest");
-        LanguageRegistry.addName(Spacetime.spacetimePearl, "Spacetime Pearl");
+        LanguageRegistry.addName(Spacetime.spacetimePanel, "\u00a79Spacetime Panel");
+        LanguageRegistry.addName(Spacetime.spacetimeChest, "\u00a79Spacetime Chest");
+        LanguageRegistry.addName(Spacetime.spacetimePearl, "\u00a79Spacetime Pearl");
         
     }
     
