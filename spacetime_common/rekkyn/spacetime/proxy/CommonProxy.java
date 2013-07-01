@@ -12,6 +12,7 @@ import net.minecraftforge.common.MinecraftForge;
 import rekkyn.spacetime.Spacetime;
 import rekkyn.spacetime.inventory.ContainerSpacetimeInfuser;
 import rekkyn.spacetime.inventory.GuiSpacetimeInfuser;
+import rekkyn.spacetime.inventory.TileSpacetimeFluctuation;
 import rekkyn.spacetime.inventory.TileSpacetimeInfuser;
 import cpw.mods.fml.common.network.IGuiHandler;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -59,6 +60,7 @@ public class CommonProxy implements IGuiHandler {
     
     public void registerTiles() {
         GameRegistry.registerTileEntity(TileSpacetimeInfuser.class, "tileSpacetimeInfuser");
+        GameRegistry.registerTileEntity(TileSpacetimeFluctuation.class, "tileSpacetimeFluctuation");
         
     }
     

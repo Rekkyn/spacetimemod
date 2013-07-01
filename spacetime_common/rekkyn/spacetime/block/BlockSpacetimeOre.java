@@ -2,24 +2,56 @@ package rekkyn.spacetime.block;
 
 import java.util.Random;
 
-import net.minecraft.block.BlockOre;
+import net.minecraft.block.BlockContainer;
+import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.Explosion;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import rekkyn.spacetime.Spacetime;
+import rekkyn.spacetime.inventory.TileSpacetimeFluctuation;
 import rekkyn.spacetime.particles.ParticleEffects;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class BlockSpacetimeOre extends BlockOre {
+public class BlockSpacetimeOre extends BlockContainer {
     
     public Minecraft mc;
     public WorldClient theWorld;
     
-    public BlockSpacetimeOre(int id) {
-        super(id);
+    public BlockSpacetimeOre(int id, Material material) {
+        super(id, material);
+    }
+    
+    @Override
+    public boolean isOpaqueCube() {
+        return false;
+    }
+    
+    @Override
+    public boolean renderAsNormalBlock() {
+        return false;
+    }
+    
+    @SideOnly(Side.CLIENT)
+    public void registerIcons(IconRegister icon)
+    {
+        this.blockIcon = icon.registerIcon("Spacetime:rekkyniteGlowing");
+    }
+    
+    @SideOnly(Side.CLIENT)
+    public boolean shouldSideBeRendered(IBlockAccess par1IBlockAccess, int par2, int par3, int par4, int par5)
+    {
+        return false;
+    }
+    
+    @Override
+    public AxisAlignedBB getCollisionBoundingBoxFromPool(World par1World, int par2, int par3, int par4) {
+        return null;
     }
     
     @Override
@@ -37,12 +69,6 @@ public class BlockSpacetimeOre extends BlockOre {
         return this.quantityDropped(random);
     }
     
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void registerIcons(IconRegister iconRegister) {
-        
-        blockIcon = iconRegister.registerIcon("Spacetime:spacetimeOre");
-    }
     
     @Override
     @SideOnly(Side.CLIENT)
@@ -86,6 +112,11 @@ public class BlockSpacetimeOre extends BlockOre {
     @Override
     public boolean canDropFromExplosion(Explosion par1Explosion) {
         return false;
+    }
+    
+    @Override
+    public TileEntity createNewTileEntity(World world) {
+        return new TileSpacetimeFluctuation();
     }
     
 }
