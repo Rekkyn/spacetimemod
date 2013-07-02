@@ -1,5 +1,9 @@
 package rekkyn.spacetime.inventory;
 
+import java.util.Iterator;
+import java.util.List;
+
+import net.minecraft.entity.Entity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import cpw.mods.fml.relauncher.Side;
@@ -21,9 +25,32 @@ public class TileSpacetimeFluctuation extends TileEntity {
     @Override
     @SideOnly(Side.CLIENT)
     public AxisAlignedBB getRenderBoundingBox() {
-        //TODO: make this better yo
+        // TODO: make this better yo
         return AxisAlignedBB.getBoundingBox(Double.NEGATIVE_INFINITY, Double.NEGATIVE_INFINITY,
                 Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY);
     }
     
+    @Override
+    public void updateEntity() {
+        
+        List list = worldObj.getEntitiesWithinAABBExcludingEntity(null, AxisAlignedBB.getBoundingBox(xCoord - 10,
+                yCoord - 10, zCoord - 10, xCoord + 10, yCoord + 10, zCoord + 10));
+        Entity entity;
+        for (Iterator iterator = list.iterator(); iterator.hasNext(); pullEntities(entity)) {
+            entity = (Entity) iterator.next();
+        }
+    }
+    
+    public void pullEntities(Entity entity) {
+        double dist = entity.getDistance(xCoord, yCoord, zCoord);
+        if (dist > 10) { return; }
+        double xDist = xCoord + 0.5 - entity.posX;
+        double yDist = yCoord + 0.5 - entity.posY;
+        double zDist = zCoord + 0.5 - entity.posZ;
+        double power = (10 - dist) / 150;
+        double xMotion = (1 / dist * xDist) * power;
+        double yMotion = (1 / dist * yDist) * power;
+        double zMotion = (1 / dist * zDist) * power;
+        entity.addVelocity(xMotion, yMotion, zMotion);
+    }
 }
