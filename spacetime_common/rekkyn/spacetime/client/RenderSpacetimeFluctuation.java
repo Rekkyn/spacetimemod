@@ -52,11 +52,11 @@ public class RenderSpacetimeFluctuation extends TileEntitySpecialRenderer {
                 GL11.glRotatef(random.nextFloat() * 360.0F, 0.0F, 1.0F, 0.0F);
                 GL11.glRotatef(random.nextFloat() * 360.0F + f1 * 90.0F, 0.0F, 0.0F, 1.0F);
                 tessellator.startDrawing(6);
-                float f3 = random.nextFloat() * 20.0F + 5.0F;
-                float f4 = random.nextFloat() * 2.0F + 1.0F;
-                tessellator.setColorRGBA_I(16777215, 255);
+                float f3 = random.nextFloat() * 10.0F + 5.0F;
+                float f4 = random.nextFloat() * 2.0F + 2.0F;
+                tessellator.setColorRGBA_I(13158655, 191);
                 tessellator.addVertex(0.0D, 0.0D, 0.0D);
-                tessellator.setColorRGBA_I(16711935, 0);
+                tessellator.setColorRGBA_I(6947071, 0);
                 tessellator.addVertex(-0.866D * f4, f3, (-0.5F * f4));
                 tessellator.addVertex(0.866D * f4, f3, (-0.5F * f4));
                 tessellator.addVertex(0.0D, f3, (1.0F * f4));

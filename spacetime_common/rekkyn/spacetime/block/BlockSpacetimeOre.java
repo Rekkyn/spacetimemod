@@ -85,15 +85,14 @@ public class BlockSpacetimeOre extends BlockContainer {
             double d4 = 0.0D;
             double d5 = 0.0D;
             int randx = rand.nextInt(2) * 2 - 1;
+            int randy = rand.nextInt(2) * 2 - 1;
             int randz = rand.nextInt(2) * 2 - 1;
-            d3 = (rand.nextFloat() - 0.5D) * 0.5D;
-            d4 = (rand.nextFloat() - 0.5D) * 0.5D;
-            d5 = (rand.nextFloat() - 0.5D) * 0.5D;
             
             d0 = x + 0.5D + 0.25D * randx;
-            d3 = rand.nextFloat() * 2.0F * randx;
+            d3 = rand.nextFloat() * 10.0F * randx;
+            d4 = rand.nextFloat() * 10.0F * randy;
             d2 = z + 0.5D + 0.25D * randz;
-            d5 = rand.nextFloat() * 2.0F * randz;
+            d5 = rand.nextFloat() * 10.0F * randz;
             
             ParticleEffects.spawnParticle("blue", d0, d1, d2, d3, d4, d5);
             
