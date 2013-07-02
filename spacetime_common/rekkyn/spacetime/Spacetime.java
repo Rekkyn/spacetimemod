@@ -18,6 +18,7 @@ import rekkyn.spacetime.handlers.EventHandler;
 import rekkyn.spacetime.item.GenericItem;
 import rekkyn.spacetime.item.ItemSpacetimeFluctuation;
 import rekkyn.spacetime.item.ItemSpacetimeJar;
+import rekkyn.spacetime.item.ItemSpacetimePearl;
 import rekkyn.spacetime.item.SpacetimeArmor;
 import rekkyn.spacetime.item.SpacetimeCrossbow;
 import rekkyn.spacetime.item.tool.ItemSpacetimeAxe;
@@ -56,12 +57,14 @@ public class Spacetime {
             .setHardness(1.7F).setResistance(10F).setUnlocalizedName("rekkynite");
     public static final BlockRekkynite rekkyniteGlowing = (BlockRekkynite) new BlockRekkynite(451, Material.rock, true)
             .setHardness(1.7F).setResistance(10F).setUnlocalizedName("rekkyniteGlowing").setLightValue(1.0F);
-    public static final BlockSpacetimeOre spacetimeOre = (BlockSpacetimeOre) new BlockSpacetimeOre(452).setHardness(5F)
+    public static final BlockSpacetimeOre spacetimeOre = (BlockSpacetimeOre) new BlockSpacetimeOre(452, Material.rock).setHardness(5F)
             .setResistance(50F).setUnlocalizedName("spacetimeOre").setCreativeTab(CreativeTabs.tabBlock)
             .setLightValue(1.0F);
-    public static final BlockSpacetimeInfuser spacetimeInfuser = (BlockSpacetimeInfuser) new BlockSpacetimeInfuser(453)
+    public static final BlockSpacetimeInfuser spacetimeInfuser = (BlockSpacetimeInfuser) new BlockSpacetimeInfuser(453, false)
             .setHardness(50.0F).setResistance(2000.0F).setUnlocalizedName("spacetimeInfuser")
             .setCreativeTab(CreativeTabs.tabDecorations);
+    public static final BlockSpacetimeInfuser spacetimeInfuserActive = (BlockSpacetimeInfuser) new BlockSpacetimeInfuser(454, true)
+    .setHardness(50.0F).setResistance(2000.0F).setUnlocalizedName("spacetimeInfuser").setLightValue(1.0F);
     
     public static final ItemSpacetimeFluctuation spacetimeFluctuation = (ItemSpacetimeFluctuation) new ItemSpacetimeFluctuation(
             1000).setMaxStackSize(1).setCreativeTab(CreativeTabs.tabMaterials)
@@ -108,9 +111,12 @@ public class Spacetime {
     
     public static final StepSound soundMetalFootstep = new StepSound("stone", 1.0F, 1.5F);
     
-    public static final Block spacetimePanel = new BlockPanel(454, "spacetimePanel", "spacetimePanel",
+    public static final Block spacetimePanel = new BlockPanel(455, "spacetimePanel", "spacetimePanel",
             Material.iron, true).setHardness(5.0F).setResistance(10.0F).setStepSound(soundMetalFootstep)
             .setUnlocalizedName("spacetimePanel");
+    
+    public static final Item spacetimePearl = new ItemSpacetimePearl(1016).setUnlocalizedName("spacetimePearl")
+            .setCreativeTab(CreativeTabs.tabTransport).setMaxStackSize(1);
     
     @Instance("Spacetime")
     public static Spacetime instance;

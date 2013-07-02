@@ -17,8 +17,9 @@ public class GuiSpacetimeInfuser extends GuiContainer {
     
     @Override
     protected void drawGuiContainerForegroundLayer(int i, int j) {
-        
-        fontRenderer.drawString("Spacetime Infuser", 8, 6, 4210752);
+        String s = infuserInventory.isInvNameLocalized() ? infuserInventory.getInvName() : StatCollector
+                .translateToLocal(infuserInventory.getInvName());
+        fontRenderer.drawString(s, 8, 6, 4210752);
         fontRenderer.drawString(StatCollector.translateToLocal("container.inventory"), 6, ySize - 96, 4210752);
     }
     
