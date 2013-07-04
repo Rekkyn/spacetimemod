@@ -102,6 +102,7 @@ public class CommonProxy implements IGuiHandler {
         LanguageRegistry.instance().addStringLocalization("item.spacetimeJar.full.name", "Spacetime Jar");
         LanguageRegistry.addName(Spacetime.spacetimePanel, "Spacetime Panel");
         LanguageRegistry.addName(Spacetime.spacetimePearl, "Spacetime Pearl");
+        LanguageRegistry.addName(Spacetime.quantumRay, "Quantum Ray");
         
     }
     
@@ -158,8 +159,8 @@ public class CommonProxy implements IGuiHandler {
         GameRegistry.addRecipe(new ItemStack(Spacetime.spacetimePanel), "OIO", "IDI", "OIO", 'I', Item.ingotIron, 'D',
                 Item.diamond, 'O', Block.obsidian);
         
-        GameRegistry.addRecipe(new ItemStack(Spacetime.spacetimeJar), "GGG", "P P", "PPP", 'G', Spacetime.spacetimeGem, 'P',
-                Spacetime.spacetimePanel);
+        GameRegistry.addRecipe(new ItemStack(Spacetime.spacetimeJar), "GGG", "P P", "PPP", 'G', Spacetime.spacetimeGem,
+                'P', Spacetime.spacetimePanel);
         
     }
 }
