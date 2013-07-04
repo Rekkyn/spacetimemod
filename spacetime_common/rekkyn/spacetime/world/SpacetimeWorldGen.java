@@ -35,7 +35,7 @@ public class SpacetimeWorldGen implements IWorldGenerator {
             int posY = rand.nextInt(128);
             int posZ = chunkZ + rand.nextInt(16);
             
-            new WorldGenFluctuation(Spacetime.spacetimeOre.blockID, 4).generate(world, rand, posX, posY, posZ);
+            new WorldGenFluctuation(Spacetime.spacetimeOre.blockID, 5).generate(world, rand, posX, posY, posZ);
         }
     }
     
