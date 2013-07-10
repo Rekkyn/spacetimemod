@@ -6,6 +6,7 @@ import rekkyn.spacetime.client.RenderCrossbowBolt;
 import rekkyn.spacetime.client.RenderItemCrossbow;
 import rekkyn.spacetime.client.RenderItemHoe;
 import rekkyn.spacetime.client.RenderSpacetimeChest;
+import rekkyn.spacetime.client.RenderSpacetimeFluctuation;
 import rekkyn.spacetime.entity.EntityCrossbowBolt;
 import rekkyn.spacetime.handlers.HUDHandler;
 import cpw.mods.fml.client.registry.ClientRegistry;
@@ -25,7 +26,8 @@ public class ClientProxy extends CommonProxy {
         
         ClientRegistry.bindTileEntitySpecialRenderer(rekkyn.spacetime.inventory.TileSpacetimeChest.class,
                 new RenderSpacetimeChest());
-        
+        ClientRegistry.bindTileEntitySpecialRenderer(rekkyn.spacetime.inventory.TileSpacetimeFluctuation.class,
+                new RenderSpacetimeFluctuation());        
     }
     
 }

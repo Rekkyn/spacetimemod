@@ -13,6 +13,7 @@ import rekkyn.spacetime.Spacetime;
 import rekkyn.spacetime.inventory.ContainerSpacetimeInfuser;
 import rekkyn.spacetime.inventory.GuiSpacetimeInfuser;
 import rekkyn.spacetime.inventory.TileSpacetimeChest;
+import rekkyn.spacetime.inventory.TileSpacetimeFluctuation;
 import rekkyn.spacetime.inventory.TileSpacetimeInfuser;
 import cpw.mods.fml.common.network.IGuiHandler;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -63,6 +64,7 @@ public class CommonProxy implements IGuiHandler {
     public void registerTiles() {
         GameRegistry.registerTileEntity(TileSpacetimeInfuser.class, "tileSpacetimeInfuser");
         GameRegistry.registerTileEntity(TileSpacetimeChest.class, "tileSpacetimeChest");
+        GameRegistry.registerTileEntity(TileSpacetimeFluctuation.class, "tileSpacetimeFluctuation");
     }
     
     public void registerBlocks() {
@@ -106,6 +108,7 @@ public class CommonProxy implements IGuiHandler {
         LanguageRegistry.addName(Spacetime.spacetimePanel, "\u00a79Spacetime Panel");
         LanguageRegistry.addName(Spacetime.spacetimeChest, "\u00a79Spacetime Chest");
         LanguageRegistry.addName(Spacetime.spacetimePearl, "\u00a79Spacetime Pearl");
+        LanguageRegistry.addName(Spacetime.quantumRay, "Quantum Ray");
         
     }
     
@@ -162,8 +165,8 @@ public class CommonProxy implements IGuiHandler {
         GameRegistry.addRecipe(new ItemStack(Spacetime.spacetimePanel), "OIO", "IDI", "OIO", 'I', Item.ingotIron, 'D',
                 Item.diamond, 'O', Block.obsidian);
         
-        GameRegistry.addRecipe(new ItemStack(Spacetime.spacetimeJar), "GGG", "P P", "PPP", 'G', Spacetime.spacetimeGem, 'P',
-                Spacetime.spacetimePanel);
+        GameRegistry.addRecipe(new ItemStack(Spacetime.spacetimeJar), "GGG", "P P", "PPP", 'G', Spacetime.spacetimeGem,
+                'P', Spacetime.spacetimePanel);
         
     }
 }
