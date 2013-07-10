@@ -54,7 +54,8 @@ public class RenderSpacetimeFluctuation extends TileEntitySpecialRenderer {
                 tessellator.startDrawing(6);
                 float f3 = random.nextFloat() * 10.0F + 5.0F;
                 float f4 = random.nextFloat() * 2.0F + 2.0F;
-                tessellator.setColorRGBA_I(13158655, 191);
+                float a = (float)entity.damage / 100.0F;
+                tessellator.setColorRGBA_I(13158655, (int) (127 * a));
                 tessellator.addVertex(0.0D, 0.0D, 0.0D);
                 tessellator.setColorRGBA_I(6947071, 0);
                 tessellator.addVertex(-0.866D * f4, f3, (-0.5F * f4));

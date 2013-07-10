@@ -5,9 +5,13 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumMovingObjectType;
+import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 import rekkyn.spacetime.Spacetime;
+import rekkyn.spacetime.inventory.TileSpacetimeFluctuation;
 import rekkyn.spacetime.packets.ParticlePacket;
+import rekkyn.spacetime.packets.SpacetimeFluctuationPacket;
 import cpw.mods.fml.common.network.PacketDispatcher;
 
 public class ItemQuantumRay extends Item {
@@ -39,12 +43,31 @@ public class ItemQuantumRay extends Item {
         if (!player.worldObj.isRemote) {
             if (mc.renderViewEntity.rayTrace(200, 1.0F) != null) {
                 spawnParticles(player.posX, player.posY, player.posZ, player.worldObj);
-                int x = mc.renderViewEntity.rayTrace(200, 1.0F).blockX;
-                int y = mc.renderViewEntity.rayTrace(200, 1.0F).blockY;
-                int z = mc.renderViewEntity.rayTrace(200, 1.0F).blockZ;
-                int side = mc.renderViewEntity.rayTrace(200, 1.0F).sideHit;
-                if (player.worldObj.getBlockId(x, y, z) == Spacetime.spacetimeOre.blockID) {
-                    player.worldObj.destroyBlock(x, y, z, false);
+                
+                MovingObjectPosition movingobjectposition = this.getMovingObjectPositionFromPlayer(player.worldObj,
+                        player, true);
+                
+                if (movingobjectposition != null) {
+                    if (movingobjectposition.typeOfHit == EnumMovingObjectType.TILE) {
+                        int x = movingobjectposition.blockX;
+                        int y = movingobjectposition.blockY;
+                        int z = movingobjectposition.blockZ;
+                        
+                        if (player.worldObj.getBlockId(x, y, z) == Spacetime.spacetimeOre.blockID) {
+                            TileSpacetimeFluctuation tile = (TileSpacetimeFluctuation) player.worldObj
+                                    .getBlockTileEntity(x, y, z);
+                            if (tile != null) {
+                                PacketDispatcher.sendPacketToAllPlayers(new SpacetimeFluctuationPacket(x, y, z,
+                                        --tile.damage).makePacket());
+                                if (tile.damage <= 0) {
+                                    if (!player.inventory.addItemStackToInventory(new ItemStack(
+                                            Spacetime.spacetimeFluctuation))) {
+                                        player.dropPlayerItem(new ItemStack(Spacetime.spacetimeFluctuation));
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }

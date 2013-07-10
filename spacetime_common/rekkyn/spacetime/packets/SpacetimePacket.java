@@ -21,7 +21,7 @@ public abstract class SpacetimePacket {
                 ImmutableBiMap.Builder<Integer, Class<? extends SpacetimePacket>> builder = ImmutableBiMap.builder();
                 
                 builder.put(Integer.valueOf(0), ParticlePacket.class);
-                builder.put(Integer.valueOf(1), TestPacket.class);
+                builder.put(Integer.valueOf(1), SpacetimeFluctuationPacket.class);
                 // builder.put(Integer.valueOf(2), YetAnotherPacket.class);
                 
                 idMap = builder.build();
