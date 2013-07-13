@@ -4,6 +4,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
@@ -56,6 +57,9 @@ public class TileSpacetimeFluctuation extends TileEntity {
     public void pullEntities(Entity entity) {
         double dist = entity.getDistance(xCoord, yCoord, zCoord);
         if (dist > 10) { return; }
+        if (entity instanceof EntityPlayer) {
+            if (((EntityPlayer) entity).capabilities.isCreativeMode) { return; }
+        }
         double xDist = xCoord + 0.5 - entity.posX;
         double yDist = yCoord + 0.5 - entity.posY;
         double zDist = zCoord + 0.5 - entity.posZ;
